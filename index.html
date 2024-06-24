@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aggregate Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    
+    <div id="calculator" class="container">
+        <h1>FAST NU Aggregate Calculator</h1>
+            <div class="button-container">
+            <button onclick="showAggregateWithNU()" class="orange-btn">Calculate Aggregate with NU/NAT Marks</button>
+            <button onclick="showNUAndAggregate()" class="orange-btn">Calculate NU Marks and Final Aggregate</button>
+        </div>
+        <a href="https://chat.whatsapp.com/GgVGnvwtfV8JvxifJYsMxH" target="_blank" class="whatsapp-btn">Join Admission 2024 WhatsApp Group</a>
+        <p class="credit">© Taha</p>
+    </div>
+
+    <div id="aggregateWithNU" class="container" style="display: none;">
+        <h1>Calculate Aggregate with NU/NAT Marks</h1>
+        <div class="input-group tooltip">
+            <label for="nuNATMarks">
+                • NU/NAT Marks <span class="tooltiptext">NU-Test marks should be entered after negative marking</span></label>
+            <input id="nuNATMarks" type="number" step="0.01">
+        </div>
+       
+        <div class="input-group">
+            <label for="matricPercentage"> • Matric Percentage:</label>
+            <input id="matricPercentage" type="number" step="0.01">
+        </div>
+        <div class="input-group tooltip">
+            <label for="fscPercentage">
+                • FSc Percentage | O/A Equivalence <span class="tooltiptext">If FSc part 2 result is not announced, enter FSc part 1 result</span>
+            </label>
+            <input id="fscPercentage" type="number" step="0.01">
+        </div>
+        <button onclick="calculateAggregateWithNU()" class="calculate-btn">Calculate</button>
+        <button onclick="goBack()" class="back-btn">Go Back</button>
+        <div id="resultsAggregateWithNU">
+            <p id="finalAggregateWithNU" class="result"></p>
+        </div>
+        <p class="credit">© Taha </p>
+    </div>
+
+    <div id="nuAndAggregate" class="container" style="display: none;">
+        <h1>Calculate NU Marks and Aggregate</h1>
+        <div class="input-group">
+            <label for="totalAttemptedExceptEnglish">• Total Attempted Questions (except English):</label>
+            <input id="totalAttemptedExceptEnglish" type="number">
+        </div>
+        <div class="input-group">
+            <label for="correctExceptEnglish">• Correct Questions (except English):</label>
+            <input id="correctExceptEnglish" type="number">
+        </div>
+        <div class="input-group">
+            <label for="totalAttemptedEnglish">• Total Attempted Questions (only English):</label>
+            <input id="totalAttemptedEnglish" type="number">
+        </div>
+        <div class="input-group">
+            <label for="correctEnglish">• Correct Questions (only English):</label>
+            <input id="correctEnglish" type="number">
+        </div>
+        <div class="input-group">
+            <label for="matricPercentageNU">• Matric Percentage</label>
+            <input id="matricPercentageNU" type="number" step="0.01">
+        </div>
+        <div class="input-group tooltip">
+            <label for="fscPercentageNU">
+                • FSc Percentage | O/A Equivalence <span class="tooltiptext">If FSc part 2 result is not announced, enter FSc part 1 result</span>
+            </label>
+            <input id="fscPercentageNU" type="number" step="0.01">
+        </div>
+        <button onclick="calculateNUAndAggregate()" class="calculate-btn">Calculate</button>
+        <button onclick="goBack()" class="back-btn">Go Back</button>
+        <div id="resultsNUAndAggregate">
+            <p id="finalMarksNU" class="result"></p>
+            <p id="nuTestMarksNU" class="result"></p>
+            <p id="negativeMarksNU" class="result"></p>
+        </div>
+        <p class="credit">© Taha</p>
+    </div>
+
+    <script src="index.js"></script>
+</body>
+</html>
