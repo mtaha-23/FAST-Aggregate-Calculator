@@ -1,152 +1,96 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aggregate Calculator</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-   
-    <div id="calculator" class="container">
-        <h1>FAST NUCES Aggregate Calculator</h1>
-        <div class="button-container">
-            <button onclick="showAggregateWithNU()" class="orange-btn">Calculate Aggregate with NU/NAT Marks</button>
-            <button onclick="showNUAndAggregate()" class="orange-btn">Calculate NU Marks and Final Aggregate</button>
-        </div>
-        <a href="https://chat.whatsapp.com/GgVGnvwtfV8JvxifJYsMxH" target="_blank" class="whatsapp-btn">Join Admission 2024 WhatsApp Group</a>
-        <p class="credit">© Taha</p>
-    </div>
+function showAggregateWithNU() {
+    document.getElementById("calculator").style.display = "none";
+    document.getElementById("aggregateWithNU").style.display = "block";
+    document.getElementById("nuAndAggregate").style.display = "none";
+}
 
-    <div id="aggregateWithNU" class="container" style="display: none;">
-        <h1>Calculate Aggregate with NU/NAT Marks</h1>
-        <div class="input-group tooltip">
-            <label for="nuNATMarks">• NU/NAT Marks <span class="tooltiptext">NU-Test marks should be entered after negative marking</span></label>
-            <input id="nuNATMarks" type="number" step="0.01">
-        </div>
-        <div class="input-group">
-            <label for="matricPercentage">• Matric Percentage:</label>
-            <input id="matricPercentage" type="number" step="0.01">
-        </div>
-        <div class="input-group tooltip">
-            <label for="fscPercentage">• FSc Percentage | O/A Equivalence <span class="tooltiptext">If FSc part 2 result is not announced, enter FSc part 1 result</span></label>
-            <input id="fscPercentage" type="number" step="0.01">
-        </div>
-        <div class="button-container">
-            <button onclick="calculateAggregateWithNU()" class="calculate-btn">Calculate</button>
-            <button onclick="goBack()" class="back-btn">Go Back</button>
-        </div>
-        <div id="resultsAggregateWithNU">
-            <p id="finalAggregateWithNU" class="result"></p>
-        </div>
-        <p class="credit">© Taha</p>
-    </div>
+function showNUAndAggregate() {
+    document.getElementById("calculator").style.display = "none";
+    document.getElementById("aggregateWithNU").style.display = "none";
+    document.getElementById("nuAndAggregate").style.display = "block";
+}
 
-    <div id="nuAndAggregate" class="container" style="display: none;">
-        <h1>Calculate NU Marks and Aggregate</h1>
-        <div class="input-group">
-            <label for="totalAttemptedExceptEnglish">• Total Attempted Questions (except English):</label>
-            <input id="totalAttemptedExceptEnglish" type="number">
-        </div>
-        <div class="input-group">
-            <label for="correctExceptEnglish">• Correct Questions (except English):</label>
-            <input id="correctExceptEnglish" type="number">
-        </div>
-        <div class="input-group">
-            <label for="totalAttemptedEnglish">• Total Attempted Questions (only English):</label>
-            <input id="totalAttemptedEnglish" type="number">
-        </div>
-        <div class="input-group">
-            <label for="correctEnglish">• Correct Questions (only English):</label>
-            <input id="correctEnglish" type="number">
-        </div>
-        <div class="input-group">
-            <label for="matricPercentageNU">• Matric Percentage</label>
-            <input id="matricPercentageNU" type="number" step="0.01">
-        </div>
-        <div class="input-group tooltip">
-            <label for="fscPercentageNU">• FSc Percentage | O/A Equivalence <span class="tooltiptext">If FSc part 2 result is not announced, enter FSc part 1 result</span></label>
-            <input id="fscPercentageNU" type="number" step="0.01">
-        </div>
-        <div class="button-container">
-            <button onclick="calculateNUAndAggregate()" class="calculate-btn">Calculate</button>
-            <button onclick="goBack()" class="back-btn">Go Back</button>
-        </div>
-        <div id="resultsNUAndAggregate">
-            <p id="finalMarksNU" class="result"></p>
-            <p id="nuTestMarksNU" class="result"></p>
-            <p id="negativeMarksNU" class="result"></p>
-        </div>
-        <p class="credit">© Taha</p>
-    </div>
+function goBack() {
+    document.getElementById("calculator").style.display = "block";
+    document.getElementById("aggregateWithNU").style.display = "none";
+    document.getElementById("nuAndAggregate").style.display = "none";
+    clearInputs();
+}
 
-    <script>
-        function showAggregateWithNU() {
-            document.getElementById("calculator").style.display = "none";
-            document.getElementById("aggregateWithNU").style.display = "block";
-            document.getElementById("nuAndAggregate").style.display = "none";
-        }
+function clearInputs() {
+    const inputs = document.querySelectorAll("input[type='number']");
+    inputs.forEach(input => input.value = '');
+    const results = document.querySelectorAll(".result");
+    results.forEach(result => {
+        result.style.display = "none";
+        result.innerText = '';
+    });
+}
 
-        function showNUAndAggregate() {
-            document.getElementById("calculator").style.display = "none";
-            document.getElementById("aggregateWithNU").style.display = "none";
-            document.getElementById("nuAndAggregate").style.display = "block";
-        }
+function calculateAggregateWithNU() {
+    const nuNATMarks = parseFloat(document.getElementById("nuNATMarks").value);
+    const fscPercentage = parseFloat(document.getElementById("fscPercentage").value);
+    const matricPercentage = parseFloat(document.getElementById("matricPercentage").value);
 
-        function goBack() {
-            document.getElementById("calculator").style.display = "block";
-            document.getElementById("aggregateWithNU").style.display = "none";
-            document.getElementById("nuAndAggregate").style.display = "none";
+    if (isNaN(nuNATMarks) || isNaN(fscPercentage) || isNaN(matricPercentage)) {
+        alert("Please enter valid numbers for all fields.");
+        return;
+    }
 
-            // Clear input fields
-            const inputs = document.querySelectorAll('input[type="number"]');
-            inputs.forEach(input => input.value = '');
+    if (fscPercentage > 100 || matricPercentage > 100) {
+        alert("FSC Percentage and Matric Percentage cannot be greater than 100.");
+        return;
+    }
 
-            // Hide result paragraphs
-            const results = document.querySelectorAll('.result');
-            results.forEach(result => result.style.display = 'none');
-        }
+    const finalAggregate = (nuNATMarks * 0.5) + (fscPercentage * 0.4) + (matricPercentage * 0.1);
 
-        function calculateAggregateWithNU() {
-            var nuNATMarks = parseFloat(document.getElementById("nuNATMarks").value) || 0;
-            var matricPercentage = parseFloat(document.getElementById("matricPercentage").value) || 0;
-            var fscPercentage = parseFloat(document.getElementById("fscPercentage").value) || 0;
+    const finalAggregateElement = document.getElementById("finalAggregateWithNU");
+    finalAggregateElement.innerText = `Final Aggregate: ${finalAggregate.toFixed(2)}`;
+    showResult(finalAggregateElement);
+}
 
-            var aggregate = (nuNATMarks * 0.5) + (matricPercentage * 0.1) + (fscPercentage * 0.4);
+function calculateNUAndAggregate() {
+    const totalAttemptedExceptEnglish = parseFloat(document.getElementById("totalAttemptedExceptEnglish").value);
+    const correctExceptEnglish = parseFloat(document.getElementById("correctExceptEnglish").value);
+    const totalAttemptedEnglish = parseFloat(document.getElementById("totalAttemptedEnglish").value);
+    const correctEnglish = parseFloat(document.getElementById("correctEnglish").value);
+    const matricPercentageNU = parseFloat(document.getElementById("matricPercentageNU").value);
+    const fscPercentageNU = parseFloat(document.getElementById("fscPercentageNU").value);
 
-            document.getElementById("finalAggregateWithNU").textContent = "Your Aggregate: " + aggregate.toFixed(2) + "%";
-            document.getElementById("finalAggregateWithNU").style.display = "block";
-        }
+    if (isNaN(totalAttemptedExceptEnglish) || isNaN(correctExceptEnglish) || isNaN(totalAttemptedEnglish) || isNaN(correctEnglish) || isNaN(matricPercentageNU) || isNaN(fscPercentageNU)) {
+        alert("Please enter valid numbers for all fields.");
+        return;
+    }
 
-        function calculateNUAndAggregate() {
-            var totalAttemptedExceptEnglish = parseFloat(document.getElementById("totalAttemptedExceptEnglish").value) || 0;
-            var correctExceptEnglish = parseFloat(document.getElementById("correctExceptEnglish").value) || 0;
-            var totalAttemptedEnglish = parseFloat(document.getElementById("totalAttemptedEnglish").value) || 0;
-            var correctEnglish = parseFloat(document.getElementById("correctEnglish").value) || 0;
-            var matricPercentageNU = parseFloat(document.getElementById("matricPercentageNU").value) || 0;
-            var fscPercentageNU = parseFloat(document.getElementById("fscPercentageNU").value) || 0;
+    if (fscPercentageNU > 100 || matricPercentageNU > 100) {
+        alert("FSC Percentage and Matric Percentage cannot be greater than 100.");
+        return;
+    }
 
-            var wrongExceptEnglish = totalAttemptedExceptEnglish - correctExceptEnglish;
-            var wrongEnglish = totalAttemptedEnglish - correctEnglish;
+    const negativeMarks = ((totalAttemptedExceptEnglish - correctExceptEnglish) * 0.25) + ((totalAttemptedEnglish - correctEnglish) * 0.075);
+    const marks = correctExceptEnglish + (correctEnglish * 0.3);
 
-            //marks without negative marking
-            var totalMarks = (correctExceptEnglish * 1) + (correctEnglish * 0.333);
-            //negative marking
-            var negativeMarks = (wrongExceptEnglish * 0.25) + (wrongEnglish * 0.0833);
-            
-            //marks after negative marking
-            var nuTestMarks = totalMarks - negativeMarks;
+    let finalMarksNU = marks - negativeMarks;
+    finalMarksNU = finalMarksNU * 0.5 + (matricPercentageNU * 0.1) + (fscPercentageNU * 0.4);
 
-            var aggregate = (nuTestMarks * 0.5) + (matricPercentageNU * 0.1) + (fscPercentageNU * 0.4);
+    const nuTestMarksNU = marks;
 
-            document.getElementById("finalMarksNU").textContent = "Your Aggregate: " + aggregate.toFixed(2) + "%";
-            document.getElementById("nuTestMarksNU").textContent = "NU Test Marks (without negative marking): " + nuTestMarks.toFixed(2);
-            document.getElementById("negativeMarksNU").textContent = "Negative Marks: " + negativeMarks.toFixed(2);
+    const negativeMarksElement = document.getElementById("negativeMarksNU");
+    negativeMarksElement.innerText = `Negative Marks: ${negativeMarks.toFixed(2)}`;
+    showResult(negativeMarksElement);
 
-            document.getElementById("finalMarksNU").style.display = "block";
-            document.getElementById("nuTestMarksNU").style.display = "block";
-            document.getElementById("negativeMarksNU").style.display = "block";
-        }
-    </script>
-</body>
-</html>
+    const finalMarksElement = document.getElementById("finalMarksNU");
+    finalMarksElement.innerText = `Final Aggregate: ${finalMarksNU.toFixed(2)}`;
+    showResult(finalMarksElement);
+
+    const nuTestMarksElement = document.getElementById("nuTestMarksNU");
+    nuTestMarksElement.innerText = `NU Test Marks (without negative marking): ${nuTestMarksNU.toFixed(2)}`;
+    showResult(nuTestMarksElement);
+}
+
+function showResult(element) {
+    element.style.display = "block";
+    element.classList.add("result");
+}
+
+
