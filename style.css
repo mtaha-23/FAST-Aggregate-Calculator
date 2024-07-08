@@ -16,7 +16,7 @@ body {
     padding: 20px;
     max-width: 500px; /* Adjusted width */
     color: white;
-    text-align: center;
+    text-align: -webkit-center;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     margin: 20px; /* Added margin for spacing */
 }
@@ -129,14 +129,6 @@ button:hover {
 .tooltip:hover .tooltiptext {
     visibility: visible;
     opacity: 1;
-}
-
-/* Result styling */
-.result {
-    margin-top: 20px;
-    font-size: 22px;
-    font-weight: bold;
-    display: none;
 }
 
 /* Credit styling */
