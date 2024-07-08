@@ -4,137 +4,126 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: #f0f0f0; /* Light grey background */
+    background-color: #2596be; /* blue background */
     font-family: 'Arial', sans-serif;
+    
 }
 
 /* Calculator container */
-#calculator {
-    background-color: #1b1b1b; /* Dark grey background */
+.container {
+    background-color: #222; /* Dark grey background */
     border-radius: 15px;
     padding: 20px;
-    max-width: 600px;
+    max-width: 500px; /* Adjusted width */
     color: white;
     text-align: center;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Slight shadow */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    margin: 20px; /* Added margin for spacing */
 }
 
-/* Header style */
+/* Heading */
 h1 {
+    font-size: 24px;
     margin-bottom: 20px;
 }
 
-/* Button container style */
-.button-container {
-    display: flex;
-    justify-content: space-around;
-    margin-top: 20px;
+/* Input group styling */
+.input-group {
+    margin-bottom: 15px;
+    text-align: left; /* Align labels to the left */
+    width: 96%;
 }
 
-/* General button style */
+/* Input fields */
+input[type="number"] {
+    width: calc(100% - 20px); /* Adjusted width */
+    padding: 8px; /* Adjusted padding */
+    border: 1px solid #555;
+    border-radius: 5px;
+    background-color: #333;
+    color: white;
+    font-size: 14px; /* Adjusted font size */
+    margin-top: 5px; /* Added margin for spacing */
+    box-sizing: border-box; /* Ensure consistent box-sizing */
+}
+
+/* Buttons styling */
 button {
-    padding: 15px 0;
-    width: 45%;
+    padding: 10px 20px;
     border: none;
     border-radius: 5px;
-    background-color: #0e76a8; /* blue */
-    color: white;
-    font-size: 1.5rem;
+    font-size: 16px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    margin: 5px;
 }
 
 button:hover {
-    background-color: #128fdc; /* Darker blue on hover */
+    opacity: 0.8;
 }
 
-button:active {
-    background-color: #147eb2; /* Darkest blue on click */
-}
-
-/* WhatsApp button style */
-.whatsapp-btn {
-    display: block;
-    margin-top: 20px;
-    padding: 15px 0;
-    width: 100%;
-    border: none;
-    border-radius: 5px;
-    background-color: #238636; /* Green */
+.calculate-btn {
+    background-color: #28a745; /* Green */
     color: white;
-    font-size: 1.5rem;
-    text-align: center;
+}
+
+.calculate-btn:hover {
+    background-color: #218838;
+}
+
+.back-btn {
+    background-color: #dc3545; /* Red */
+    color: white;
+}
+
+.back-btn:hover {
+    background-color: #c82333;
+}
+
+.orange-btn {
+    background-color: #fd7e14; /* Orange */
+    color: white;
+}
+
+.orange-btn:hover {
+    background-color: #e36900;
+}
+
+.whatsapp-btn {
+    display: inline-block;
+    background-color: #25D366; /* WhatsApp green */
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
     text-decoration: none;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+    font-size: 16px;
+    margin-top: 20px;
 }
 
 .whatsapp-btn:hover {
-    background-color: #2ea043; /* Darker green on hover */
+    background-color: #20b358;
 }
 
-.whatsapp-btn:active {
-    background-color: #30b145; /* Darkest green on click */
-}
-
-/* Footer credit style */
-.credit {
-    margin-top: 20px;
-    font-size: 0.8rem;
-    color: #666;
-}
-
-/* Input group style */
-.input-group {
-    margin: 10px 0;
-    text-align: start;
-    padding-left: 10px;
-   }
-
-/* Label style */
-label {
-    display: block;
-    margin-bottom: 5px;
-    font-family: 'Arial', sans-serif;
-    font-weight: bold;
-    color: #333; /* Dark grey */
-}
-
-/* Input style */
-input {
-    width: calc(100% - 22px);
-    padding: 10px;
-    font-size: 1rem;
-    border: 1px solid #ccc; /* Light grey border */
-    border-radius: 5px;
-}
-
-/* Placeholder style */
-input::placeholder {
-    color: #999; /* Light grey placeholder text */
-}
-
-/* Tooltip style */
+/* Tooltip styling */
 .tooltip {
     position: relative;
-    cursor: help;
+    display: inline-block;
 }
 
 .tooltip .tooltiptext {
     visibility: hidden;
-    width: 200px;
-    background-color: #1b1b1b; /* Dark grey tooltip background */
-    color: white;
+    width: 200px; /* Adjusted width */
+    background-color: black;
+    color: #fff;
     text-align: center;
     border-radius: 5px;
-    padding: 5px;
+    padding: 5px 0;
     position: absolute;
     z-index: 1;
-    top: 100%;
+    bottom: 125%; 
     left: 50%;
-    transform: translateX(-50%);
+    margin-left: -100px; /* Adjusted margin */
     opacity: 0;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.3s;
 }
 
 .tooltip:hover .tooltiptext {
@@ -142,61 +131,24 @@ input::placeholder {
     opacity: 1;
 }
 
-/* Results container style */
-.results-container {
-    display: none;
-    margin-top: 20px;
-    padding: 20px;
-    background-color: #f0f0f0; /* Light grey background */
-    border-radius: 10px;
-    text-align: center;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Slight shadow */
-}
-
-/* Individual result style */
+/* Result styling */
 .result {
-    margin-top: 10px;
-    font-weight: bolder;
-    font-size: 1.2rem;
-    background-color: #9c2d2d; /* Dark red */
-    padding: 10px;
-    border-radius: 5px;
-    text-align: center;
-    color: white;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-}
-
-.result span {
-    font-weight: bold;
-}
-
-/* Calculate and Go Back button style */
-button.calculate-btn, button.go-back-btn {
     margin-top: 20px;
-    padding: 15px 0;
-    width: 45%;
-    border: none;
-    border-radius: 5px;
-    background-color: #238636; /* Green */
-    color: white;
-    font-size: 1.5rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+    font-size: 22px;
+    font-weight: bold;
+    display: none;
 }
 
-button.go-back-btn {
-    background-color: #8c2b2b; /* Dark red for Go Back button */
+/* Credit styling */
+.credit {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #aaa;
 }
 
-button.calculate-btn:hover, button.go-back-btn:hover {
-    background-color: #2ea043; /* Darker green on hover */
-}
-
-button.calculate-btn:active, button.go-back-btn:active {
-    background-color: #30b145; /* Darkest green on click */
-}
-
-.credit{
-    font-size: 1rem;
-    
+/* Align buttons container to the center */
+.button-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
 }
