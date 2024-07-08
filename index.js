@@ -42,7 +42,7 @@ function calculateAggregateWithNU() {
         return;
     }
 
-    const finalAggregate = (nuNATMarks * 0.5) + (fscPercentage * 0.4) + (matricPercentage * 0.1);
+    const finalAggregate = (nuNATMarks * (1/2)) + (fscPercentage * (4/10)) + (matricPercentage * (1/10));
 
     const finalAggregateElement = document.getElementById("finalAggregateWithNU");
     finalAggregateElement.innerText = `Final Aggregate: ${finalAggregate.toFixed(2)}`;
@@ -67,11 +67,12 @@ function calculateNUAndAggregate() {
         return;
     }
 
-    const negativeMarks = ((totalAttemptedExceptEnglish - correctExceptEnglish) * 0.25) + ((totalAttemptedEnglish - correctEnglish) * 0.0833);
-    const marks = correctExceptEnglish + (correctEnglish * 0.3);
+    const negativeMarks = ((totalAttemptedExceptEnglish - correctExceptEnglish) * (1/4)) + ((totalAttemptedEnglish - correctEnglish) * ((10/30)/4) );
+    
+    const marks = correctExceptEnglish + (correctEnglish * (10/30));
 
     let finalMarksNU = marks - negativeMarks;
-    finalMarksNU = finalMarksNU * 0.5 + (matricPercentageNU * 0.1) + (fscPercentageNU * 0.4);
+    finalMarksNU = (finalMarksNU * (1/2)) + (matricPercentageNU * (1/10)) + (fscPercentageNU * (4/10));
 
     const nuTestMarksNU = marks;
 
@@ -92,5 +93,4 @@ function showResult(element) {
     element.style.display = "block";
     element.classList.add("result");
 }
-
 
