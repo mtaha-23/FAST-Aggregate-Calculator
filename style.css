@@ -153,3 +153,26 @@ button:hover {
     border-left: 3px solid #ccc; /* Left border for emphasis */
     background-color: #1f1f1f; /* Light gray background */
    }
+
+   /* Credit container styling */
+.credit-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 100px;
+    margin-top: 20px;
+}
+
+.instagram-icon {
+    color: white;
+    text-decoration: none;
+    font-size: 24px;
+    margin-left: 10px; /* Spacing between credit and icon */
+}
+
+.instagram-icon:hover {
+    color: #e1306c; /* Instagram brand color on hover */
+    transition: .2s;
+}
+   
+   
