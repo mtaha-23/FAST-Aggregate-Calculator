@@ -14,6 +14,17 @@ function goBack() {
     document.getElementById("calculator").style.display = "block";
     document.getElementById("aggregateWithNU").style.display = "none";
     document.getElementById("nuAndAggregate").style.display = "none";
+    clearInputs();
+}
+
+function clearInputs() {
+    const inputs = document.querySelectorAll("input[type='number']");
+    inputs.forEach(input => input.value = '');
+    const results = document.querySelectorAll(".result");
+    results.forEach(result => {
+        result.style.display = "none";
+        result.innerText = '';
+    });
 }
 
 function calculateAggregateWithNU() {
