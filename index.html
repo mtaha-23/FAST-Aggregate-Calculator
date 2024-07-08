@@ -80,71 +80,8 @@
         <p class="credit">© Taha</p>
     </div>
 
-    <script>
-        function showAggregateWithNU() {
-            document.getElementById("calculator").style.display = "none";
-            document.getElementById("aggregateWithNU").style.display = "block";
-            document.getElementById("nuAndAggregate").style.display = "none";
-        }
+    <script src="index.js">
 
-        function showNUAndAggregate() {
-            document.getElementById("calculator").style.display = "none";
-            document.getElementById("aggregateWithNU").style.display = "none";
-            document.getElementById("nuAndAggregate").style.display = "block";
-        }
-
-        function goBack() {
-            document.getElementById("calculator").style.display = "block";
-            document.getElementById("aggregateWithNU").style.display = "none";
-            document.getElementById("nuAndAggregate").style.display = "none";
-
-            // Clear input fields
-            const inputs = document.querySelectorAll('input[type="number"]');
-            inputs.forEach(input => input.value = '');
-
-            // Hide result paragraphs
-            const results = document.querySelectorAll('.result');
-            results.forEach(result => result.style.display = 'none');
-        }
-
-        function calculateAggregateWithNU() {
-            var nuNATMarks = parseFloat(document.getElementById("nuNATMarks").value) || 0;
-            var matricPercentage = parseFloat(document.getElementById("matricPercentage").value) || 0;
-            var fscPercentage = parseFloat(document.getElementById("fscPercentage").value) || 0;
-
-            var aggregate = (nuNATMarks / 100 * 50) + (matricPercentage * 0.1) + (fscPercentage * 0.4);
-
-            document.getElementById("finalAggregateWithNU").textContent = "Your Aggregate: " + aggregate.toFixed(2) + "%";
-            document.getElementById("finalAggregateWithNU").style.display = "block";
-        }
-
-        function calculateNUAndAggregate() {
-            var totalAttemptedExceptEnglish = parseFloat(document.getElementById("totalAttemptedExceptEnglish").value) || 0;
-            var correctExceptEnglish = parseFloat(document.getElementById("correctExceptEnglish").value) || 0;
-            var totalAttemptedEnglish = parseFloat(document.getElementById("totalAttemptedEnglish").value) || 0;
-            var correctEnglish = parseFloat(document.getElementById("correctEnglish").value) || 0;
-            var matricPercentageNU = parseFloat(document.getElementById("matricPercentageNU").value) || 0;
-            var fscPercentageNU = parseFloat(document.getElementById("fscPercentageNU").value) || 0;
-
-            var wrongExceptEnglish = totalAttemptedExceptEnglish - correctExceptEnglish;
-            var wrongEnglish = totalAttemptedEnglish - correctEnglish;
-
-            var totalMarks = (correctExceptEnglish * 1) + (correctEnglish * 1);
-            var negativeMarks = (wrongExceptEnglish * -0.25) + (wrongEnglish * -0.25);
-
-            var netMarks = totalMarks + negativeMarks;
-            var nuTestMarks = (netMarks / 120) * 100;
-
-            var aggregate = (nuTestMarks * 0.5) + (matricPercentageNU * 0.1) + (fscPercentageNU * 0.4);
-
-            document.getElementById("finalMarksNU").textContent = "Your Aggregate: " + aggregate.toFixed(2) + "%";
-            document.getElementById("nuTestMarksNU").textContent = "NU Test Marks: " + nuTestMarks.toFixed(2);
-            document.getElementById("negativeMarksNU").textContent = "Negative Marks: " + negativeMarks.toFixed(2);
-
-            document.getElementById("finalMarksNU").style.display = "block";
-            document.getElementById("nuTestMarksNU").style.display = "block";
-            document.getElementById("negativeMarksNU").style.display = "block";
-        }
     </script>
 </body>
 </html>
