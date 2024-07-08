@@ -67,7 +67,7 @@ function calculateNUAndAggregate() {
         return;
     }
 
-    const negativeMarks = ((totalAttemptedExceptEnglish - correctExceptEnglish) * 0.25) + ((totalAttemptedEnglish - correctEnglish) * 0.075);
+    const negativeMarks = ((totalAttemptedExceptEnglish - correctExceptEnglish) * 0.25) + ((totalAttemptedEnglish - correctEnglish) * 0.0833);
     const marks = correctExceptEnglish + (correctEnglish * 0.3);
 
     let finalMarksNU = marks - negativeMarks;
