@@ -2,21 +2,23 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
     <title>Aggregate Calculator</title>
     <link rel="stylesheet" href="style.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
 </head>
 <body>
-   
+   <div class="logo_container">
+    <img src="resources/NU-logo-removebg-preview.png" class="logo" id="logo">
+   </div>
     <div id="calculator" class="container">
-        <h1>FAST NUCES BS Aggregate Calculator</h1>
+        <h1>FAST Aggregate Calculator</h1>
         <div class="button-container">
-            <button onclick="showAggregateWithNU()" class="orange-btn">Calculate Aggregate with NU/NAT Marks</button>
-            <button onclick="showNUAndAggregate()" class="orange-btn">Calculate NU Marks and Final Aggregate</button>
+            <button onclick="showAggregateWithNU()" class="orange-btn"><b>Calculate Aggregate with NAT Marks</b></button>
+            <button onclick="showNUAndAggregate()" class="orange-btn"><b>Calculate NU Marks and Final Aggregate</b></button>
         </div>
-        <a href="https://chat.whatsapp.com/F76rK8KExGsFnVbxXmy6aC" target="_blank" class="whatsapp-btn">Join Admission 2024 WhatsApp Group</a>
+        <a href="https://chat.whatsapp.com/F76rK8KExGsFnVbxXmy6aC" target="_blank" class="whatsapp-btn"><b>Join Admission 2024 WhatsApp Group</b></a>
         <div class="credit-container">
             <a href="https://www.instagram.com/taha.insights" class="instagram-icon" target="_blank"><i class='bx bxl-instagram'></i></a>
             <p class="credit">© Taha</p>
@@ -52,7 +54,7 @@
         </div>
     </div>
 
-    <div id="nuAndAggregate" class="container" style="display: none;">
+    <div id="nuAndAggregate" class="container_NU" style="display: none;">
         <h1>Calculate NU Marks and Aggregate</h1>
         <div class="input-group">
             <label for="totalAttemptedExceptEnglish">Total Attempted Questions (except English):</label>
@@ -94,7 +96,7 @@
             <p class="credit">© Taha</p>
         </div>
     </div>
-
+    <div class="spacing">l</div>
     <script src="index.js"></script>
 </body>
 </html>
