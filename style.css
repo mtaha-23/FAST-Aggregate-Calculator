@@ -1,11 +1,12 @@
 body {
-    margin: 0;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: #2596be; /* blue background */
+    background-color: rgb(152, 223, 248); /* blue background */
     font-family: 'Arial', sans-serif;
+    flex-direction: column;
+    margin: 0 auto;
     
 }
 
@@ -19,6 +20,19 @@ body {
     text-align: -webkit-center;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     margin: 20px; /* Added margin for spacing */
+}
+
+.container_NU {
+    background-color: #222; /* Dark grey background */
+    border-radius: 15px;
+    padding: 20px;
+    max-width: 500px; /* Adjusted width */
+    color: white;
+    text-align: -webkit-center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    margin: 20px; /* Added margin for spacing */
+    margin-top: 200px;
+    
 }
 
 /* Heading */
@@ -57,9 +71,6 @@ button {
     margin: 5px;
 }
 
-button:hover {
-    opacity: 0.8;
-}
 
 .calculate-btn {
     background-color: #28a745; /* Green */
@@ -82,10 +93,17 @@ button:hover {
 .orange-btn {
     background-color: #fd7e14; /* Orange */
     color: white;
+    width: 70%;
+
 }
 
 .orange-btn:hover {
     background-color: #e36900;
+    transform: scale(1.1);
+    transition-duration: 0.4s;
+	-webkit-transition-duration: 0.4s;
+	-ms-transition-duration: 0.4s;
+	-moz-transition-duration: 0.4s;
 }
 
 .whatsapp-btn {
@@ -97,10 +115,17 @@ button:hover {
     text-decoration: none;
     font-size: 16px;
     margin-top: 20px;
+    width: 70%;
+    transition-duration: 0.5s;
+	-webkit-transition-duration: 0.5s;
+	-ms-transition-duration: 0.5s;
+	-moz-transition-duration: 0.5s;
+
 }
 
 .whatsapp-btn:hover {
-    background-color: #20b358;
+    background-color: white;
+    color: #25D366;
 }
 
 /* Tooltip styling */
@@ -133,7 +158,7 @@ button:hover {
 
 /* Credit styling */
 .credit {
-    margin-top: 20px;
+    margin-top: 10px;
     font-size: 14px;
     color: #aaa;
 }
@@ -148,10 +173,12 @@ button:hover {
     font-size: 12px;
     font-style: italic;
     text-align: left;
-    color: #666; /* Gray color for text */
+    color: rgb(220, 220, 220); /* Gray color for text */
     padding: 5px; /* Padding around the note */
+    padding-left: 15px;
     border-left: 3px solid #ccc; /* Left border for emphasis */
     background-color: #1f1f1f; /* Light gray background */
+    font-weight: bold;
    }
 
    /* Credit container styling */
@@ -166,8 +193,8 @@ button:hover {
 .instagram-icon {
     color: white;
     text-decoration: none;
-    font-size: 24px;
-    margin-left: 10px; /* Spacing between credit and icon */
+    font-size: 30px;
+    padding: 11px; /* Spacing between credit and icon */
 }
 
 .instagram-icon:hover {
@@ -175,4 +202,26 @@ button:hover {
     transition: .2s;
 }
    
-   
+.logo{
+    width: 70%;
+    height: auto;
+}   
+
+.logo_container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.spacing{
+    color: rgb(152, 223, 248);
+    font-size: 1px;
+}
+
+@media (max-width: 1024px) {
+    .container, button {
+      width: 85vw;
+      height: auto;
+    }
+
+  }

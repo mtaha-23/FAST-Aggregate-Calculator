@@ -2,18 +2,22 @@ function showAggregateWithNU() {
     document.getElementById("calculator").style.display = "none";
     document.getElementById("aggregateWithNU").style.display = "block";
     document.getElementById("nuAndAggregate").style.display = "none";
+    document.getElementById("logo").style.display = "none";
 }
 
 function showNUAndAggregate() {
     document.getElementById("calculator").style.display = "none";
     document.getElementById("aggregateWithNU").style.display = "none";
     document.getElementById("nuAndAggregate").style.display = "block";
+    document.getElementById("logo").style.display = "none";
 }
 
 function goBack() {
     document.getElementById("calculator").style.display = "block";
     document.getElementById("aggregateWithNU").style.display = "none";
     document.getElementById("nuAndAggregate").style.display = "none";
+    document.getElementById("logo").style.display = "block";
+    document.getElementById("logo").classList.add("logo");
     clearInputs();
 }
 
