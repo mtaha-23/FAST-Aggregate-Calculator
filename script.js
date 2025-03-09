@@ -361,7 +361,7 @@ document.getElementById("feedbackForm").addEventListener("submit", function(even
         comments: document.getElementById("comments").value
     };
 
-    fetch("https://script.google.com/macros/s/AKfycbyI291YIccJXtvGmm20Xet8LXPe1_a7q7T-sXHwiGVlfY7rras076HIDyCGwYF5PAp-/exec", {  // Replace with your actual URL
+    fetch("https://script.google.com/macros/s/AKfycbyqulAF3MuAb6oW-HqBtpNZIG6ThrwivgWtJjNqR6xut2Xu6aCrlnE2wvjmvMbCf0KY/exec", {  // Replace with your actual URL
         method: "POST",
         headers: {
             "Content-Type": "application/json"
