@@ -50,7 +50,7 @@
   }
   
   .logo {
-    max-width: 50px;
+    max-width: 100px;
     height: auto;
     margin-right: 15px;
     filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
