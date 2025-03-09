@@ -352,3 +352,24 @@ function showAlert(message, type, formId) {
         bsAlert.close();
     }, 5000);
 }
+
+document.getElementById("feedbackForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    var formData = {
+        rating: document.getElementById("rating").value,
+        comments: document.getElementById("comments").value
+    };
+
+    fetch("https://script.google.com/macros/s/AKfycbyI291YIccJXtvGmm20Xet8LXPe1_a7q7T-sXHwiGVlfY7rras076HIDyCGwYF5PAp-/exec", {  // Replace with your actual URL
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        mode: "no-cors",  // Temporary test (response won’t be readable)
+        body: JSON.stringify(formData)
+    }).then(() => {
+        alert("Feedback submitted successfully! (But response may not be visible)");
+        document.getElementById("feedbackForm").reset();
+    }).catch(error => console.error("Error:", error));
+});

@@ -55,6 +55,11 @@
                                     <i class="bi bi-building"></i> Estimate Program
                                 </button>
                             </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="feedback-tab" data-bs-toggle="pill" data-bs-target="#feedback" type="button" role="tab"  aria-selected="false">
+                                    <i class="bi bi-building"></i> Feedback
+                                </button>
+                            </li>
                         </ul>
 
                         <!-- Tab Content -->
@@ -256,6 +261,27 @@
                                 
                             </div>
 
+                            <div class="tab-pane fade" id="feedback" role="tabpanel" aria-labelledby="feedback-tab">
+                                <div class="container mt-4">
+                                    <h3>Give Your Feedback</h3>
+                                    <form id="feedbackForm">
+                                        <label for="rating">How helpful was this calculator? (1-5)</label>
+                                        <select id="rating" class="form-control">
+                                            <option value="1">1 - Not Helpful</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5 - Very Helpful</option>
+                                        </select>
+                                
+                                        <label for="comments">Any comments?</label>
+                                        <textarea id="comments" class="form-control" rows="3"></textarea>
+                                
+                                        <button type="submit" class="btn btn-primary mt-2">Submit Feedback</button>
+                                    </form>
+                                </div>
+                            </div>
+                            
                         </div>
                     </div>
                 </div>
