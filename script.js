@@ -353,23 +353,41 @@ function showAlert(message, type, formId) {
     }, 5000);
 }
 
+
 document.getElementById("feedbackForm").addEventListener("submit", function(event) {
     event.preventDefault();
 
+    var selectedRating = document.querySelector('input[name="rating"]:checked');
+    if (!selectedRating) {
+        alert("Please select a rating before submitting.");
+        return;
+    }
+
     var formData = {
-        rating: document.getElementById("rating").value,
+        rating: selectedRating.value,
+        email: document.getElementById("email").value,
         comments: document.getElementById("comments").value
     };
 
-    fetch("https://script.google.com/macros/s/AKfycbyqulAF3MuAb6oW-HqBtpNZIG6ThrwivgWtJjNqR6xut2Xu6aCrlnE2wvjmvMbCf0KY/exec", {  // Replace with your actual URL
+    //clear input
+    document.getElementById("feedbackForm").reset();
+    selectedRating.checked = false;
+
+    fetch("https://script.google.com/macros/s/AKfycbxvuGgbM_2eb_82fHAK-RaYdxVSAWPMB0g53fYlX0O7PR44QREq0ZzZiYjRmpxsQIoQ/exec", {  // Replace with actual Web App URL
         method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
-        mode: "no-cors",  // Temporary test (response won’t be readable)
+        mode: "no-cors",
         body: JSON.stringify(formData)
-    }).then(() => {
-        alert("Feedback submitted successfully! (But response may not be visible)");
-        document.getElementById("feedbackForm").reset();
-    }).catch(error => console.error("Error:", error));
+    })
+    .then(response => response.text())
+    .then(data => {
+        console.log("Response from Google Apps Script:", data);
+    })
+    .catch(error => {
+        console.error("Error:", error);
+        alert("There was an error submitting your feedback.");
+    });
 });
+
