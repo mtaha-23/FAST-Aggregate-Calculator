@@ -373,7 +373,7 @@ document.getElementById("feedbackForm").addEventListener("submit", function(even
     document.getElementById("feedbackForm").reset();
     selectedRating.checked = false;
 
-    fetch("https://script.google.com/macros/s/AKfycbxvuGgbM_2eb_82fHAK-RaYdxVSAWPMB0g53fYlX0O7PR44QREq0ZzZiYjRmpxsQIoQ/exec", {  // Replace with actual Web App URL
+    fetch("https://script.google.com/macros/s/AKfycbxvuGgbM_2eb_82fHAK-RaYdxVSAWPMB0g53fYlX0O7PR44QREq0ZzZiYjRmpxsQIoQ/exec", {  
         method: "POST",
         headers: {
             "Content-Type": "application/json"
