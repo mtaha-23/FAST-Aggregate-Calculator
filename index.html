@@ -34,33 +34,35 @@
                 <div class="col-lg-10">
                     <div class="card main-card shadow">
                         <!-- Navigation Tabs -->
-                        <ul class="nav nav-pills nav-justified mb-4" id="calculatorTabs" role="tablist">
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link active" id="home-tab" data-bs-toggle="pill" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">
+                        <ul class="nav nav-pills row row-cols-5 text-center mb-4" id="calculatorTabs" role="tablist">
+                            <li class="col">
+                                <button class="nav-link active w-100 text-nowrap" id="home-tab" data-bs-toggle="pill" data-bs-target="#home" type="button" role="tab">
                                     <i class="bi bi-house-door"></i> Home
                                 </button>
                             </li>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="nat-tab" data-bs-toggle="pill" data-bs-target="#nat" type="button" role="tab" aria-controls="nat" aria-selected="false">
+                            <li class="col">
+                                <button class="nav-link w-100 text-nowrap" id="nat-tab" data-bs-toggle="pill" data-bs-target="#nat" type="button" role="tab">
                                     <i class="bi bi-calculator"></i> NAT Marks
                                 </button>
                             </li>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="nu-tab" data-bs-toggle="pill" data-bs-target="#nu" type="button" role="tab" aria-controls="nu" aria-selected="false">
+                            <li class="col">
+                                <button class="nav-link w-100 text-nowrap" id="nu-tab" data-bs-toggle="pill" data-bs-target="#nu" type="button" role="tab">
                                     <i class="bi bi-graph-up"></i> NU Marks
                                 </button>
                             </li>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="estimate-tab" data-bs-toggle="pill" data-bs-target="#estimate" type="button" role="tab" aria-controls="estimate" aria-selected="false">
-                                    <i class="bi bi-building"></i> Estimate Program
+                            <li class="col">
+                                <button class="nav-link w-100 text-nowrap" id="estimate-tab" data-bs-toggle="pill" data-bs-target="#estimate" type="button" role="tab">
+                                    <i class="bi bi-building"></i> Campus Merit
                                 </button>
                             </li>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="feedback-tab" data-bs-toggle="pill" data-bs-target="#feedback" type="button" role="tab"  aria-selected="false">
-                                    <i class="bi bi-building"></i> Feedback
+                            <li class="col">
+                                <button class="nav-link w-100 text-nowrap" id="feedback-tab" data-bs-toggle="pill" data-bs-target="#feedback" type="button" role="tab">
+                                    <i class="bi bi-star"></i> Feedback
                                 </button>
                             </li>
                         </ul>
+                        
+                        
 
                         <!-- Tab Content -->
                         <div class="tab-content p-3" id="calculatorTabContent">
@@ -267,10 +269,10 @@
                                     <h3>Give Your Feedback</h3>
                                     <form id="feedbackForm">
                                         <div class="mb-3">
-                                            <label class="form-label">How helpful was this calculator? (1-5)</label>
+                                            <label class="form-label">How helpful was this calculator?*</label>
                                             <div class="d-flex justify-content-between">
                                                 <label class="form-check-label">
-                                                    <input type="radio" name="rating" value="1" class="form-check-input"> 1
+                                                    <input type="radio" name="rating" value="1" class="form-check-input"> 1 - (Not helpful)
                                                 </label>
                                                 <label class="form-check-label">
                                                     <input type="radio" name="rating" value="2" class="form-check-input"> 2
@@ -282,7 +284,7 @@
                                                     <input type="radio" name="rating" value="4" class="form-check-input"> 4
                                                 </label>
                                                 <label class="form-check-label">
-                                                    <input type="radio" name="rating" value="5" class="form-check-input"> 5
+                                                    <input type="radio" name="rating" value="5" class="form-check-input"> 5 - (Very helpful)
                                                 </label>
                                             </div>
                                         </div>
@@ -293,7 +295,7 @@
                                         </div>
                             
                                         <div class="mb-3">
-                                            <label for="comments" class="form-label">Any comments?</label>
+                                            <label for="comments" class="form-label">Any comments? (optional)</label>
                                             <textarea id="comments" class="form-control" rows="3"></textarea>
                                         </div>
                             

@@ -118,6 +118,11 @@
     margin: 0 10px;
   }
   
+  .nav-link {
+    font-size: 0.9rem; /* Reduce font size slightly */
+    white-space: nowrap; /* Prevent text wrapping */
+    }
+
   .nav-pills .nav-link {
     border-radius: 6px;
     padding: 8px 15px;
