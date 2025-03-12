@@ -40,7 +40,7 @@ function setupRatingReminder() {
         // Set a timer to show the rating reminder after 25 seconds
         const ratingReminderTimer = setTimeout(function() {
             showRatingReminder();
-        }, 5000); // 25 seconds
+        }, 25000); // 25 seconds
         
         // Track user activity to ensure they're still active
         let userActive = false;
