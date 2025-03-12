@@ -19,7 +19,45 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Add input validation
     setupInputValidation();
+    
+    // Check for mobile devices and adjust UI accordingly
+    checkMobileDevice();
 });
+
+// Check if device is mobile and adjust UI
+function checkMobileDevice() {
+    const isMobile = window.innerWidth < 768;
+    if (isMobile) {
+        // Simplify UI for mobile devices
+        adjustForMobile();
+    }
+    
+    // Listen for window resize events
+    window.addEventListener('resize', function() {
+        if (window.innerWidth < 768 && !isMobile) {
+            adjustForMobile();
+        } else if (window.innerWidth >= 768 && isMobile) {
+            resetMobileAdjustments();
+        }
+    });
+}
+
+// Adjust UI for mobile devices
+function adjustForMobile() {
+    // Simplify navigation
+    const navLinks = document.querySelectorAll('.nav-link');
+    navLinks.forEach(link => {
+        link.classList.add('mobile-nav');
+    });
+}
+
+// Reset mobile adjustments
+function resetMobileAdjustments() {
+    const navLinks = document.querySelectorAll('.nav-link');
+    navLinks.forEach(link => {
+        link.classList.remove('mobile-nav');
+    });
+}
 
 // Set up input validation
 function setupInputValidation() {
@@ -353,41 +391,44 @@ function showAlert(message, type, formId) {
     }, 5000);
 }
 
+// Feedback form submission
+document.addEventListener('DOMContentLoaded', function() {
+    const feedbackForm = document.getElementById("feedbackForm");
+    if (feedbackForm) {
+        feedbackForm.addEventListener("submit", function(event) {
+            event.preventDefault();
 
-document.getElementById("feedbackForm").addEventListener("submit", function(event) {
-    event.preventDefault();
+            var selectedRating = document.querySelector('input[name="rating"]:checked');
+            if (!selectedRating) {
+                alert("Please select a rating before submitting.");
+                return;
+            }
 
-    var selectedRating = document.querySelector('input[name="rating"]:checked');
-    if (!selectedRating) {
-        alert("Please select a rating before submitting.");
-        return;
+            var formData = {
+                rating: selectedRating.value,
+                email: document.getElementById("email").value,
+                comments: document.getElementById("comments").value
+            };
+
+            //clear input
+            document.getElementById("feedbackForm").reset();
+            selectedRating.checked = false;
+
+            fetch("https://script.google.com/macros/s/AKfycbxvuGgbM_2eb_82fHAK-RaYdxVSAWPMB0g53fYlX0O7PR44QREq0ZzZiYjRmpxsQIoQ/exec", {  
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                mode: "no-cors",
+                body: JSON.stringify(formData)
+            })
+            .then(response => {
+                showAlert("Thank you for your feedback!", "success", "feedbackForm");
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                showAlert("There was an error submitting your feedback.", "danger", "feedbackForm");
+            });
+        });
     }
-
-    var formData = {
-        rating: selectedRating.value,
-        email: document.getElementById("email").value,
-        comments: document.getElementById("comments").value
-    };
-
-    //clear input
-    document.getElementById("feedbackForm").reset();
-    selectedRating.checked = false;
-
-    fetch("https://script.google.com/macros/s/AKfycbxvuGgbM_2eb_82fHAK-RaYdxVSAWPMB0g53fYlX0O7PR44QREq0ZzZiYjRmpxsQIoQ/exec", {  
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        mode: "no-cors",
-        body: JSON.stringify(formData)
-    })
-    .then(response => response.text())
-    .then(data => {
-        console.log("Response from Google Apps Script:", data);
-    })
-    .catch(error => {
-        console.error("Error:", error);
-        alert("There was an error submitting your feedback.");
-    });
 });
-
