@@ -31,6 +31,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Set up hamburger menu
     setupHamburgerMenu();
+
+    // Set up theme toggle
+    setupThemeToggle();
 });
 
 // Set up rating reminder popup
@@ -517,4 +520,41 @@ function setupHamburgerMenu() {
             });
         });
     }
+}
+
+// Set up theme toggle
+function setupThemeToggle() {
+    const themeToggle = document.getElementById('themeToggle');
+    
+    // Check for saved theme preference or use device preference
+    const savedTheme = localStorage.getItem('theme');
+    const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+    
+    // Apply the saved theme or device preference
+    if (savedTheme === 'dark' || (!savedTheme && prefersDarkScheme.matches)) {
+        document.body.classList.add('dark-theme');
+    }
+    
+    // Toggle theme when button is clicked
+    themeToggle.addEventListener('click', () => {
+        document.body.classList.toggle('dark-theme');
+        
+        // Save preference to localStorage
+        if (document.body.classList.contains('dark-theme')) {
+            localStorage.setItem('theme', 'dark');
+        } else {
+            localStorage.setItem('theme', 'light');
+        }
+    });
+    
+    // Listen for changes in device theme preference
+    prefersDarkScheme.addEventListener('change', (e) => {
+        if (!localStorage.getItem('theme')) {
+            if (e.matches) {
+                document.body.classList.add('dark-theme');
+            } else {
+                document.body.classList.remove('dark-theme');
+            }
+        }
+    });
 }
