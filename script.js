@@ -34,6 +34,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Set up theme toggle
     setupThemeToggle();
+    
+    // Set up PDF generation
+    setupPDFGeneration();
 });
 
 // Set up rating reminder popup
@@ -557,4 +560,166 @@ function setupThemeToggle() {
             }
         }
     });
+}
+// Set up PDF generation
+function setupPDFGeneration() {
+    const pdfButtons = document.querySelectorAll('.generate-pdf-btn');
+    
+    pdfButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const resultType = this.getAttribute('data-result-type');
+            generatePDF(resultType);
+        });
+    });
+}
+
+// Generate PDF based on result type
+function generatePDF(resultType) {
+    // Show loading indicator
+    showAlert('Generating PDF, please wait...', 'info', resultType === 'nat' ? 'natForm' : 'nuForm');
+    
+    // Create a new jsPDF instance
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({
+        orientation: 'portrait',
+        unit: 'mm',
+        format: 'a4'
+    });
+    
+    // Set document properties
+    doc.setProperties({
+        title: 'FAST NUCES Aggregate Calculation',
+        subject: 'Admission Test Score Calculator Results',
+        author: 'FAST NUCES Calculator',
+        creator: 'FAST NUCES Calculator'
+    });
+    
+    // Add header
+    doc.setFontSize(22);
+    doc.setTextColor(13, 71, 161); // Primary dark color
+    doc.text('FAST NUCES', 105, 20, { align: 'center' });
+    
+    doc.setFontSize(16);
+    doc.setTextColor(25, 118, 210); // Primary color
+    doc.text('Admission Test Score Calculator', 105, 30, { align: 'center' });
+    
+    // Add horizontal line
+    doc.setDrawColor(25, 118, 210);
+    doc.setLineWidth(0.5);
+    doc.line(20, 35, 190, 35);
+    
+    // Add date
+    const today = new Date();
+    const dateStr = today.toLocaleDateString('en-US', { 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric' 
+    });
+    doc.setFontSize(10);
+    doc.setTextColor(100, 100, 100);
+    doc.text(`Generated on: ${dateStr}`, 20, 45);
+    
+    // Add calculation type
+    doc.setFontSize(14);
+    doc.setTextColor(0, 0, 0);
+    if (resultType === 'nat') {
+        doc.text('NAT Marks Calculation Results', 105, 55, { align: 'center' });
+        
+        // Add input values
+        doc.setFontSize(12);
+        doc.text('Input Values:', 20, 65);
+        
+        const nuNATMarks = document.getElementById('nuNATMarks').value || 'Not provided';
+        const matricPercentage = document.getElementById('matricPercentage').value || 'Not provided';
+        const fscPercentage = document.getElementById('fscPercentage').value || 'Not provided';
+        
+        doc.text(`NU/NAT Marks: ${nuNATMarks}`, 30, 75);
+        doc.text(`Matric Percentage: ${matricPercentage}`, 30, 85);
+        doc.text(`FSc Percentage: ${fscPercentage}`, 30, 95);
+        
+        // Add result
+        const finalAggregate = document.getElementById('finalAggregateWithNU').textContent;
+        
+        doc.setFontSize(14);
+        doc.text('Final Result:', 20, 115);
+        
+        doc.setFontSize(16);
+        doc.setTextColor(13, 71, 161);
+        doc.text(`Aggregate Score: ${finalAggregate}`, 105, 125, { align: 'center' });
+        
+    } else if (resultType === 'nu') {
+        doc.text('NU Marks Calculation Results', 105, 55, { align: 'center' });
+        
+        // Add input values
+        doc.setFontSize(12);
+        doc.text('Input Values:', 20, 65);
+        
+        const totalAttemptedExceptEnglish = document.getElementById('totalAttemptedExceptEnglish').value || 'Not provided';
+        const correctExceptEnglish = document.getElementById('correctExceptEnglish').value || 'Not provided';
+        const totalAttemptedEnglish = document.getElementById('totalAttemptedEnglish').value || 'Not provided';
+        const correctEnglish = document.getElementById('correctEnglish').value || 'Not provided';
+        const matricPercentageNU = document.getElementById('matricPercentageNU').value || 'Not provided';
+        const fscPercentageNU = document.getElementById('fscPercentageNU').value || 'Not provided';
+        
+        doc.text(`Total Attempted Questions (except English): ${totalAttemptedExceptEnglish}`, 30, 75);
+        doc.text(`Correct Questions (except English): ${correctExceptEnglish}`, 30, 85);
+        doc.text(`Total Attempted Questions (only English): ${totalAttemptedEnglish}`, 30, 95);
+        doc.text(`Correct Questions (only English): ${correctEnglish}`, 30, 105);
+        doc.text(`Matric Percentage: ${matricPercentageNU}`, 30, 115);
+        doc.text(`FSc Percentage: ${fscPercentageNU}`, 30, 125);
+        
+        // Add results
+        const finalMarksNU = document.getElementById('finalMarksNU').textContent;
+        const nuTestMarksNU = document.getElementById('nuTestMarksNU').textContent;
+        const negativeMarksNU = document.getElementById('negativeMarksNU').textContent;
+        
+        doc.setFontSize(14);
+        doc.text('Final Results:', 20, 145);
+        
+        doc.setFontSize(12);
+        doc.setTextColor(0, 0, 0);
+        doc.text(`NU Test Marks: ${nuTestMarksNU}`, 30, 155);
+        doc.text(`Negative Marks: ${negativeMarksNU}`, 30, 165);
+        
+        doc.setFontSize(16);
+        doc.setTextColor(13, 71, 161);
+        doc.text(`Final Aggregate: ${finalMarksNU}`, 105, 180, { align: 'center' });
+    }
+    
+    // Add calculator link
+    doc.setFontSize(12);
+    doc.setTextColor(25, 118, 210); // Primary color
+    doc.text('Calculator Link:', 20, 210);
+    
+    // Add clickable link
+    const calculatorLink = 'https://mtaha-23.github.io/FAST-Aggregate-Calculator/';
+    doc.setTextColor(0, 102, 204); // Link blue color
+    doc.textWithLink(calculatorLink, 50, 210, { url: calculatorLink });
+    doc.setLineWidth(0.1);
+    doc.line(50, 211, 50 + doc.getTextWidth(calculatorLink), 211);
+    
+    // Add social media section
+    doc.setFontSize(12);
+    doc.setTextColor(25, 118, 210); // Primary color
+    doc.text('Follow on instagram:', 20, 225);
+    
+    // Add Instagram link
+    doc.setTextColor(0, 102, 204); // Link blue color
+    const instagramText = '         Taha (Instagram)';
+    const instagramLink = 'https://www.instagram.com/taha.insights';
+    doc.textWithLink(instagramText, 50, 225, { url: instagramLink });
+    doc.setLineWidth(0.1);
+    doc.line(50, 226, 50 + doc.getTextWidth(instagramText), 226);
+    
+    // Add footer
+    doc.setFontSize(10);
+    doc.setTextColor(100, 100, 100);
+    doc.text('© Taha | FAST NUCES Calculator', 105, 280, { align: 'center' });
+    doc.text('This is a calculation result and not an official document from FAST NUCES.', 105, 285, { align: 'center' });
+    
+    // Save the PDF
+    doc.save(`FAST-NUCES-${resultType.toUpperCase()}-Calculation.pdf`);
+    
+    // Show success message
+    showAlert('PDF generated successfully!', 'success', resultType === 'nat' ? 'natForm' : 'nuForm');
 }

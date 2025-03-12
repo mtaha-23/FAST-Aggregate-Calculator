@@ -2,5 +2,4 @@
 
 ## Coming Soon
     - Save and Compare Results
-    - PDF Report Generation
     - Admission Process Timeline

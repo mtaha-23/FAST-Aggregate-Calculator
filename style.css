@@ -815,3 +815,24 @@ footer p {
 .dark-theme .modal-footer {
   border-top-color: var(--border-color);
 }
+
+/* PDF Generation Button */
+.generate-pdf-btn {
+  transition: var(--transition);
+}
+
+.generate-pdf-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(33, 150, 243, 0.3);
+}
+
+/* PDF Template Styles (not visible on page) */
+.pdf-template {
+  display: none;
+}
+
+/* Dark mode for PDF button */
+.dark-theme .generate-pdf-btn {
+  background-color: var(--primary-color);
+  border-color: var(--primary-dark);
+}
