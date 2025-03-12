@@ -22,7 +22,71 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Check for mobile devices and adjust UI accordingly
     checkMobileDevice();
+    
+    // Set up feedback form submission
+    setupFeedbackForm();
+    
+    // Set up rating reminder
+    setupRatingReminder();
+    
+    // Set up hamburger menu
+    setupHamburgerMenu();
 });
+
+// Set up rating reminder popup
+function setupRatingReminder() {
+    // Check if the user has already seen the popup in this session
+    if (!sessionStorage.getItem('ratingReminderShown')) {
+        // Set a timer to show the rating reminder after 25 seconds
+        const ratingReminderTimer = setTimeout(function() {
+            showRatingReminder();
+        }, 5000); // 25 seconds
+        
+        // Track user activity to ensure they're still active
+        let userActive = false;
+        const activityEvents = ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart'];
+        
+        activityEvents.forEach(function(eventName) {
+            document.addEventListener(eventName, function() {
+                userActive = true;
+            }, { once: true });
+        });
+        
+        // Check if user was active before showing the popup
+        setTimeout(function() {
+            if (!userActive) {
+                clearTimeout(ratingReminderTimer);
+            }
+        }, 24000); // Check just before showing the popup
+    }
+    
+    // Set up the "Give Feedback" button in the modal
+    const goToFeedbackBtn = document.getElementById('goToFeedbackBtn');
+    if (goToFeedbackBtn) {
+        goToFeedbackBtn.addEventListener('click', function() {
+            // Hide the modal
+            const ratingModal = bootstrap.Modal.getInstance(document.getElementById('ratingReminderModal'));
+            ratingModal.hide();
+            
+            // Navigate to the feedback tab
+            const feedbackTab = document.getElementById('feedback-tab');
+            if (feedbackTab) {
+                const tab = new bootstrap.Tab(feedbackTab);
+                tab.show();
+            }
+        });
+    }
+}
+
+// Function to show the rating reminder modal
+function showRatingReminder() {
+    // Mark that we've shown the reminder this session
+    sessionStorage.setItem('ratingReminderShown', 'true');
+    
+    // Show the modal
+    const ratingModal = new bootstrap.Modal(document.getElementById('ratingReminderModal'));
+    ratingModal.show();
+}
 
 // Check if device is mobile and adjust UI
 function checkMobileDevice() {
@@ -391,8 +455,8 @@ function showAlert(message, type, formId) {
     }, 5000);
 }
 
-// Feedback form submission
-document.addEventListener('DOMContentLoaded', function() {
+// Set up feedback form submission
+function setupFeedbackForm() {
     const feedbackForm = document.getElementById("feedbackForm");
     if (feedbackForm) {
         feedbackForm.addEventListener("submit", function(event) {
@@ -413,6 +477,7 @@ document.addEventListener('DOMContentLoaded', function() {
             //clear input
             document.getElementById("feedbackForm").reset();
             selectedRating.checked = false;
+            showAlert("Thank you for your feedback!", "success", "feedbackForm"); 
 
             fetch("https://script.google.com/macros/s/AKfycbxvuGgbM_2eb_82fHAK-RaYdxVSAWPMB0g53fYlX0O7PR44QREq0ZzZiYjRmpxsQIoQ/exec", {  
                 method: "POST",
@@ -431,4 +496,25 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     }
-});
+}
+
+// Set up hamburger menu
+function setupHamburgerMenu() {
+    const hamburgerBtn = document.querySelector('.hamburger-btn');
+    const navLinks = document.querySelectorAll('.nav-link');
+    
+    if (hamburgerBtn) {
+        // Auto-collapse the menu when a nav item is clicked on mobile
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                if (window.innerWidth < 768) {
+                    const navbarCollapse = document.getElementById('navbarNav');
+                    const bsCollapse = bootstrap.Collapse.getInstance(navbarCollapse);
+                    if (bsCollapse) {
+                        bsCollapse.hide();
+                    }
+                }
+            });
+        });
+    }
+}

@@ -571,3 +571,69 @@ footer p {
   font-size: 0.85rem;
   font-weight: 500;
 }
+
+/* Hamburger Menu Styling */
+.hamburger-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 10px;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius);
+  font-weight: 500;
+  font-size: 1rem;
+  transition: var(--transition);
+}
+
+.hamburger-btn:hover, .hamburger-btn:focus {
+  background-color: var(--primary-dark);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.hamburger-btn i {
+  font-size: 1.2rem;
+  margin-right: 8px;
+}
+
+/* Mobile Navigation Styling */
+@media (max-width: 767px) {
+  .navbar-collapse {
+      margin-bottom: 15px;
+  }
+  
+  .nav-pills {
+      flex-direction: column;
+      padding: 5px;
+  }
+  
+  .nav-item {
+      width: 100%;
+      margin: 3px 0;
+  }
+  
+  .nav-link {
+      flex-direction: row;
+      justify-content: flex-start;
+      padding: 10px 15px;
+      text-align: left;
+  }
+  
+  .nav-link i {
+      margin-right: 10px;
+      margin-bottom: 0;
+  }
+  
+  .nav-text {
+      text-align: left;
+  }
+}
+
+/* Show the navbar by default on larger screens */
+@media (min-width: 768px) {
+  .navbar-collapse {
+      display: block !important;
+  }
+}
