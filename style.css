@@ -836,3 +836,26 @@ footer p {
   background-color: var(--primary-color);
   border-color: var(--primary-dark);
 }
+
+/* Button container styles */
+.nat-buttons-container, .nu-buttons-container {
+  margin-bottom: 15px;
+}
+
+.copy-btn {
+  transition: var(--transition);
+}
+
+.copy-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(33, 150, 243, 0.3);
+}
+
+.dark-theme .copy-btn {
+  color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.dark-theme .copy-btn:hover {
+  background-color: rgba(33, 150, 243, 0.1);
+}

@@ -37,6 +37,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Set up PDF generation
     setupPDFGeneration();
+    
+    // Set up share buttons
+    setupShareButtons();
 });
 
 // Set up rating reminder popup
@@ -225,8 +228,18 @@ function clearForm(formId) {
     // Hide results
     if (formId === 'natForm') {
         document.getElementById('natResult').style.display = 'none';
+        // Remove buttons container if it exists
+        const buttonsContainer = document.querySelector('.nat-buttons-container');
+        if (buttonsContainer) {
+            buttonsContainer.remove();
+        }
     } else if (formId === 'nuForm') {
         document.getElementById('nuResult').style.display = 'none';
+        // Remove buttons container if it exists
+        const buttonsContainer = document.querySelector('.nu-buttons-container');
+        if (buttonsContainer) {
+            buttonsContainer.remove();
+        }
     }
 }
 
@@ -561,6 +574,7 @@ function setupThemeToggle() {
         }
     });
 }
+
 // Set up PDF generation
 function setupPDFGeneration() {
     const pdfButtons = document.querySelectorAll('.generate-pdf-btn');
@@ -722,4 +736,180 @@ function generatePDF(resultType) {
     
     // Show success message
     showAlert('PDF generated successfully!', 'success', resultType === 'nat' ? 'natForm' : 'nuForm');
+}
+
+// Set up share buttons functionality
+function setupShareButtons() {
+  // Function to generate share text based on result type
+  function getShareText(resultType) {
+    if (resultType === 'nat') {
+      const finalAggregate = document.getElementById('finalAggregateWithNU').textContent;
+      return `I calculated my FAST NUCES aggregate score: ${finalAggregate}! Calculate yours at https://mtaha-23.github.io/FAST-Aggregate-Calculator/`;
+    } else if (resultType === 'nu') {
+      const finalMarks = document.getElementById('finalMarksNU').textContent;
+      const nuTestMarks = document.getElementById('nuTestMarksNU').textContent;
+      const negativeMarks = document.getElementById('negativeMarksNU').textContent;
+      return `I calculated my FAST NUCES results - Final Aggregate: ${finalMarks}, NU Test Marks: ${nuTestMarks}, Negative Marks: ${negativeMarks}. Calculate yours at https://mtaha-23.github.io/FAST-Aggregate-Calculator/`;
+    }
+    return '';
+  }
+
+  // Function to copy result to clipboard
+  function copyResult(resultType) {
+    const shareText = getShareText(resultType);
+    
+    navigator.clipboard.writeText(shareText)
+      .then(() => {
+        showAlert('Result copied to clipboard!', 'success', resultType === 'nat' ? 'natForm' : 'nuForm');
+      })
+      .catch(() => {
+        showAlert('Failed to copy to clipboard', 'danger', resultType === 'nat' ? 'natForm' : 'nuForm');
+      });
+  }
+
+  // Add copy button to the NAT result container
+  function addCopyButtonToNat() {
+    const resultContainer = document.getElementById('natResult');
+    if (!resultContainer) return;
+    
+    // Check if buttons container already exists
+    let buttonsContainer = document.querySelector('.nat-buttons-container');
+    if (!buttonsContainer) {
+      // Create buttons container
+      buttonsContainer = document.createElement('div');
+      buttonsContainer.className = 'nat-buttons-container d-flex justify-content-between mt-3';
+      
+      // Get the PDF button and remove it from its current position
+      const pdfButton = document.querySelector('.generate-pdf-btn[data-result-type="nat"]');
+      if (pdfButton) {
+        pdfButton.parentNode.removeChild(pdfButton);
+        
+        // Create left side container for PDF and Copy buttons
+        const leftButtons = document.createElement('div');
+        leftButtons.className = 'd-flex gap-2';
+        
+        // Create copy button
+        const copyButton = document.createElement('button');
+        copyButton.type = 'button';
+        copyButton.className = 'btn btn-outline-primary copy-btn';
+        copyButton.setAttribute('data-result-type', 'nat');
+        copyButton.innerHTML = '<i class="bi bi-clipboard me-2"></i> Copy Result';
+        
+        // Add event listener to copy button
+        copyButton.addEventListener('click', function() {
+          copyResult('nat');
+        });
+        
+        // Add buttons to left container
+        leftButtons.appendChild(copyButton);
+        leftButtons.appendChild(pdfButton);
+        
+        // Get the clear button
+        const clearButton = document.querySelector('.clear-btn[data-form="natForm"]');
+        
+        // Add elements to buttons container
+        buttonsContainer.appendChild(leftButtons);
+        if (clearButton) {
+          const rightButtons = document.createElement('div');
+          rightButtons.appendChild(clearButton.cloneNode(true));
+          buttonsContainer.appendChild(rightButtons);
+          
+          // Remove the original clear button
+          clearButton.parentNode.removeChild(clearButton);
+          
+          // Add event listener to the new clear button
+          rightButtons.querySelector('.clear-btn').addEventListener('click', function() {
+            clearForm('natForm');
+          });
+        }
+        
+        // Insert buttons container after the result container
+        resultContainer.after(buttonsContainer);
+      }
+    }
+  }
+  
+  // Add copy button to the NU result container
+  function addCopyButtonToNu() {
+    const resultContainer = document.getElementById('nuResult');
+    if (!resultContainer) return;
+    
+    // Check if buttons container already exists
+    let buttonsContainer = document.querySelector('.nu-buttons-container');
+    if (!buttonsContainer) {
+      // Create buttons container
+      buttonsContainer = document.createElement('div');
+      buttonsContainer.className = 'nu-buttons-container d-flex justify-content-between mt-3';
+      
+      // Get the PDF button and remove it from its current position
+      const pdfButton = document.querySelector('.generate-pdf-btn[data-result-type="nu"]');
+      if (pdfButton) {
+        pdfButton.parentNode.removeChild(pdfButton);
+        
+        // Create left side container for PDF and Copy buttons
+        const leftButtons = document.createElement('div');
+        leftButtons.className = 'd-flex gap-2';
+        
+        // Create copy button
+        const copyButton = document.createElement('button');
+        copyButton.type = 'button';
+        copyButton.className = 'btn btn-outline-primary copy-btn';
+        copyButton.setAttribute('data-result-type', 'nu');
+        copyButton.innerHTML = '<i class="bi bi-clipboard me-2"></i> Copy Result';
+        
+        // Add event listener to copy button
+        copyButton.addEventListener('click', function() {
+          copyResult('nu');
+        });
+        
+        // Add buttons to left container
+        leftButtons.appendChild(copyButton);
+        leftButtons.appendChild(pdfButton);
+        
+        // Get the clear button
+        const clearButton = document.querySelector('.clear-btn[data-form="nuForm"]');
+        
+        // Add elements to buttons container
+        buttonsContainer.appendChild(leftButtons);
+        if (clearButton) {
+          const rightButtons = document.createElement('div');
+          rightButtons.appendChild(clearButton.cloneNode(true));
+          buttonsContainer.appendChild(rightButtons);
+          
+          // Remove the original clear button
+          clearButton.parentNode.removeChild(clearButton);
+          
+          // Add event listener to the new clear button
+          rightButtons.querySelector('.clear-btn').addEventListener('click', function() {
+            clearForm('nuForm');
+          });
+        }
+        
+        // Insert buttons container after the result container
+        resultContainer.after(buttonsContainer);
+      }
+    }
+  }
+
+  // Modify the calculateAggregateWithNU function to add copy button
+  const originalCalculateAggregateWithNU = calculateAggregateWithNU;
+  calculateAggregateWithNU = function() {
+    originalCalculateAggregateWithNU.apply(this, arguments);
+    
+    // Add copy button if results are displayed
+    if (document.getElementById('natResult').style.display !== 'none') {
+      addCopyButtonToNat();
+    }
+  };
+  
+  // Modify the calculateNUAndAggregate function to add copy button
+  const originalCalculateNUAndAggregate = calculateNUAndAggregate;
+  calculateNUAndAggregate = function() {
+    originalCalculateNUAndAggregate.apply(this, arguments);
+    
+    // Add copy button if results are displayed
+    if (document.getElementById('nuResult').style.display !== 'none') {
+      addCopyButtonToNu();
+    }
+  };
 }
