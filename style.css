@@ -887,8 +887,8 @@ footer p {
 
 /* Dark theme support */
 .dark-theme .weights-card {
-    background-color: #2d2d2d;
-    border-color: #404040;
+    background-color: transparent;
+    border-color: var(--border-color);
 }
 
 .dark-theme .weights-card:hover {
