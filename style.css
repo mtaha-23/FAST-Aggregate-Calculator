@@ -914,3 +914,38 @@ footer p {
         font-size: 0.85rem;
     }
 }
+
+/* Button container styles */
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+    gap: 1rem;
+}
+
+.generate-pdf-btn {
+    flex: 1;
+    margin-right: 0.5rem;
+}
+
+.clear-btn {
+    flex: 0 0 auto;
+}
+
+/* Mobile adjustments */
+@media (max-width: 576px) {
+    .button-container {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .generate-pdf-btn {
+        margin-right: 0;
+        width: 100%;
+    }
+    
+    .clear-btn {
+        width: 100%;
+    }
+}
