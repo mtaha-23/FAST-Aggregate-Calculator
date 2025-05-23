@@ -681,25 +681,34 @@ function generatePDF(resultType) {
     doc.setTextColor(0, 0, 0);
     
     if (resultType === 'nat') {
-        
         const isProgramTypeComputing = document.getElementById('natComputing').checked;
         const programType = isProgramTypeComputing ? 'COMPUTING': 'ENGINEERING';
         
         doc.text('NAT Marks Calculation Results', 105, 55, { align: 'center' });
         doc.setFontSize(12);
-        doc.text(`Program Type: ${programType.charAt(0).toUpperCase() + programType.slice(1)}`, 20, 65);
+        doc.text(`Program Type: ${programType}`, 20, 65);
+        
+        // Add weights information
+        doc.setFontSize(10);
+        doc.setTextColor(100, 100, 100);
+        if (isProgramTypeComputing) {
+            doc.text('Weights: NU/NAT (50%), FSc (40%), Matric (10%)', 20, 72);
+        } else {
+            doc.text('Weights: NU/NAT (33%), FSc (50%), Matric (17%)', 20, 72);
+        }
         
         // Add input values
         doc.setFontSize(12);
-        doc.text('Input Values:', 20, 75);
+        doc.setTextColor(0, 0, 0);
+        doc.text('Input Values:', 20, 85);
         
         const nuNATMarks = document.getElementById('nuNATMarks').value || 'Not provided';
         const matricPercentage = document.getElementById('matricPercentage').value || 'Not provided';
         const fscPercentage = document.getElementById('fscPercentage').value || 'Not provided';
         
-        doc.text(`NU/NAT Marks: ${nuNATMarks}`, 30, 85);
-        doc.text(`Matric Percentage: ${matricPercentage}`, 30, 95);
-        doc.text(`FSc Percentage: ${fscPercentage}`, 30, 105);
+        doc.text(`NU/NAT Marks: ${nuNATMarks}`, 30, 95);
+        doc.text(`Matric Percentage: ${matricPercentage}`, 30, 105);
+        doc.text(`FSc Percentage: ${fscPercentage}`, 30, 115);
         
         // Add result
         const finalAggregate = document.getElementById('finalAggregateWithNU').textContent;
@@ -712,17 +721,26 @@ function generatePDF(resultType) {
         doc.text(`Aggregate Score: ${finalAggregate}`, 105, 135, { align: 'center' });
         
     } else if (resultType === 'nu') {
-        
         const isProgramTypeComputing = document.getElementById('nuComputing').checked;
         const programType = isProgramTypeComputing ? 'COMPUTING': 'ENGINEERING';
 
         doc.text('NU Marks Calculation Results', 105, 55, { align: 'center' });
         doc.setFontSize(12);
-        doc.text(`Program Type: ${programType.charAt(0).toUpperCase() + programType.slice(1)}`, 20, 65);
+        doc.text(`Program Type: ${programType}`, 20, 65);
+        
+        // Add weights information
+        doc.setFontSize(10);
+        doc.setTextColor(100, 100, 100);
+        if (isProgramTypeComputing) {
+            doc.text('Weights: NU Test (50%), FSc (40%), Matric (10%)', 20, 72);
+        } else {
+            doc.text('Weights: NU Test (33%), FSc (50%), Matric (17%)', 20, 72);
+        }
         
         // Add input values
         doc.setFontSize(12);
-        doc.text('Input Values:', 20, 75);
+        doc.setTextColor(0, 0, 0);
+        doc.text('Input Values:', 20, 85);
         
         const totalAttemptedExceptEnglish = document.getElementById('totalAttemptedExceptEnglish').value || 'Not provided';
         const correctExceptEnglish = document.getElementById('correctExceptEnglish').value || 'Not provided';
@@ -731,12 +749,12 @@ function generatePDF(resultType) {
         const matricPercentageNU = document.getElementById('matricPercentageNU').value || 'Not provided';
         const fscPercentageNU = document.getElementById('fscPercentageNU').value || 'Not provided';
         
-        doc.text(`Total Attempted Questions (except English): ${totalAttemptedExceptEnglish}`, 30, 85);
-        doc.text(`Correct Questions (except English): ${correctExceptEnglish}`, 30, 95);
-        doc.text(`Total Attempted Questions (only English): ${totalAttemptedEnglish}`, 30, 105);
-        doc.text(`Correct Questions (only English): ${correctEnglish}`, 30, 115);
-        doc.text(`Matric Percentage: ${matricPercentageNU}`, 30, 125);
-        doc.text(`FSc Percentage: ${fscPercentageNU}`, 30, 135);
+        doc.text(`Total Attempted Questions (except English): ${totalAttemptedExceptEnglish}`, 30, 95);
+        doc.text(`Correct Questions (except English): ${correctExceptEnglish}`, 30, 105);
+        doc.text(`Total Attempted Questions (only English): ${totalAttemptedEnglish}`, 30, 115);
+        doc.text(`Correct Questions (only English): ${correctEnglish}`, 30, 125);
+        doc.text(`Matric Percentage: ${matricPercentageNU}`, 30, 135);
+        doc.text(`FSc Percentage: ${fscPercentageNU}`, 30, 145);
         
         // Add results
         const finalMarksNU = document.getElementById('finalMarksNU').textContent;
