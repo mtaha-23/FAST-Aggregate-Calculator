@@ -40,6 +40,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Set up share buttons
     setupShareButtons();
+
+    // Set up program type radio buttons
+    setupProgramTypeRadios();
 });
 
 // Set up rating reminder popup
@@ -199,6 +202,9 @@ function setupDynamicCalculation() {
     programTypeRadios.forEach(radio => {
         radio.addEventListener('change', function() {
             calculateAggregateWithNU();
+            // Show/hide appropriate weights info
+            document.getElementById('natComputingWeights').style.display = this.value === 'computing' ? 'block' : 'none';
+            document.getElementById('natEngineeringWeights').style.display = this.value === 'engineering' ? 'block' : 'none';
         });
     });
     
@@ -215,6 +221,9 @@ function setupDynamicCalculation() {
     nuProgramTypeRadios.forEach(radio => {
         radio.addEventListener('change', function() {
             calculateNUAndAggregate();
+            // Show/hide appropriate weights info
+            document.getElementById('nuComputingWeights').style.display = this.value === 'computing' ? 'block' : 'none';
+            document.getElementById('nuEngineeringWeights').style.display = this.value === 'engineering' ? 'block' : 'none';
         });
     });
 }
@@ -986,4 +995,57 @@ function setupShareButtons() {
       addCopyButtonToNu();
     }
   };
+}
+
+// Set up program type radio buttons and weights information
+function setupProgramTypeRadios() {
+    // NAT program type radio buttons
+    const natComputingRadio = document.getElementById('natComputing');
+    const natEngineeringRadio = document.getElementById('natEngineering');
+    const natComputingWeights = document.getElementById('natComputingWeights');
+    const natEngineeringWeights = document.getElementById('natEngineeringWeights');
+
+    // NU program type radio buttons
+    const nuComputingRadio = document.getElementById('nuComputing');
+    const nuEngineeringRadio = document.getElementById('nuEngineering');
+    const nuComputingWeights = document.getElementById('nuComputingWeights');
+    const nuEngineeringWeights = document.getElementById('nuEngineeringWeights');
+
+    // Function to handle NAT program type change
+    function handleNATProgramTypeChange() {
+        if (natComputingRadio.checked) {
+            natComputingWeights.style.display = 'block';
+            natEngineeringWeights.style.display = 'none';
+        } else {
+            natComputingWeights.style.display = 'none';
+            natEngineeringWeights.style.display = 'block';
+        }
+    }
+
+    // Function to handle NU program type change
+    function handleNUProgramTypeChange() {
+        if (nuComputingRadio.checked) {
+            nuComputingWeights.style.display = 'block';
+            nuEngineeringWeights.style.display = 'none';
+        } else {
+            nuComputingWeights.style.display = 'none';
+            nuEngineeringWeights.style.display = 'block';
+        }
+    }
+
+    // Add event listeners for NAT radio buttons
+    if (natComputingRadio && natEngineeringRadio) {
+        natComputingRadio.addEventListener('change', handleNATProgramTypeChange);
+        natEngineeringRadio.addEventListener('change', handleNATProgramTypeChange);
+        // Initialize NAT weights visibility
+        handleNATProgramTypeChange();
+    }
+
+    // Add event listeners for NU radio buttons
+    if (nuComputingRadio && nuEngineeringRadio) {
+        nuComputingRadio.addEventListener('change', handleNUProgramTypeChange);
+        nuEngineeringRadio.addEventListener('change', handleNUProgramTypeChange);
+        // Initialize NU weights visibility
+        handleNUProgramTypeChange();
+    }
 }
