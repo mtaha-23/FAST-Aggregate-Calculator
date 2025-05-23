@@ -365,7 +365,7 @@ function calculateNUAndAggregate() {
     const matricPercentageNU = parseFloat(document.getElementById('matricPercentageNU').value);
     const fscPercentageNU = parseFloat(document.getElementById('fscPercentageNU').value);
     const isProgramTypeComputing = document.getElementById('nuComputing').checked;
-
+    
     // Check if at least one input has a value
     const hasAnyValue = !isNaN(totalAttemptedExceptEnglish) || 
                         !isNaN(correctExceptEnglish) || 
@@ -679,8 +679,12 @@ function generatePDF(resultType) {
     // Add calculation type and program type
     doc.setFontSize(14);
     doc.setTextColor(0, 0, 0);
+    
     if (resultType === 'nat') {
-        const programType = document.querySelector('input[name="natProgramType"]:checked').value;
+        
+        const isProgramTypeComputing = document.getElementById('natComputing').checked;
+        const programType = isProgramTypeComputing ? 'COMPUTING': 'ENGINEERING';
+        
         doc.text('NAT Marks Calculation Results', 105, 55, { align: 'center' });
         doc.setFontSize(12);
         doc.text(`Program Type: ${programType.charAt(0).toUpperCase() + programType.slice(1)}`, 20, 65);
@@ -708,7 +712,10 @@ function generatePDF(resultType) {
         doc.text(`Aggregate Score: ${finalAggregate}`, 105, 135, { align: 'center' });
         
     } else if (resultType === 'nu') {
-        const programType = document.querySelector('input[name="nuProgramType"]:checked').value;
+        
+        const isProgramTypeComputing = document.getElementById('nuComputing').checked;
+        const programType = isProgramTypeComputing ? 'COMPUTING': 'ENGINEERING';
+
         doc.text('NU Marks Calculation Results', 105, 55, { align: 'center' });
         doc.setFontSize(12);
         doc.text(`Program Type: ${programType.charAt(0).toUpperCase() + programType.slice(1)}`, 20, 65);
