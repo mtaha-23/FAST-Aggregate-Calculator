@@ -194,10 +194,26 @@ function setupDynamicCalculation() {
         });
     });
     
+    // Add event listeners for program type radio buttons
+    const programTypeRadios = document.querySelectorAll('input[name="natProgramType"]');
+    programTypeRadios.forEach(radio => {
+        radio.addEventListener('change', function() {
+            calculateAggregateWithNU();
+        });
+    });
+    
     // NU calculator inputs
     const nuInputs = document.querySelectorAll('.calc-input[data-calc="nu"]');
     nuInputs.forEach(input => {
         input.addEventListener('input', function() {
+            calculateNUAndAggregate();
+        });
+    });
+    
+    // Add event listeners for NU program type radio buttons
+    const nuProgramTypeRadios = document.querySelectorAll('input[name="nuProgramType"]');
+    nuProgramTypeRadios.forEach(radio => {
+        radio.addEventListener('change', function() {
             calculateNUAndAggregate();
         });
     });
@@ -275,14 +291,20 @@ function calculateAggregateWithNU() {
     const nuNATMarks = parseFloat(document.getElementById('nuNATMarks').value);
     const fscPercentage = parseFloat(document.getElementById('fscPercentage').value);
     const matricPercentage = parseFloat(document.getElementById('matricPercentage').value);
+    const isProgramTypeComputing = document.getElementById('natComputing').checked;
 
+   
     // Calculate with any available values
     let finalAggregate = 0;
     let hasAnyValue = false;
     let componentsUsed = 0;
     
     if (!isNaN(nuNATMarks)) {
-        finalAggregate += nuNATMarks * (1/2);
+        if (isProgramTypeComputing) {
+            finalAggregate += nuNATMarks * (1/2);   //50% for computing
+        } else {
+            finalAggregate += nuNATMarks * (0.33);  //33% for engineering
+        }
         hasAnyValue = true;
         componentsUsed++;
     }
@@ -292,7 +314,11 @@ function calculateAggregateWithNU() {
             showAlert('FSC Percentage cannot be greater than 100.', 'danger', 'natForm');
             return;
         }
-        finalAggregate += fscPercentage * (4/10);
+        if (isProgramTypeComputing) {
+            finalAggregate += fscPercentage * (4/10);  //40% for computing
+        } else {
+            finalAggregate += fscPercentage * (0.5); // 50% for engineering
+        }
         hasAnyValue = true;
         componentsUsed++;
     }
@@ -302,7 +328,11 @@ function calculateAggregateWithNU() {
             showAlert('Matric Percentage cannot be greater than 100.', 'danger', 'natForm');
             return;
         }
-        finalAggregate += matricPercentage * (1/10);
+        if (isProgramTypeComputing) {
+            finalAggregate += matricPercentage * (1/10);  //10% for computing
+        } else {
+            finalAggregate += matricPercentage * (0.17); // 17% for engineering
+        }
         hasAnyValue = true;
         componentsUsed++;
     }
@@ -334,6 +364,7 @@ function calculateNUAndAggregate() {
     const correctEnglish = parseFloat(document.getElementById('correctEnglish').value);
     const matricPercentageNU = parseFloat(document.getElementById('matricPercentageNU').value);
     const fscPercentageNU = parseFloat(document.getElementById('fscPercentageNU').value);
+    const isProgramTypeComputing = document.getElementById('nuComputing').checked;
 
     // Check if at least one input has a value
     const hasAnyValue = !isNaN(totalAttemptedExceptEnglish) || 
@@ -401,18 +432,30 @@ function calculateNUAndAggregate() {
         let aggregateComponents = 0;
         let aggregateValue = 0;
         
-        aggregateValue += finalMarksNU * (1/2);
+        if (isProgramTypeComputing) {
+            aggregateValue += finalMarksNU * (1/2);    //50% for computing
+        } else {
+            aggregateValue += finalMarksNU * (0.33); // 30% for engineering
+        }
         aggregateComponents++;
         
         if (!isNaN(matricPercentageNU)) {
-            aggregateValue += matricPercentageNU * (1/10);
+            if (isProgramTypeComputing) {
+                aggregateValue += matricPercentageNU * (1/10);  //10% for computing
+            } else {
+                aggregateValue += matricPercentageNU * (0.17); // 17% for engineering
+            }
             aggregateComponents++;
         } else {
             isPartial = true;
         }
         
         if (!isNaN(fscPercentageNU)) {
-            aggregateValue += fscPercentageNU * (4/10);
+            if (isProgramTypeComputing) {
+                aggregateValue += fscPercentageNU * (4/10); // 40% for computing
+            } else {
+                aggregateValue += fscPercentageNU * (1/2); // 50% for engineering
+            }
             aggregateComponents++;
         } else {
             isPartial = true;
@@ -633,40 +676,46 @@ function generatePDF(resultType) {
     doc.setTextColor(100, 100, 100);
     doc.text(`Generated on: ${dateStr}`, 20, 45);
     
-    // Add calculation type
+    // Add calculation type and program type
     doc.setFontSize(14);
     doc.setTextColor(0, 0, 0);
     if (resultType === 'nat') {
+        const programType = document.querySelector('input[name="natProgramType"]:checked').value;
         doc.text('NAT Marks Calculation Results', 105, 55, { align: 'center' });
+        doc.setFontSize(12);
+        doc.text(`Program Type: ${programType.charAt(0).toUpperCase() + programType.slice(1)}`, 20, 65);
         
         // Add input values
         doc.setFontSize(12);
-        doc.text('Input Values:', 20, 65);
+        doc.text('Input Values:', 20, 75);
         
         const nuNATMarks = document.getElementById('nuNATMarks').value || 'Not provided';
         const matricPercentage = document.getElementById('matricPercentage').value || 'Not provided';
         const fscPercentage = document.getElementById('fscPercentage').value || 'Not provided';
         
-        doc.text(`NU/NAT Marks: ${nuNATMarks}`, 30, 75);
-        doc.text(`Matric Percentage: ${matricPercentage}`, 30, 85);
-        doc.text(`FSc Percentage: ${fscPercentage}`, 30, 95);
+        doc.text(`NU/NAT Marks: ${nuNATMarks}`, 30, 85);
+        doc.text(`Matric Percentage: ${matricPercentage}`, 30, 95);
+        doc.text(`FSc Percentage: ${fscPercentage}`, 30, 105);
         
         // Add result
         const finalAggregate = document.getElementById('finalAggregateWithNU').textContent;
         
         doc.setFontSize(14);
-        doc.text('Final Result:', 20, 115);
+        doc.text('Final Result:', 20, 125);
         
         doc.setFontSize(16);
         doc.setTextColor(13, 71, 161);
-        doc.text(`Aggregate Score: ${finalAggregate}`, 105, 125, { align: 'center' });
+        doc.text(`Aggregate Score: ${finalAggregate}`, 105, 135, { align: 'center' });
         
     } else if (resultType === 'nu') {
+        const programType = document.querySelector('input[name="nuProgramType"]:checked').value;
         doc.text('NU Marks Calculation Results', 105, 55, { align: 'center' });
+        doc.setFontSize(12);
+        doc.text(`Program Type: ${programType.charAt(0).toUpperCase() + programType.slice(1)}`, 20, 65);
         
         // Add input values
         doc.setFontSize(12);
-        doc.text('Input Values:', 20, 65);
+        doc.text('Input Values:', 20, 75);
         
         const totalAttemptedExceptEnglish = document.getElementById('totalAttemptedExceptEnglish').value || 'Not provided';
         const correctExceptEnglish = document.getElementById('correctExceptEnglish').value || 'Not provided';
@@ -675,12 +724,12 @@ function generatePDF(resultType) {
         const matricPercentageNU = document.getElementById('matricPercentageNU').value || 'Not provided';
         const fscPercentageNU = document.getElementById('fscPercentageNU').value || 'Not provided';
         
-        doc.text(`Total Attempted Questions (except English): ${totalAttemptedExceptEnglish}`, 30, 75);
-        doc.text(`Correct Questions (except English): ${correctExceptEnglish}`, 30, 85);
-        doc.text(`Total Attempted Questions (only English): ${totalAttemptedEnglish}`, 30, 95);
-        doc.text(`Correct Questions (only English): ${correctEnglish}`, 30, 105);
-        doc.text(`Matric Percentage: ${matricPercentageNU}`, 30, 115);
-        doc.text(`FSc Percentage: ${fscPercentageNU}`, 30, 125);
+        doc.text(`Total Attempted Questions (except English): ${totalAttemptedExceptEnglish}`, 30, 85);
+        doc.text(`Correct Questions (except English): ${correctExceptEnglish}`, 30, 95);
+        doc.text(`Total Attempted Questions (only English): ${totalAttemptedEnglish}`, 30, 105);
+        doc.text(`Correct Questions (only English): ${correctEnglish}`, 30, 115);
+        doc.text(`Matric Percentage: ${matricPercentageNU}`, 30, 125);
+        doc.text(`FSc Percentage: ${fscPercentageNU}`, 30, 135);
         
         // Add results
         const finalMarksNU = document.getElementById('finalMarksNU').textContent;
@@ -688,16 +737,16 @@ function generatePDF(resultType) {
         const negativeMarksNU = document.getElementById('negativeMarksNU').textContent;
         
         doc.setFontSize(14);
-        doc.text('Final Results:', 20, 145);
+        doc.text('Final Results:', 20, 155);
         
         doc.setFontSize(12);
         doc.setTextColor(0, 0, 0);
-        doc.text(`NU Test Marks: ${nuTestMarksNU}`, 30, 155);
-        doc.text(`Negative Marks: ${negativeMarksNU}`, 30, 165);
+        doc.text(`NU Test Marks: ${nuTestMarksNU}`, 30, 165);
+        doc.text(`Negative Marks: ${negativeMarksNU}`, 30, 175);
         
         doc.setFontSize(16);
         doc.setTextColor(13, 71, 161);
-        doc.text(`Final Aggregate: ${finalMarksNU}`, 105, 180, { align: 'center' });
+        doc.text(`Final Aggregate: ${finalMarksNU}`, 105, 190, { align: 'center' });
     }
     
     // Add calculator link

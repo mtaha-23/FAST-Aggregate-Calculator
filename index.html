@@ -142,6 +142,15 @@
                                 </div>
                                 
                                 <form id="natForm">
+                                    <div class="mb-4">
+                                        <label class="form-label">Program Type</label>
+                                        <div class="btn-group w-100" role="group">
+                                            <input type="radio" class="btn-check" name="natProgramType" id="natComputing" value="computing" checked>
+                                            <label class="btn btn-outline-primary" for="natComputing">Computing</label>
+                                            <input type="radio" class="btn-check" name="natProgramType" id="natEngineering" value="engineering">
+                                            <label class="btn btn-outline-primary" for="natEngineering">Engineering</label>
+                                        </div>
+                                    </div>
                                     <div class="mb-3">
                                         <label for="nuNATMarks" class="form-label">NU/NAT Marks <i class="bi bi-info-circle" data-bs-toggle="tooltip" title="NU-Test marks should be entered after negative marking"></i></label>
                                         <input type="number" class="form-control calc-input" id="nuNATMarks" step="0.01" data-calc="nat" min="0" max="100">
@@ -153,7 +162,7 @@
                                     </div>
                                     
                                     <div class="mb-3">
-                                        <label for="fscPercentage" class="form-label">FSc Percentage | O/A Equivalence <i class="bi bi-info-circle" data-bs-toggle="tooltip" title="If FSc part 2 result is not announced, enter FSc part 1 result"></i></label>
+                                        <label for="fscPercentage" class="form-label">HSSC/A-Level/Equivalence<i class="bi bi-info-circle" data-bs-toggle="tooltip" title="if (HSSC Part 2/A-Level) result is not announced, enter HSSC Part 1/O-Level result."></i></label>
                                         <input type="number" class="form-control calc-input" id="fscPercentage" step="0.01" data-calc="nat" min="0" max="100">
                                     </div>
                                     
@@ -191,6 +200,15 @@
                                 </div>
                                 
                                 <form id="nuForm">
+                                    <div class="mb-4">
+                                        <label class="form-label">Program Type</label>
+                                        <div class="btn-group w-100" role="group">
+                                            <input type="radio" class="btn-check" name="nuProgramType" id="nuComputing" value="computing" checked>
+                                            <label class="btn btn-outline-primary" for="nuComputing">Computing</label>
+                                            <input type="radio" class="btn-check" name="nuProgramType" id="nuEngineering" value="engineering">
+                                            <label class="btn btn-outline-primary" for="nuEngineering">Engineering</label>
+                                        </div>
+                                    </div>
                                     <div class="row g-3">
                                         <div class="col-md-6">
                                             <div class="mb-3">
@@ -224,13 +242,13 @@
                                     <div class="row g-3">
                                         <div class="col-md-6">
                                             <div class="mb-3">
-                                                <label for="matricPercentageNU" class="form-label">Matric Percentage</label>
+                                                <label for="matricPercentageNU" class="form-label">SSC/O-Level/Equivalence</label>
                                                 <input type="number" class="form-control calc-input" id="matricPercentageNU" step="0.01" data-calc="nu" min="0" max="100">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="mb-3">
-                                                <label for="fscPercentageNU" class="form-label">FSc Percentage | O/A Equivalence <i class="bi bi-info-circle" data-bs-toggle="tooltip" title="If FSc part 2 result is not announced, enter FSc part 1 result"></i></label>
+                                                <label for="fscPercentageNU" class="form-label">HSSC/A-Level/Equivalence<i class="bi bi-info-circle" data-bs-toggle="tooltip" title="if (HSSC Part 2/A-Level) result is not announced, enter HSSC Part 1/O-Level result."></i></label>
                                                 <input type="number" class="form-control calc-input" id="fscPercentageNU" step="0.01" data-calc="nu" min="0" max="100">
                                             </div>
                                         </div>
