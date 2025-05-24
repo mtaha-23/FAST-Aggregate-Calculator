@@ -1,0 +1,121 @@
+/* Mobile-specific styles */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    input[type="number"] {
+        font-size: 16px; /* Prevents zoom on iOS */
+        padding: 8px;
+        width: 100%;
+    }
+
+    .program-type-card {
+        margin-bottom: 10px;
+    }
+
+    .result-container {
+        padding: 15px;
+        margin-top: 20px;
+    }
+
+    .btn {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .navbar-brand {
+        font-size: 1.2rem;
+    }
+
+    .alert {
+        margin: 10px 0;
+        padding: 10px;
+    }
+
+    /* Improve touch targets */
+    .btn, 
+    .form-control,
+    .program-type-card {
+        min-height: 44px;
+    }
+
+    /* Adjust spacing for mobile */
+    .row {
+        margin-left: -5px;
+        margin-right: -5px;
+    }
+
+    .col, .col-md-6 {
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+
+    /* Make sure modals are mobile-friendly */
+    .modal-dialog {
+        margin: 10px;
+    }
+
+    .modal-content {
+        padding: 15px;
+    }
+
+    /* Improve feedback form on mobile */
+    #feedbackForm textarea {
+        min-height: 100px;
+    }
+
+    /* Adjust PDF generation for mobile */
+    .pdf-template {
+        padding: 10px;
+    }
+
+    /* Improve share buttons on mobile */
+    .share-btn {
+        margin-bottom: 10px;
+    }
+}
+
+/* Dark theme adjustments for mobile */
+@media (max-width: 768px) {
+    .dark-theme {
+        background-color: #1a1a1a;
+        color: #ffffff;
+    }
+
+    .dark-theme .form-control {
+        background-color: #2d2d2d;
+        color: #ffffff;
+        border-color: #404040;
+    }
+
+    .dark-theme .program-type-card {
+        background-color: #2d2d2d;
+        border-color: #404040;
+    }
+
+    .dark-theme .result-container {
+        background-color: #2d2d2d;
+        border-color: #404040;
+    }
+}
+
+/* Fix for iOS input zoom */
+@supports (-webkit-touch-callout: none) {
+    input[type="number"],
+    input[type="text"] {
+        font-size: 16px;
+    }
+}
+
+/* Improve touch feedback */
+@media (hover: none) {
+    .btn:active,
+    .program-type-card:active {
+        opacity: 0.7;
+    }
+} 

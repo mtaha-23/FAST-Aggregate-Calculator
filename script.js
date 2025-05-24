@@ -201,51 +201,141 @@ class Calculator {
     }
 
     setupClearButtons() {
-        // Implementation of setupClearButtons method
+        document.querySelectorAll('.clear-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                const formId = button.getAttribute('data-form');
+                utils.clearForm(formId);
+            });
+        });
     }
 
     setupTabSwitching() {
-        // Implementation of setupTabSwitching method
+        const tabs = document.querySelectorAll('.nav-link[data-bs-toggle="tab"]');
+        tabs.forEach(tab => {
+            tab.addEventListener('shown.bs.tab', (e) => {
+                const targetId = e.target.getAttribute('href').substring(1);
+                const form = document.getElementById(targetId + 'Form');
+                if (form) {
+                    utils.clearForm(form.id);
+                }
+            });
+        });
     }
 
     setupOptionCards() {
-        // Implementation of setupOptionCards method
+        document.querySelectorAll('.program-type-card').forEach(card => {
+            card.addEventListener('click', () => {
+                const radio = card.querySelector('input[type="radio"]');
+                if (radio) {
+                    radio.checked = true;
+                    this.calculateAggregateWithNU();
+                }
+            });
+        });
     }
 
     setupInputValidation() {
-        // Implementation of setupInputValidation method
+        const inputs = document.querySelectorAll('input[type="number"]');
+        inputs.forEach(input => {
+            input.addEventListener('input', () => {
+                const value = parseFloat(input.value);
+                if (value < 0) input.value = 0;
+                if (value > 100) input.value = 100;
+            });
+        });
     }
 
     setupFeedbackForm() {
-        // Implementation of setupFeedbackForm method
+        const feedbackForm = document.getElementById('feedbackForm');
+        if (feedbackForm) {
+            feedbackForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const message = document.getElementById('feedbackMessage').value;
+                if (message.trim()) {
+                    utils.showAlert('Thank you for your feedback!', 'success', 'feedbackForm');
+                    feedbackForm.reset();
+                }
+            });
+        }
     }
 
     setupRatingReminder() {
-        // Implementation of setupRatingReminder method
+        setTimeout(() => {
+            const hasRated = localStorage.getItem('hasRated');
+            if (!hasRated) {
+                utils.showAlert('Enjoying the calculator? Please rate it!', 'info', 'natForm');
+            }
+        }, CONSTANTS.RATING_REMINDER_DELAY);
     }
 
     setupHamburgerMenu() {
-        // Implementation of setupHamburgerMenu method
+        const hamburger = document.querySelector('.navbar-toggler');
+        const nav = document.querySelector('.navbar-collapse');
+        if (hamburger && nav) {
+            hamburger.addEventListener('click', () => {
+                nav.classList.toggle('show');
+            });
+        }
     }
 
     setupThemeToggle() {
-        // Implementation of setupThemeToggle method
+        const themeToggle = document.getElementById('themeToggle');
+        if (themeToggle) {
+            themeToggle.addEventListener('click', () => {
+                document.body.classList.toggle('dark-theme');
+                const isDark = document.body.classList.contains('dark-theme');
+                localStorage.setItem('darkTheme', isDark);
+            });
+
+            // Check for saved theme preference
+            if (localStorage.getItem('darkTheme') === 'true') {
+                document.body.classList.add('dark-theme');
+            }
+        }
     }
 
     setupPDFGeneration() {
-        // Implementation of setupPDFGeneration method
+        document.querySelectorAll('.generate-pdf-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                const resultType = button.getAttribute('data-result-type');
+                generatePDF(resultType);
+            });
+        });
     }
 
     setupShareButtons() {
-        // Implementation of setupShareButtons method
+        document.querySelectorAll('.share-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                const resultType = button.getAttribute('data-result-type');
+                const shareText = getShareText(resultType);
+                copyResult(shareText);
+            });
+        });
     }
 
     setupProgramTypeRadios() {
-        // Implementation of setupProgramTypeRadios method
+        const programTypeRadios = document.querySelectorAll('input[name="natProgramType"], input[name="nuProgramType"]');
+        programTypeRadios.forEach(radio => {
+            radio.addEventListener('change', () => {
+                if (radio.name === 'natProgramType') {
+                    this.calculateAggregateWithNU();
+                } else {
+                    this.calculateNUAndAggregate();
+                }
+            });
+        });
     }
 
     checkMobileDevice() {
-        // Implementation of checkMobileDevice method
+        const isMobile = window.innerWidth <= CONSTANTS.MOBILE_BREAKPOINT;
+        if (isMobile) {
+            document.body.classList.add('mobile-view');
+            // Adjust input fields for mobile
+            document.querySelectorAll('input[type="number"]').forEach(input => {
+                input.setAttribute('inputmode', 'numeric');
+                input.setAttribute('pattern', '[0-9]*');
+            });
+        }
     }
 }
 
