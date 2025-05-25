@@ -1,4 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // Initialize view counter
+    initializeViewCounter();
+
     // Initialize tooltips
     const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
     tooltipTriggerList.map(function (tooltipTriggerEl) {
@@ -44,6 +47,69 @@ document.addEventListener('DOMContentLoaded', function() {
     // Set up program type radio buttons
     setupProgramTypeRadios();
 });
+
+// View Counter Function
+function initializeViewCounter() {
+    const viewNumberElement = document.getElementById("viewNumber");
+    const scriptURL = "https://script.google.com/macros/s/AKfycbx-DjreYgj5oIwy5ZYGf-ri26LVQJxX1b4BcJyyCeY5vk0AmOLMHodZiw15ovRhGTUa/exec";
+
+    if (!viewNumberElement) {
+        console.error("View counter element not found");
+        return;
+    }
+
+    // Set initial loading state
+    viewNumberElement.innerText = "Loading...";
+
+    // Check if this is a new visit
+    const lastVisit = localStorage.getItem("lastVisitCalc");
+    const today = new Date().toDateString();
+    const isNewVisit = !lastVisit || lastVisit !== today;
+
+    console.log("Visit status:", {
+        lastVisit,
+        today,
+        isNewVisit
+    });
+
+    // Create a unique callback name
+    const callbackName = 'viewCounterCallback_' + Math.random().toString(36).substr(2, 9);
+    
+    // Create and append the script tag
+    const script = document.createElement('script');
+    script.src = `${scriptURL}?action=${isNewVisit ? 'increment' : 'get'}&callback=${callbackName}`;
+    
+    // Add timeout fallback
+    const timeoutId = setTimeout(() => {
+        console.warn("View count fetch timed out");
+        viewNumberElement.innerText = "1000+";
+        delete window[callbackName];
+        if (script.parentNode) script.parentNode.removeChild(script);
+    }, 3000); // 3 seconds timeout
+
+    // Create the callback function
+    window[callbackName] = function(data) {
+        clearTimeout(timeoutId);
+        console.log("Received data:", data);
+        viewNumberElement.innerText = data.value;
+        if (isNewVisit) {
+            localStorage.setItem("lastVisitCalc", today);
+        }
+        // Clean up
+        delete window[callbackName];
+        if (script.parentNode) script.parentNode.removeChild(script);
+    };
+
+    script.onerror = function() {
+        clearTimeout(timeoutId);
+        console.error("Failed to load view counter");
+        viewNumberElement.innerText = "1000+";
+        delete window[callbackName];
+        if (script.parentNode) script.parentNode.removeChild(script);
+    };
+
+    document.body.appendChild(script);
+}
 
 // Set up rating reminder popup
 function setupRatingReminder() {
