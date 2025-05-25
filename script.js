@@ -51,8 +51,8 @@ document.addEventListener('DOMContentLoaded', function() {
 // View Counter Function
 function initializeViewCounter() {
     const viewNumberElement = document.getElementById("viewNumber");
-    const scriptURL = "https://script.google.com/macros/s/AKfycbz1M_-Mj9rg6p-4b0IS9QW49JA8i3M-ytIwBo3Dd-xml1ZdZi6G9ChJsKKDUIzM6cxn/exec";
-                        
+    const scriptURL = "https://script.google.com/macros/s/AKfycbzQwcTqF7mv3Xjp5m-nCCCMstAnAGOJ23VpXmADr2oLdBhXinR4hVoHUKqVwPhMPv7Z/exec";
+      
     if (!viewNumberElement) {
         console.error("View counter element not found");
         return;
@@ -85,7 +85,7 @@ function initializeViewCounter() {
         viewNumberElement.innerText = "1000+";
         delete window[callbackName];
         if (script.parentNode) script.parentNode.removeChild(script);
-    }, 8000); // 8 seconds timeout
+    }, 8000); // 3 seconds timeout
 
     // Create the callback function
     window[callbackName] = function(data) {
