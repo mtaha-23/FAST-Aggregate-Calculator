@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function() {
 // View Counter Function
 function initializeViewCounter() {
     const viewNumberElement = document.getElementById("viewNumber");
-    const scriptURL = "https://script.google.com/macros/s/AKfycbyPghFiyfCXluiDDTJhgHf1D_GXRsb2OJ_7LqVeCiK8LB9uIXdE0tJgoyKvbPH79f-I/exec";
+    const scriptURL = "https://script.google.com/macros/s/AKfycbz1M_-Mj9rg6p-4b0IS9QW49JA8i3M-ytIwBo3Dd-xml1ZdZi6G9ChJsKKDUIzM6cxn/exec";
                         
     if (!viewNumberElement) {
         console.error("View counter element not found");
