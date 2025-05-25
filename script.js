@@ -85,7 +85,7 @@ function initializeViewCounter() {
         viewNumberElement.innerText = "1000+";
         delete window[callbackName];
         if (script.parentNode) script.parentNode.removeChild(script);
-    }, 3000); // 3 seconds timeout
+    }, 8000); // 8 seconds timeout
 
     // Create the callback function
     window[callbackName] = function(data) {
