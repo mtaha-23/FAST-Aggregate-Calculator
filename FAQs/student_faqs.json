@@ -1,0 +1,39 @@
+[
+    {
+        "question": "What is the social life like at FAST?",
+        "answer": "FAST has a vibrant social scene with many student-run societies and events happening throughout the year. From tech competitions to cultural festivals, there's always something to get involved in.",
+        "category": "Students FAQs"
+    },
+    {
+      "question": "Is the test in last dates difficult?",
+      "answer": "No, the test difficulty remains same.",
+      "category": "Students FAQs"
+    },
+    {
+      "question": "Where to prepare Additional Mathematics?",
+      "answer": "You can prepare for the Additional Mathematics test by following the topics of FSc part 1 and part 2. Follow Sir Hashim Zia youtube videos, that will be helpul. ",
+      "category": "Students FAQs"
+    },
+    {
+      "question": "Where to prepare Basic Maths?",
+      "answer": "Basic Maths is quite easy, you can take help from KIPs FUNG book. Look for the topic on the content page.",
+      "category": "Students FAQs"
+    },
+    {
+      "question": "Where to prepare English?",
+      "answer": "For English prepare the grammer rules and other things. No need to prepare synonyms, antonyms, word meanings, etc.",
+      "category": "Students FAQs"
+    },
+    {
+      "question": "Where to prepare IQ?",
+      "answer": "Search for Amin Education on YouTube. They have a lot of videos on IQ preparation for FAST. Just watch one video from it of round about 3 hours.",
+      "category": "Students FAQs"
+    },
+    {
+        "question": "How can I calculate my aggregate?",
+        "answer": "You can calculate your aggregate by using the following calculator: https://mtaha-23.github.io/FAST-Aggregate-Calculator",
+        "category": "Students FAQs"
+
+    }
+
+] 

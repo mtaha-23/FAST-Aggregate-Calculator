@@ -46,6 +46,20 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Set up program type radio buttons
     setupProgramTypeRadios();
+
+    // Function to handle tab change
+    function handleTabChange(event) {
+        const targetTab = event.target.getAttribute('data-bs-target');
+        if (targetTab === '#estimate' && !meritDataLoaded) {
+            loadMeritData();
+        }
+    }
+
+    // Event listener for tab change
+    const calculatorTabs = document.getElementById('calculatorTabs');
+    if (calculatorTabs) {
+        calculatorTabs.addEventListener('show.bs.tab', handleTabChange);
+    }
 });
 
 // View Counter Function
@@ -1115,4 +1129,149 @@ function setupProgramTypeRadios() {
         // Initialize NU weights visibility
         handleNUProgramTypeChange();
     }
+}
+
+// Function to handle FAQ data loading
+function loadFaqData() {
+    const faqContainer = document.getElementById('faq-container');
+    const categoryNav = document.getElementById('category-nav');
+    const searchBar = document.getElementById('search-bar');
+    const toTopBtn = document.getElementById('to-top-btn');
+
+    // Load and display FAQs
+    Promise.all([
+            fetch('FAQs/official_faqs.json').then(response => response.json()),
+            fetch('FAQs/student_faqs.json').then(response => response.json())
+        ])
+        .then(([officialFaqs, studentFaqs]) => {
+            const data = [...officialFaqs, ...studentFaqs];
+            const faqsByCategory = data.reduce((acc, faq) => {
+                const {
+                    category
+                } = faq;
+                if (!acc[category]) {
+                    acc[category] = [];
+                }
+                acc[category].push(faq);
+                return acc;
+            }, {});
+
+            for (const category in faqsByCategory) {
+                const categoryId = 'category-' + category.replace(/[^\w\s]/gi, '').replace(/\s+/g, '-').toLowerCase();
+                const navLink = document.createElement('a');
+                navLink.href = `#${categoryId}`;
+                navLink.textContent = category;
+                navLink.classList.add('category-nav-link');
+                navLink.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    document.getElementById(categoryId)?.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+                categoryNav.appendChild(navLink);
+            }
+
+            for (const category in faqsByCategory) {
+                const categoryId = 'category-' + category.replace(/[^\w\s]/gi, '').replace(/\s+/g, '-').toLowerCase();
+                const categoryContainer = document.createElement('div');
+                categoryContainer.classList.add('faq-category');
+                categoryContainer.id = categoryId;
+
+                const categoryTitle = document.createElement('h2');
+                categoryTitle.classList.add('category-title');
+                categoryTitle.textContent = category;
+                categoryContainer.appendChild(categoryTitle);
+
+                faqsByCategory[category].forEach(faq => {
+                    const faqItem = document.createElement('div');
+                    faqItem.classList.add('faq-item');
+                    faqItem.dataset.question = faq.question.toLowerCase();
+                    faqItem.dataset.answer = faq.answer.toLowerCase();
+                    faqItem.dataset.category = faq.category.toLowerCase();
+
+                    const answerText = faq.answer
+                        .replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank">$1</a>')
+                        .replace(/\n/g, '<br>');
+
+                    faqItem.innerHTML = `
+                    <div class="faq-question">${faq.question}</div>
+                    <div class="faq-answer">${answerText}</div>
+                `;
+
+                    categoryContainer.appendChild(faqItem);
+
+                    const question = faqItem.querySelector('.faq-question');
+                    question.addEventListener('click', () => {
+                        const wasActive = faqItem.classList.contains('active');
+
+                        document.querySelectorAll('.faq-item.active').forEach(item => {
+                            item.classList.remove('active');
+                        });
+
+                        if (!wasActive) {
+                            faqItem.classList.add('active');
+                        }
+                    });
+                });
+                faqContainer.appendChild(categoryContainer);
+            }
+        })
+        .catch(error => console.error('Error fetching FAQs:', error));
+
+    // Search functionality
+    searchBar.addEventListener('input', (e) => {
+        const searchTerm = e.target.value.toLowerCase();
+        const allFaqItems = document.querySelectorAll('.faq-item');
+        const allCategoryTitles = document.querySelectorAll('.category-title');
+
+        let visibleCategories = new Set();
+
+        allFaqItems.forEach(item => {
+            const questionText = item.dataset.question;
+            const answerText = item.dataset.answer;
+            const categoryText = item.dataset.category;
+
+            const isVisible = questionText.includes(searchTerm) || answerText.includes(searchTerm);
+            item.style.display = isVisible ? 'block' : 'none';
+
+            if (isVisible) {
+                visibleCategories.add(categoryText);
+            }
+        });
+
+        allCategoryTitles.forEach(title => {
+            const category = title.textContent.toLowerCase();
+            const isVisible = visibleCategories.has(category);
+            title.style.display = isVisible ? 'block' : 'none';
+        });
+    });
+
+    // "Go to top" button logic
+    if (toTopBtn) {
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 200) {
+                toTopBtn.classList.add('visible');
+            } else {
+                toTopBtn.classList.remove('visible');
+            }
+        });
+
+        toTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    }
+}
+
+let faqDataLoaded = false;
+const faqTab = document.getElementById('faq-tab');
+if (faqTab) {
+    faqTab.addEventListener('shown.bs.tab', function (event) {
+        if (!faqDataLoaded) {
+            loadFaqData();
+            faqDataLoaded = true;
+        }
+    });
 }
