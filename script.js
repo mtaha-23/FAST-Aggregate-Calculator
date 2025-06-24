@@ -44,8 +44,23 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Set up program type radio buttons
     setupProgramTypeRadios();
+
+    //show view count
+    showViewCount();
 });
 
+function showViewCount() {
+    
+ fetch("https://script.google.com/macros/s/AKfycbxCda-tb1-geuKxn0Fd8_SmIcLD1vl-kkUgOyuLsK9RJTIOaG18oqN3JRLU3ZuEAQ29/exec")
+    .then(res => res.json())
+    .then(data => {
+      document.getElementById("viewNumber").textContent = data.count;
+    })
+    .catch(err => {
+      console.error("Error fetching view count:", err);
+      document.getElementById("viewNumber").textContent = "1500+";
+    });
+}
 // records every view of the page
 function recordView() {
     var formData = {
@@ -53,7 +68,7 @@ function recordView() {
                 email: "view",
                 comments: "Page viewed"
             };
-            fetch("https://script.google.com/macros/s/AKfycbxvuGgbM_2eb_82fHAK-RaYdxVSAWPMB0g53fYlX0O7PR44QREq0ZzZiYjRmpxsQIoQ/exec", {  
+            fetch("https://script.google.com/macros/s/AKfycbxCda-tb1-geuKxn0Fd8_SmIcLD1vl-kkUgOyuLsK9RJTIOaG18oqN3JRLU3ZuEAQ29/exec", {  
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -215,7 +230,7 @@ function setupInputValidation() {
     });
 }
 
-// Set up dynamic calculation as user types
+// Set up dynamic result calculation as user types
 function setupDynamicCalculation() {
     // NAT calculator inputs
     const natInputs = document.querySelectorAll('.calc-input[data-calc="nat"]');
@@ -578,7 +593,7 @@ function setupFeedbackForm() {
             selectedRating.checked = false;
             showAlert("Thank you for your feedback!", "success", "feedbackForm"); 
 
-            fetch("https://script.google.com/macros/s/AKfycbxvuGgbM_2eb_82fHAK-RaYdxVSAWPMB0g53fYlX0O7PR44QREq0ZzZiYjRmpxsQIoQ/exec", {  
+            fetch("https://script.google.com/macros/s/AKfycbxCda-tb1-geuKxn0Fd8_SmIcLD1vl-kkUgOyuLsK9RJTIOaG18oqN3JRLU3ZuEAQ29/exec", {  
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
