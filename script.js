@@ -46,15 +46,13 @@ document.addEventListener('DOMContentLoaded', function() {
     setupProgramTypeRadios();
 
     //show view count
-    //showViewCount();
-
-    recordView();
-       
+    showViewCount();
+     
 });
 
 function showViewCount() {
     
- fetch("https://script.google.com/macros/s/AKfycbxCda-tb1-geuKxn0Fd8_SmIcLD1vl-kkUgOyuLsK9RJTIOaG18oqN3JRLU3ZuEAQ29/exec")
+ fetch("https://script.google.com/macros/s/AKfycbxh2BUlf8HCm8qw4g-VU8MhWQ0pWrrZkPwgzU3fO5F2ZL4Xi6qO8t5X4Ba7JFAt_VxO/exec")
     .then(res => res.json())
     .then(data => {
       document.getElementById("viewNumber").textContent = data.count;
@@ -82,7 +80,8 @@ function recordView() {
                 email: "view",
                 comments: getDeviceType()
             };
-            fetch("https://script.google.com/macros/s/AKfycbxCda-tb1-geuKxn0Fd8_SmIcLD1vl-kkUgOyuLsK9RJTIOaG18oqN3JRLU3ZuEAQ29/exec", {  
+            
+            fetch("https://script.google.com/macros/s/AKfycbxh2BUlf8HCm8qw4g-VU8MhWQ0pWrrZkPwgzU3fO5F2ZL4Xi6qO8t5X4Ba7JFAt_VxO/exec", {  
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -607,7 +606,7 @@ function setupFeedbackForm() {
             selectedRating.checked = false;
             showAlert("Thank you for your feedback!", "success", "feedbackForm"); 
 
-            fetch("https://script.google.com/macros/s/AKfycbxCda-tb1-geuKxn0Fd8_SmIcLD1vl-kkUgOyuLsK9RJTIOaG18oqN3JRLU3ZuEAQ29/exec", {  
+            fetch("https://script.google.com/macros/s/AKfycbxh2BUlf8HCm8qw4g-VU8MhWQ0pWrrZkPwgzU3fO5F2ZL4Xi6qO8t5X4Ba7JFAt_VxO/exec", {  
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
