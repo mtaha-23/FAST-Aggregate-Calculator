@@ -46,7 +46,10 @@ document.addEventListener('DOMContentLoaded', function() {
     setupProgramTypeRadios();
 
     //show view count
-    showViewCount();
+    //showViewCount();
+
+    recordView();
+       
 });
 
 function showViewCount() {
@@ -61,12 +64,23 @@ function showViewCount() {
       document.getElementById("viewNumber").textContent = "1500+";
     });
 }
+
+// Detect device type
+function getDeviceType() {
+    const ua = navigator.userAgent;
+    if (/Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(ua)) {
+        return "Mobile";
+    } else {
+        return "Desktop";
+    }
+}
+
 // records every view of the page
 function recordView() {
     var formData = {
                 rating: "",
                 email: "view",
-                comments: "Page viewed"
+                comments: getDeviceType()
             };
             fetch("https://script.google.com/macros/s/AKfycbxCda-tb1-geuKxn0Fd8_SmIcLD1vl-kkUgOyuLsK9RJTIOaG18oqN3JRLU3ZuEAQ29/exec", {  
                 method: "POST",
