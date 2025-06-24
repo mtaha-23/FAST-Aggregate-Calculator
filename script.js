@@ -68,8 +68,11 @@ function setupRatingReminder() {
     // Check if the user has already seen the popup in this session
     if (!sessionStorage.getItem('ratingReminderShown')) {
 
+        if (!sessionStorage.getItem('viewRecorded')) {
         //record the user view
         recordView();
+        sessionStorage.setItem('viewRecorded', 'true');
+    }
 
         // Set a timer to show the rating reminder after 25 seconds
         const ratingReminderTimer = setTimeout(function() {
@@ -123,6 +126,7 @@ function showRatingReminder() {
     const ratingModal = new bootstrap.Modal(document.getElementById('ratingReminderModal'));
     ratingModal.show();
 }
+
 
 // Check if device is mobile and adjust UI
 function checkMobileDevice() {
