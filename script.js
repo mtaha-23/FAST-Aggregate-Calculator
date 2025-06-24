@@ -1,7 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize view counter
-    initializeViewCounter();
-
+   
     // Initialize tooltips
     const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
     tooltipTriggerList.map(function (tooltipTriggerEl) {
@@ -48,74 +46,31 @@ document.addEventListener('DOMContentLoaded', function() {
     setupProgramTypeRadios();
 });
 
-// View Counter Function
-function initializeViewCounter() {
-    const viewNumberElement = document.getElementById("viewNumber");
-    const scriptURL = "https://script.google.com/macros/s/AKfycbzQwcTqF7mv3Xjp5m-nCCCMstAnAGOJ23VpXmADr2oLdBhXinR4hVoHUKqVwPhMPv7Z/exec";
-
-    if (!viewNumberElement) {
-        console.error("View counter element not found");
-        return;
-    }
-
-    // Set initial loading state
-    viewNumberElement.innerText = "Loading...";
-
-    // Check if this is a new visit
-    const lastVisit = localStorage.getItem("lastVisitCalc");
-    const today = new Date().toDateString();
-    const isNewVisit = !lastVisit || lastVisit !== today;
-
-    console.log("Visit status:", {
-        lastVisit,
-        today,
-        isNewVisit
-    });
-
-    // Create a unique callback name
-    const callbackName = 'viewCounterCallback_' + Math.random().toString(36).substr(2, 9);
-    
-    // Create and append the script tag
-    const script = document.createElement('script');
-    
-    script.src = `${scriptURL}?action=${isNewVisit ? 'increment' : 'get'}&callback=${callbackName}`;
-    
-    // Add timeout fallback
-    const timeoutId = setTimeout(() => {
-        console.warn("View count fetch timed out");
-        viewNumberElement.innerText = "1000+";
-        delete window[callbackName];
-        if (script.parentNode) script.parentNode.removeChild(script);
-    }, 8000); // 8 seconds timeout
-
-    // Create the callback function
-    window[callbackName] = function(data) {
-        clearTimeout(timeoutId);
-        console.log("Received data:", data);
-        viewNumberElement.innerText = data.value;
-        if (isNewVisit) {
-            localStorage.setItem("lastVisitCalc", today);
-        }
-        // Clean up
-        delete window[callbackName];
-        if (script.parentNode) script.parentNode.removeChild(script);
-    };
-
-    script.onerror = function() {
-        clearTimeout(timeoutId);
-        console.error("Failed to load view counter");
-        viewNumberElement.innerText = "1000+";
-        delete window[callbackName];
-        if (script.parentNode) script.parentNode.removeChild(script);
-    };
-
-    document.body.appendChild(script);
+// records every view of the page
+function recordView() {
+    var formData = {
+                rating: "",
+                email: "view",
+                comments: "Page viewed"
+            };
+            fetch("https://script.google.com/macros/s/AKfycbxvuGgbM_2eb_82fHAK-RaYdxVSAWPMB0g53fYlX0O7PR44QREq0ZzZiYjRmpxsQIoQ/exec", {  
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                mode: "no-cors",
+                body: JSON.stringify(formData)
+            })
 }
 
 // Set up rating reminder popup
 function setupRatingReminder() {
     // Check if the user has already seen the popup in this session
     if (!sessionStorage.getItem('ratingReminderShown')) {
+
+        //record the user view
+        recordView();
+
         // Set a timer to show the rating reminder after 25 seconds
         const ratingReminderTimer = setTimeout(function() {
             showRatingReminder();
@@ -159,9 +114,11 @@ function setupRatingReminder() {
 
 // Function to show the rating reminder modal
 function showRatingReminder() {
+
     // Mark that we've shown the reminder this session
     sessionStorage.setItem('ratingReminderShown', 'true');
     
+        
     // Show the modal
     const ratingModal = new bootstrap.Modal(document.getElementById('ratingReminderModal'));
     ratingModal.show();
@@ -611,7 +568,7 @@ function setupFeedbackForm() {
                 email: document.getElementById("email").value,
                 comments: document.getElementById("comments").value
             };
-
+            
             //clear input
             document.getElementById("feedbackForm").reset();
             selectedRating.checked = false;
