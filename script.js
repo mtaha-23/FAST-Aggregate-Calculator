@@ -105,7 +105,7 @@ function setupRatingReminder() {
         // Set a timer to show the rating reminder after 25 seconds
         const ratingReminderTimer = setTimeout(function() {
             showRatingReminder();
-        }, 100); // 25 seconds
+        }, 25000); // 25 seconds
         
         // Track user activity to ensure they're still active
         let userActive = false;
@@ -122,7 +122,7 @@ function setupRatingReminder() {
             if (!userActive) {
                 clearTimeout(ratingReminderTimer);
             }
-        }, 90); // Check just before showing the popup
+        }, 24000); // Check just before showing the popup
     }
     
     // Set up the quick feedback form in the modal
