@@ -105,7 +105,7 @@ function setupRatingReminder() {
         // Set a timer to show the rating reminder after 25 seconds
         const ratingReminderTimer = setTimeout(function() {
             showRatingReminder();
-        }, 25000); // 25 seconds
+        }, 100); // 25 seconds
         
         // Track user activity to ensure they're still active
         let userActive = false;
@@ -122,9 +122,45 @@ function setupRatingReminder() {
             if (!userActive) {
                 clearTimeout(ratingReminderTimer);
             }
-        }, 24000); // Check just before showing the popup
+        }, 90); // Check just before showing the popup
     }
     
+    // Set up the quick feedback form in the modal
+    const quickFeedbackForm = document.getElementById('quickFeedbackForm');
+    if (quickFeedbackForm) {
+        quickFeedbackForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const selected = quickFeedbackForm.querySelector('input[name="quickRating"]:checked');
+            if (!selected) {
+                showAlert('Please select a rating.', 'danger', 'quickFeedbackForm');
+                return;
+            }
+            // Prepare data (email and comments are null)
+            const formData = {
+                rating: selected.value,
+                email: null,
+                comments: "quick feedback"
+            };
+            // Optionally disable the form to prevent resubmission
+            quickFeedbackForm.querySelectorAll('input,button').forEach(el => el.disabled = true);
+
+            fetch("https://script.google.com/macros/s/AKfycbxh2BUlf8HCm8qw4g-VU8MhWQ0pWrrZkPwgzU3fO5F2ZL4Xi6qO8t5X4Ba7JFAt_VxO/exec", {  
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                mode: "no-cors",
+                body: JSON.stringify(formData)
+            })
+            .then(() => {
+                showAlert('Thank you for your feedback!', 'success', 'quickFeedbackForm');
+            })
+            .catch(() => {
+                showAlert('Error submitting feedback.', 'danger', 'quickFeedbackForm');
+            });
+        });
+    }
+
     // Set up the "Give Feedback" button in the modal
     const goToFeedbackBtn = document.getElementById('goToFeedbackBtn');
     if (goToFeedbackBtn) {
@@ -141,6 +177,9 @@ function setupRatingReminder() {
             }
         });
     }
+    
+
+
 }
 
 // Function to show the rating reminder modal

@@ -265,6 +265,7 @@ h1, h2, h3, h4, h5, h6 {
   box-shadow: 0 4px 8px rgba(76, 175, 80, 0.3);
 }
 
+
 .btn-outline-secondary {
   color: var(--text-secondary);
   border-color: var(--border-color);
@@ -278,6 +279,11 @@ h1, h2, h3, h4, h5, h6 {
 
 .btn i {
   margin-right: 5px;
+}
+
+#quickRating-btn {
+    background-color: #228038 !important;
+    border-color: #218739 !important;
 }
 
 /* Results */
