@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function() {
     setupProgramTypeRadios();
 
     //show view count
-    showViewCount();
+   // showViewCount();
      
 });
 
@@ -59,7 +59,7 @@ function showViewCount() {
     })
     .catch(err => {
       console.error("Error fetching view count:", err);
-      document.getElementById("viewNumber").textContent = "1500+";
+      document.getElementById("viewNumber").textContent = "1000+";
     });
 }
 
