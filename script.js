@@ -693,8 +693,10 @@ function setupThemeToggle() {
     const savedTheme = localStorage.getItem('theme');
     const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
     
-    // Apply the saved theme or device preference
-    if (savedTheme === 'dark' || (!savedTheme && prefersDarkScheme.matches)) {
+    // Apply dark theme by default unless user has set light
+    if (savedTheme === 'light') {
+        document.body.classList.remove('dark-theme');
+    } else {
         document.body.classList.add('dark-theme');
     }
     
