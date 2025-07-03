@@ -203,22 +203,45 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-md-4 mb-3">
-                                            <label for="nuNATMarks" class="form-label">NU/NAT Marks <i class="bi bi-info-circle" data-bs-toggle="tooltip" title="NU-Test marks should be entered after negative marking"></i></label>
-                                            <input type="number" class="form-control calc-input" id="nuNATMarks" step="0.01" data-calc="nat" min="0" max="100" inputmode="decimal" pattern="[0-9]*[.,]?[0-9]*">
+                                    <div class="row g-3">
+                                        <!-- NU/NAT Marks -->
+                                        <div class="col-md-4 d-flex flex-column mb-3">
+                                            <label for="nuNATMarks" class="form-label">
+                                            NU/NAT Marks
+                                            <i class="bi bi-info-circle" data-bs-toggle="tooltip" title="NU-Test marks should be entered after negative marking"></i>
+                                            </label>
+
+                                            <input type="number" class="form-control calc-input mt-auto" id="nuNATMarks"
+                                            step="0.01" data-calc="nat" min="0" max="100"
+                                            inputmode="decimal" pattern="[0-9]*[.,]?[0-9]*" placeholder="Max: 100">
+                                        </div>
+
+                                        <!-- Matric Percentage -->
+                                        <div class="col-md-4 d-flex flex-column mb-3">
+                                            <label for="matricPercentage" class="form-label"> SSC/O-Level/Equivalence % </label>
+
+                                            <input type="number" class="form-control calc-input mt-auto" id="matricPercentage"
+                                            step="0.01" data-calc="nat" min="0" max="100"
+                                            inputmode="decimal" pattern="[0-9]*[.,]?[0-9]*" placeholder="Max: 100">
+                                        </div>
+
+                                        <!-- FSC Percentage -->
+                                        <div class="col-md-4 d-flex flex-column mb-3">
+                                            <label for="fscPercentage" class="form-label">
+                                            HSSC/A-Level/Equivalence%
+                                            <i class="bi bi-info-circle" data-bs-toggle="tooltip"
+                                                title="If HSSC Part 2/A-Level result is not announced, enter Part 1/O-Level result."></i>
+                                            </label>
+
+                                            <span class="badge bg-secondary align-self-star">Part 1/O-Levels if result pending</span>
+
+                                            <input type="number" class="form-control calc-input mt-auto" id="fscPercentage"
+                                            step="0.01" data-calc="nat" min="0" max="100"
+                                            inputmode="decimal" pattern="[0-9]*[.,]?[0-9]*">
                                         </div>
                                         
-                                        <div class="col-md-4 mb-3">
-                                            <label for="matricPercentage" class="form-label">SSC/O-Level/Equivalence%</label>
-                                            <input type="number" class="form-control calc-input" id="matricPercentage" step="0.01" data-calc="nat" min="0" max="100" inputmode="decimal" pattern="[0-9]*[.,]?[0-9]*">
-                                        </div>
-                                        
-                                        <div class="col-md-4 mb-3">
-                                            <label for="fscPercentage" class="form-label">HSSC/A-Level/Equivalence%<i class="bi bi-info-circle" data-bs-toggle="tooltip" title="if (HSSC Part 2/A-Level) result is not announced, enter HSSC Part 1/O-Level result."></i></label>
-                                            <input type="number" class="form-control calc-input" id="fscPercentage" step="0.01" data-calc="nat" min="0" max="100" inputmode="decimal" pattern="[0-9]*[.,]?[0-9]*">
-                                        </div>
                                     </div>
+
                                         
                                     <div class="alert alert-info mb-4">
                                         <i class="bi bi-info-circle-fill me-2"></i> 
@@ -290,20 +313,22 @@
                                     <div class="row g-3">
                                         <!-- Total Attempted (Except English) -->
                                         <div class="col-md-4 d-flex flex-column">
-                                            <label for="totalAttemptedExceptEnglish" class="form-label">Total Questions Attempted (Except English)</label>
-                                            <input type="number" class="form-control calc-input mt-auto" id="totalAttemptedExceptEnglish" step="1" data-calc="nu" min="0" max="90" inputmode="numeric" pattern="[0-9]*">
+                                            <label for="totalAttemptedExceptEnglish" class="form-label">Total Attempted</label>
+                                             <span class="badge bg-secondary">Except English</span>
+                                            <input type="number" class="form-control calc-input mt-auto" id="totalAttemptedExceptEnglish" step="1" data-calc="nu" min="0" max="90" inputmode="numeric" pattern="[0-9]*" placeholder="Max: 90">
                                         </div>
 
                                         <!-- Correct (Except English) -->
                                         <div class="col-md-4 d-flex flex-column">
-                                            <label for="correctExceptEnglish" class="form-label">Correct Questions (Except English)</label>
-                                            <input type="number" class="form-control calc-input mt-auto" id="correctExceptEnglish" step="1" data-calc="nu" min="0" max="90" inputmode="numeric" pattern="[0-9]*">
+                                            <label for="correctExceptEnglish" class="form-label">Correct Questions</label>
+                                             <span class="badge bg-secondary">Except English</span>
+                                            <input type="number" class="form-control calc-input mt-auto" id="correctExceptEnglish" step="1" data-calc="nu" min="0" max="90" inputmode="numeric" pattern="[0-9]*" placeholder="Max: 90">
                                         </div>
 
                                         <!-- Matric Percentage -->
                                         <div class="col-md-4 d-flex flex-column">
                                             <label for="matricPercentageNU" class="form-label">SSC/O-Level/Equivalence %</label>
-                                            <input type="number" class="form-control calc-input mt-auto" id="matricPercentageNU" step="0.01" data-calc="nu" min="0" max="100" inputmode="decimal" pattern="[0-9]*[.,]?[0-9]*">
+                                            <input type="number" class="form-control calc-input mt-auto" id="matricPercentageNU" step="0.01" data-calc="nu" min="0" max="100" inputmode="decimal" pattern="[0-9]*[.,]?[0-9]*" placeholder="Max: 100">
                                         </div>
                                     </div>
 
@@ -311,23 +336,26 @@
                                     <div class="row g-3 mt-2">
                                         <!-- Total Attempted (English) -->
                                         <div class="col-md-4 d-flex flex-column">
-                                            <label for="totalAttemptedEnglish" class="form-label">Total Questions Attempted (English)</label>
-                                            <input type="number" class="form-control calc-input mt-auto" id="totalAttemptedEnglish" step="1" data-calc="nu" min="0" max="30" inputmode="numeric" pattern="[0-9]*">
+                                            <label for="totalAttemptedEnglish" class="form-label">Questions Attempted</label>
+                                             <span class="badge bg-secondary">English</span>
+                                            <input type="number" class="form-control calc-input mt-auto" id="totalAttemptedEnglish" step="1" data-calc="nu" min="0" max="30" inputmode="numeric" pattern="[0-9]*" placeholder="Max: 30">
                                         </div>
 
                                         <!-- Correct (English) -->
                                         <div class="col-md-4 d-flex flex-column">
-                                            <label for="correctEnglish" class="form-label">Correct Questions (English)</label>
-                                            <input type="number" class="form-control calc-input mt-auto" id="correctEnglish" step="1" data-calc="nu" min="0" max="30" inputmode="numeric" pattern="[0-9]*">
+                                            <label for="correctEnglish" class="form-label">Correct Questions</label>
+                                             <span class="badge bg-secondary">English</span>
+                                            <input type="number" class="form-control calc-input mt-auto" id="correctEnglish" step="1" data-calc="nu" min="0" max="30" inputmode="numeric" pattern="[0-9]*" placeholder="Max: 30">
                                         </div>
 
                                         <!-- FSC Percentage -->
                                         <div class="col-md-4 d-flex flex-column">
                                             <label for="fscPercentageNU" class="form-label">
-                                            HSSC/A-Level/Equivalence %
+                                            HSSC/A-Level/Equivalence%
                                             <i class="bi bi-info-circle" data-bs-toggle="tooltip" title="if (HSSC Part 2/A-Level) result is not announced, enter HSSC Part 1/O-Level result."></i>
                                             </label>
-                                            <input type="number" class="form-control calc-input mt-auto" id="fscPercentageNU" step="0.01" data-calc="nu" min="0" max="100" inputmode="decimal" pattern="[0-9]*[.,]?[0-9]*">
+                                             <span class="badge bg-secondary">Part 1/O-Levels if result pending</span>
+                                            <input type="number" class="form-control calc-input mt-auto" id="fscPercentageNU" step="0.01" data-calc="nu" min="0" max="100" inputmode="decimal" pattern="[0-9]*[.,]?[0-9]*" placeholder="Max: 100">
                                         </div>
                                     </div>
                                     
