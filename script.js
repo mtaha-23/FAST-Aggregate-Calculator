@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function() {
     setupPDFGeneration();
     
     // Set up share buttons
-    setupShareButtons();
+    initCopyPdfClearButtons();
 
     // Set up program type radio buttons
     setupProgramTypeRadios();
@@ -918,9 +918,9 @@ function generatePDF(resultType) {
     showAlert('PDF generated successfully!', 'success', resultType === 'nat' ? 'natForm' : 'nuForm');
 }
 
-// Set up share buttons functionality
-function setupShareButtons() {
-  // Function to generate share text based on result type
+// Sets up Copy, PDF, and Clear buttons after result calculation
+function initCopyPdfClearButtons() {
+  // Generate dynamic share text
   function getShareText(resultType) {
     if (resultType === 'nat') {
       const finalAggregate = document.getElementById('finalAggregateWithNU').textContent;
@@ -934,162 +934,83 @@ function setupShareButtons() {
     return '';
   }
 
-  // Function to copy result to clipboard
+  // Copy to clipboard
   function copyResult(resultType) {
     const shareText = getShareText(resultType);
-    
     navigator.clipboard.writeText(shareText)
-      .then(() => {
-        showAlert('Result copied to clipboard!', 'success', resultType === 'nat' ? 'natForm' : 'nuForm');
-      })
-      .catch(() => {
-        showAlert('Failed to copy to clipboard', 'danger', resultType === 'nat' ? 'natForm' : 'nuForm');
-      });
+      .then(() => showAlert('Result copied to clipboard!', 'success', `${resultType}Form`))
+      .catch(() => showAlert('Failed to copy to clipboard', 'danger', `${resultType}Form`));
   }
 
-  // Add copy button to the NAT result container
-  function addCopyButtonToNat() {
-    const resultContainer = document.getElementById('natResult');
+  // Reusable: Add copy, PDF, and clear buttons
+  function addButtons(resultType) {
+    const resultContainer = document.getElementById(`${resultType}Result`);
     if (!resultContainer) return;
-    
-    // Check if buttons container already exists
-    let buttonsContainer = document.querySelector('.nat-buttons-container');
-    if (!buttonsContainer) {
-      // Create buttons container
-      buttonsContainer = document.createElement('div');
-      buttonsContainer.className = 'nat-buttons-container d-flex justify-content-between mt-3';
-      
-      // Get the PDF button and remove it from its current position
-      const pdfButton = document.querySelector('.generate-pdf-btn[data-result-type="nat"]');
-      if (pdfButton) {
-        pdfButton.parentNode.removeChild(pdfButton);
-        
-        // Create left side container for PDF and Copy buttons
-        const leftButtons = document.createElement('div');
-        leftButtons.className = 'd-flex gap-2';
-        
-        // Create copy button
-        const copyButton = document.createElement('button');
-        copyButton.type = 'button';
-        copyButton.className = 'btn btn-outline-primary copy-btn';
-        copyButton.setAttribute('data-result-type', 'nat');
-        copyButton.innerHTML = '<i class="bi bi-clipboard me-2"></i> Copy Result';
-        
-        // Add event listener to copy button
-        copyButton.addEventListener('click', function() {
-          copyResult('nat');
-        });
-        
-        // Add buttons to left container
-        leftButtons.appendChild(copyButton);
-        leftButtons.appendChild(pdfButton);
-        
-        // Get the clear button
-        const clearButton = document.querySelector('.clear-btn[data-form="natForm"]');
-        
-        // Add elements to buttons container
-        buttonsContainer.appendChild(leftButtons);
-        if (clearButton) {
-          const rightButtons = document.createElement('div');
-          rightButtons.appendChild(clearButton.cloneNode(true));
-          buttonsContainer.appendChild(rightButtons);
-          
-          // Remove the original clear button
-          clearButton.parentNode.removeChild(clearButton);
-          
-          // Add event listener to the new clear button
-          rightButtons.querySelector('.clear-btn').addEventListener('click', function() {
-            clearForm('natForm');
-          });
-        }
-        
-        // Insert buttons container after the result container
-        resultContainer.after(buttonsContainer);
-      }
-    }
-  }
-  
-  // Add copy button to the NU result container
-  function addCopyButtonToNu() {
-    const resultContainer = document.getElementById('nuResult');
-    if (!resultContainer) return;
-    
-    // Check if buttons container already exists
-    let buttonsContainer = document.querySelector('.nu-buttons-container');
-    if (!buttonsContainer) {
-      // Create buttons container
-      buttonsContainer = document.createElement('div');
-      buttonsContainer.className = 'nu-buttons-container d-flex justify-content-between mt-3';
-      
-      // Get the PDF button and remove it from its current position
-      const pdfButton = document.querySelector('.generate-pdf-btn[data-result-type="nu"]');
-      if (pdfButton) {
-        pdfButton.parentNode.removeChild(pdfButton);
-        
-        // Create left side container for PDF and Copy buttons
-        const leftButtons = document.createElement('div');
-        leftButtons.className = 'd-flex gap-2';
-        
-        // Create copy button
-        const copyButton = document.createElement('button');
-        copyButton.type = 'button';
-        copyButton.className = 'btn btn-outline-primary copy-btn';
-        copyButton.setAttribute('data-result-type', 'nu');
-        copyButton.innerHTML = '<i class="bi bi-clipboard me-2"></i> Copy Result';
-        
-        // Add event listener to copy button
-        copyButton.addEventListener('click', function() {
-          copyResult('nu');
-        });
-        
-        // Add buttons to left container
-        leftButtons.appendChild(copyButton);
-        leftButtons.appendChild(pdfButton);
-        
-        // Get the clear button
-        const clearButton = document.querySelector('.clear-btn[data-form="nuForm"]');
-        
-        // Add elements to buttons container
-        buttonsContainer.appendChild(leftButtons);
-        if (clearButton) {
-          const rightButtons = document.createElement('div');
-          rightButtons.appendChild(clearButton.cloneNode(true));
-          buttonsContainer.appendChild(rightButtons);
-          
-          // Remove the original clear button
-          clearButton.parentNode.removeChild(clearButton);
-          
-          // Add event listener to the new clear button
-          rightButtons.querySelector('.clear-btn').addEventListener('click', function() {
-            clearForm('nuForm');
-          });
-        }
-        
-        // Insert buttons container after the result container
-        resultContainer.after(buttonsContainer);
-      }
-    }
+
+    const existing = document.querySelector(`.${resultType}-buttons-container`);
+    if (existing) existing.remove();
+
+    const wrapper = document.createElement('div');
+    wrapper.className = `${resultType}-buttons-container text-center mt-3`;
+
+    const row = document.createElement('div');
+    row.className = 'row g-2 justify-content-center';
+
+    // 📋 Copy Button
+    row.appendChild(createButtonColumn({
+      type: 'button',
+      className: 'btn btn-outline-primary w-100 px-4',
+      innerHTML: '<i class="bi bi-clipboard me-2"></i> Copy Result',
+      onClick: () => copyResult(resultType)
+    }));
+
+    // 📄 PDF Button
+    row.appendChild(createButtonColumn({
+      type: 'button',
+      className: 'btn btn-primary w-100 px-4',
+      innerHTML: '<i class="bi bi-file-earmark-pdf me-2"></i> Download PDF Report',
+      onClick: () => generatePDF(resultType)
+    }));
+
+    // 🧹 Clear Button
+    row.appendChild(createButtonColumn({
+      type: 'button',
+      className: 'btn btn-outline-secondary w-100 px-4',
+      innerHTML: '<i class="bi bi-eraser me-2"></i> Clear',
+      onClick: () => clearForm(`${resultType}Form`)
+    }));
+
+    wrapper.appendChild(row);
+    resultContainer.after(wrapper);
   }
 
-  // Modify the calculateAggregateWithNU function to add copy button
+  // Helper to create a Bootstrap column button
+  function createButtonColumn({ type, className, innerHTML, onClick }) {
+    const col = document.createElement('div');
+    col.className = 'col-12 col-md-auto';
+    const btn = document.createElement('button');
+    btn.type = type;
+    btn.className = className;
+    btn.innerHTML = innerHTML;
+    btn.addEventListener('click', onClick);
+    col.appendChild(btn);
+    return col;
+  }
+
+  // Hook into original calculation functions
   const originalCalculateAggregateWithNU = calculateAggregateWithNU;
-  calculateAggregateWithNU = function() {
+  calculateAggregateWithNU = function () {
     originalCalculateAggregateWithNU.apply(this, arguments);
-    
-    // Add copy button if results are displayed
     if (document.getElementById('natResult').style.display !== 'none') {
-      addCopyButtonToNat();
+      addButtons('nat');
     }
   };
-  
-  // Modify the calculateNUAndAggregate function to add copy button
+
   const originalCalculateNUAndAggregate = calculateNUAndAggregate;
-  calculateNUAndAggregate = function() {
+  calculateNUAndAggregate = function () {
     originalCalculateNUAndAggregate.apply(this, arguments);
-    
-    // Add copy button if results are displayed
     if (document.getElementById('nuResult').style.display !== 'none') {
-      addCopyButtonToNu();
+      addButtons('nu');
     }
   };
 }
