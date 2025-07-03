@@ -203,21 +203,24 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="mb-3">
-                                        <label for="nuNATMarks" class="form-label">NU/NAT Marks <i class="bi bi-info-circle" data-bs-toggle="tooltip" title="NU-Test marks should be entered after negative marking"></i></label>
-                                        <input type="number" class="form-control calc-input" id="nuNATMarks" step="0.01" data-calc="nat" min="0" max="100" inputmode="decimal" pattern="[0-9]*[.,]?[0-9]*">
+                                    <div class="row">
+
+                                        <div class="col-md-4 mb-3">
+                                            <label for="nuNATMarks" class="form-label">NU/NAT Marks <i class="bi bi-info-circle" data-bs-toggle="tooltip" title="NU-Test marks should be entered after negative marking"></i></label>
+                                            <input type="number" class="form-control calc-input" id="nuNATMarks" step="0.01" data-calc="nat" min="0" max="100" inputmode="decimal" pattern="[0-9]*[.,]?[0-9]*">
+                                        </div>
+                                        
+                                        <div class="col-md-4 mb-3">
+                                            <label for="matricPercentage" class="form-label">SSC/O-Level/Equivalence%</label>
+                                            <input type="number" class="form-control calc-input" id="matricPercentage" step="0.01" data-calc="nat" min="0" max="100" inputmode="decimal" pattern="[0-9]*[.,]?[0-9]*">
+                                        </div>
+                                        
+                                        <div class="col-md-4 mb-3">
+                                            <label for="fscPercentage" class="form-label">HSSC/A-Level/Equivalence%<i class="bi bi-info-circle" data-bs-toggle="tooltip" title="if (HSSC Part 2/A-Level) result is not announced, enter HSSC Part 1/O-Level result."></i></label>
+                                            <input type="number" class="form-control calc-input" id="fscPercentage" step="0.01" data-calc="nat" min="0" max="100" inputmode="decimal" pattern="[0-9]*[.,]?[0-9]*">
+                                        </div>
                                     </div>
-                                    
-                                    <div class="mb-3">
-                                        <label for="matricPercentage" class="form-label">SSC/O-Level/Equivalence %</label>
-                                        <input type="number" class="form-control calc-input" id="matricPercentage" step="0.01" data-calc="nat" min="0" max="100" inputmode="decimal" pattern="[0-9]*[.,]?[0-9]*">
-                                    </div>
-                                    
-                                    <div class="mb-3">
-                                        <label for="fscPercentage" class="form-label">HSSC/A-Level/Equivalence %<i class="bi bi-info-circle" data-bs-toggle="tooltip" title="if (HSSC Part 2/A-Level) result is not announced, enter HSSC Part 1/O-Level result."></i></label>
-                                        <input type="number" class="form-control calc-input" id="fscPercentage" step="0.01" data-calc="nat" min="0" max="100" inputmode="decimal" pattern="[0-9]*[.,]?[0-9]*">
-                                    </div>
-                                    
+                                        
                                     <div class="alert alert-info mb-4">
                                         <i class="bi bi-info-circle-fill me-2"></i> Note: Results may vary by 0.01-0.05 due to calculation methods.
                                     </div>
