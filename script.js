@@ -528,7 +528,7 @@ function calculateNUAndAggregate() {
         isPartial = true;
     }
     
-    // Calculate final marks
+    // Calculate final marks after negative marking
     finalMarksNU = marks - negativeMarks;
     
     // Add matric and FSc components if available
@@ -581,6 +581,10 @@ function calculateNUAndAggregate() {
     
     // Show final marks
     document.getElementById('finalMarksNU').textContent = !isNaN(finalMarksNU) ? finalMarksNU.toFixed(2) : "N/A";
+    
+    // Show test marks after negative marking
+    const afterNegative = marks - negativeMarks
+    document.getElementById('NU_Marks_after_negative_marking').textContent = !isNaN(afterNegative) ? afterNegative.toFixed(2) : "N/A";
     
     // Show test marks
     document.getElementById('nuTestMarksNU').textContent = !isNaN(marks) ? marks.toFixed(2) : "N/A";
