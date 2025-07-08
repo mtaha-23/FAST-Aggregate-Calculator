@@ -450,7 +450,7 @@ function calculateAggregateWithNU() {
         if (componentsUsed < 3) {
             titleElement.textContent = "Your Result (Partial Calculation)";
         } else {
-            titleElement.textContent = "Your Result";
+            titleElement.textContent = "Final Result";
         }
         
         document.getElementById('finalAggregateWithNU').textContent = resultText;
@@ -576,7 +576,7 @@ function calculateNUAndAggregate() {
     if (isPartial) {
         titleElement.textContent = "Your Result (Partial Calculation)";
     } else {
-        titleElement.textContent = "Your Result";
+        titleElement.textContent = "Final Result";
     }
     
     // Show final marks
