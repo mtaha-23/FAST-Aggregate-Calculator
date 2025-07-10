@@ -1,8 +1,6 @@
 # FAST NUCES Aggregate Calculator
 
-[Click to view the Calculator](https://mtaha-23.github.io/FAST-Aggregate-Calculator/)  
-
----
+## [Click to view the Calculator](https://mtaha-23.github.io/FAST-Aggregate-Calculator/)  
 
 ## About
 
