@@ -960,19 +960,28 @@ function initCopyPdfClearButtons() {
     const row = document.createElement('div');
     row.className = 'row g-2 justify-content-center';
 
-    // 📋 Copy Button
-    row.appendChild(createButtonColumn({
-      type: 'button',
-      className: 'btn btn-outline-primary w-100 px-4',
-      innerHTML: '<i class="bi bi-clipboard me-2"></i> Copy Result',
-      onClick: () => copyResult(resultType)
-    }));
+    // // 📋 Copy Button
+    // row.appendChild(createButtonColumn({
+    //   type: 'button',
+    //   className: 'btn btn-outline-primary w-100 px-4',
+    //   innerHTML: '<i class="bi bi-clipboard me-2"></i> Copy Result',
+    //   onClick: () => copyResult(resultType)
+    // }));
 
-    // 📄 PDF Button
+     // 📋 Screenshot Button
     row.appendChild(createButtonColumn({
       type: 'button',
       className: 'btn btn-primary w-100 px-4',
-      innerHTML: '<i class="bi bi-file-earmark-pdf me-2"></i> Download PDF Report',
+      innerHTML: '<i class="bi bi-camera"></i> Screenshot Result',
+      onClick: () => downloadResultImage(resultType)
+      
+    }));
+   
+    // 📄 PDF Button
+    row.appendChild(createButtonColumn({
+      type: 'button',
+      className: 'btn btn-outline-primary w-100 px-4',
+      innerHTML: '<i class="bi bi-file-earmark-pdf me-2"></i> Generate PDF',
       onClick: () => generatePDF(resultType)
     }));
 
@@ -1071,3 +1080,85 @@ function setupProgramTypeRadios() {
         handleNUProgramTypeChange();
     }
 }
+
+// Set up download result image functionality
+function downloadResultImage(resultType) {
+    let tempDiv = document.createElement("div");
+    tempDiv.style.width = "400px";
+    tempDiv.style.margin = "50px auto";
+    tempDiv.style.padding = "20px";
+    tempDiv.style.borderRadius = "12px";
+    tempDiv.style.backgroundColor = "#063377";
+    tempDiv.style.fontFamily = "'Poppins', sans-serif";
+    tempDiv.style.color = "#e0e0e0";
+    tempDiv.style.boxShadow = "0 0 15px rgba(0,0,0,0.4)";
+    tempDiv.style.position = "relative";
+
+    let watermarkHTML = `
+        <div style="text-align: center; font-size: 12px; color: rgba(255, 255, 255, 0.3); margin-bottom: 20px;">
+            mtaha-23.github.io/FAST-Aggregate-Calculator
+        </div>`;
+
+    if (resultType === "nu") {
+        const aggregate = document.getElementById("finalMarksNU").innerText || "—";
+        const finalNU = document.getElementById("NU_Marks_after_negative_marking").innerText || "—";
+        const rawNU = document.getElementById("nuTestMarksNU").innerText || "—";
+        const negative = document.getElementById("negativeMarksNU").innerText || "—";
+
+        tempDiv.innerHTML = `
+            <h3 style="text-align:center; margin-bottom: 8px; color: white;">Final Result</h3>
+            ${watermarkHTML}
+            <div style="display: flex; flex-direction: column; gap: 15px; align-items: center;">
+                <div style="width: 100%; background-color: #2e7d32; padding: 15px; border-radius: 12px; text-align: center;">
+                    <div style="color: white; font-weight: 500; font-size: 0.85rem;">Final Aggregate</div>
+                    <div style="color: white; font-size: 1.4rem; font-weight: 700;">${aggregate}</div>
+                </div>
+                <div style="width: 100%; background-color: #1565c0; padding: 15px; border-radius: 12px; text-align: center;">
+                    <div style="color: white; font-weight: 500; font-size: 0.85rem;">Final NU Marks</div>
+                    <div style="color: white; font-size: 1.4rem; font-weight: 700;">${finalNU}</div>
+                </div>
+                <div style="width: 100%; background-color: #1565c0; padding: 15px; border-radius: 12px; text-align: center;">
+                    <div style="color: white; font-weight: 500; font-size: 0.85rem;">NU Test Marks</div>
+                    <div style="color: white; font-size: 1.4rem; font-weight: 700;">${rawNU}</div>
+                </div>
+                <div style="width: 100%; background-color: #ba5554; padding: 15px; border-radius: 12px; text-align: center;">
+                    <div style="color: white; font-weight: 500; font-size: 0.85rem;">NU Negative Mark</div>
+                    <div style="color: white; font-size: 1.4rem; font-weight: 700;">${negative}</div>
+                </div>
+            </div>`;
+    } else if (resultType === "nat") {
+        const finalAggregate = document.getElementById("finalAggregateWithNU").innerText || "—";
+
+        tempDiv.innerHTML = `
+            <h3 style="text-align:center; margin-bottom: 8px; color: white;">Final Result</h3>
+            ${watermarkHTML}
+            <div style="display: flex; justify-content: center;">
+                <div style="width: 100%; background-color: #2e7d32; padding: 20px; border-radius: 12px; text-align: center;">
+                    <div style="color: white; font-weight: 500; font-size: 0.85rem;">Final Aggregate</div>
+                    <div style="color: white; font-size: 1.6rem; font-weight: 700;">${finalAggregate}</div>
+                </div>
+            </div>`;
+    } else {
+        alert("Invalid result type");
+        return;
+    }
+
+    document.body.appendChild(tempDiv);
+
+    html2canvas(tempDiv, {
+        backgroundColor: null,
+        scale: 2
+    }).then(canvas => {
+        const link = document.createElement("a");
+        link.download = "FAST_Result.png";
+        link.href = canvas.toDataURL("image/png");
+        link.click();
+        document.body.removeChild(tempDiv);
+    }).catch(error => {
+        console.error("Image generation failed:", error);
+        document.body.removeChild(tempDiv);
+    });
+}
+
+
+
