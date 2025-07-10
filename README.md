@@ -39,7 +39,7 @@ It supports both NU Test and NAT marks, and provides an easy way to check your e
 ## Author
 
 Made by [Taha](https://www.instagram.com/taha.insights)  
-[GitHub](https://github.com/mtaha-23) | [Portfolio](https://mtaha-23.github.io/Portfolio/)
+[Portfolio](https://mtaha-23.github.io/Portfolio/)
 
 ---
 
