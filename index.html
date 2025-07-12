@@ -96,9 +96,9 @@
                                         </button>
                                     </li>
                                     <li class="nav-item" role="presentation">
-                                        <a class="nav-link" href="https://mtaha-23.github.io/FAST-NUCES-FAQs/">
+                                        <button class="nav-link" id="faqs-tab" data-bs-toggle="pill" data-bs-target="#faqs" type="button" role="tab">
                                             <i class="bi bi-question-circle"></i> <span class="nav-text">FAQs</span>
-                                        </a>
+                                        </button>
                                     </li>
                                 </ul>
                             </div>
@@ -542,7 +542,7 @@
                                                 <div class="card h-100">
                                                     <div class="card-header py-2">
                                                         <h6 class="card-title mb-0">
-                                                            <i class="bi bi-calculator me-2"></i>Advanced Math
+                                                            <i class="bi bi-calculator me-2"></i>Basic Math
                                                         </h6>
                                                     </div>
                                                     <div class="card-body py-3">
@@ -926,6 +926,35 @@
                                 </div>
 
 
+                            </div>
+
+                            <!-- FAQs Tab -->
+                            <div class="tab-pane fade" id="faqs" role="tabpanel" aria-labelledby="faqs-tab">
+                                <div class="mb-3">
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <h2 class="fw-bold mb-0">Frequently Asked Questions</h2>
+                                        <span class="text-muted small"><i class="bi bi-calendar-event me-1"></i> LAST UPDATED: 21/JUNE/2025</span>
+                                    </div>
+                                    <p class="text-muted mb-3">Find answers to common questions about FAST NUCES admission process</p>
+                                </div>
+                                
+                                <!-- Search Container -->
+                                <div class="mb-3">
+                                    <div class="input-group">
+                                        <span class="input-group-text">
+                                            <i class="bi bi-search"></i>
+                                        </span>
+                                        <input type="text" id="faq-search-bar" class="form-control" placeholder="Search any word in FAQs...">
+                                    </div>
+                                </div>
+
+                                <!-- Category Navigation -->
+                                <div class="mb-3">
+                                    <div id="faq-category-nav" class="d-flex flex-wrap gap-2"></div>
+                                </div>
+
+                                <!-- FAQs Container -->
+                                <div id="faq-container"></div>
                             </div>
                         </div>
                     </div>

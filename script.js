@@ -45,6 +45,15 @@ document.addEventListener('DOMContentLoaded', function() {
     // Set up program type radio buttons
     setupProgramTypeRadios();
 
+    // Set up tab change listener for FAQs
+    const faqsTab = document.getElementById('faqs-tab');
+    if (faqsTab) {
+        faqsTab.addEventListener('shown.bs.tab', function() {
+            // Initialize FAQs when the tab is shown
+            setupFAQs();
+        });
+    }
+
     //show view count
    // showViewCount();
      
@@ -1640,6 +1649,146 @@ function setupProgramTypeRadios() {
         // Initialize NU weights visibility
         handleNUProgramTypeChange();
     }
+}
+
+// Set up FAQs functionality
+function setupFAQs() {
+    const faqContainer = document.getElementById('faq-container');
+    const categoryNav = document.getElementById('faq-category-nav');
+    const searchBar = document.getElementById('faq-search-bar');
+
+    if (!faqContainer || !categoryNav || !searchBar) {
+        return; // FAQs tab not loaded yet
+    }
+
+    // Check if FAQs are already loaded to prevent duplicates
+    if (faqContainer.children.length > 0) {
+        return; // FAQs already loaded
+    }
+
+    // Load and display FAQs
+    Promise.all([
+        fetch('FAQs/student_faqs.json').then(response => response.json()),
+        fetch('FAQs/official_faqs.json').then(response => response.json())
+    ])
+    .then(([studentFaqs, officialFaqs]) => {
+        const data = [...studentFaqs, ...officialFaqs];
+        const faqsByCategory = data.reduce((acc, faq) => {
+            const { category } = faq;
+            if (!acc[category]) {
+                acc[category] = [];
+            }
+            acc[category].push(faq);
+            return acc;
+        }, {});
+
+        // Create category navigation
+        for (const category in faqsByCategory) {
+            const categoryId = 'category-' + category.replace(/[^\w\s]/gi, '').replace(/\s+/g, '-').toLowerCase();
+            const navLink = document.createElement('button');
+            navLink.textContent = category;
+            navLink.classList.add('btn', 'btn-outline-primary', 'btn-sm');
+            navLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                document.getElementById(categoryId)?.scrollIntoView({ behavior: 'smooth' });
+            });
+            categoryNav.appendChild(navLink);
+        }
+
+        // Create FAQ content
+        for (const category in faqsByCategory) {
+            const categoryId = 'category-' + category.replace(/[^\w\s]/gi, '').replace(/\s+/g, '-').toLowerCase();
+            const categoryContainer = document.createElement('div');
+            categoryContainer.classList.add('faq-category', 'mb-4');
+            categoryContainer.id = categoryId;
+            
+            const categoryTitle = document.createElement('h3');
+            categoryTitle.classList.add('category-title', 'fw-bold', 'mb-3', 'text-primary');
+            categoryTitle.textContent = category;
+            categoryContainer.appendChild(categoryTitle);
+
+            faqsByCategory[category].forEach(faq => {
+                const faqItem = document.createElement('div');
+                faqItem.classList.add('faq-item', 'card', 'mb-2', 'shadow-sm');
+                faqItem.dataset.question = faq.question.toLowerCase();
+                faqItem.dataset.answer = faq.answer.toLowerCase();
+                faqItem.dataset.category = faq.category.toLowerCase();
+
+                const answerText = faq.answer
+                    .replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank">$1</a>')
+                    .replace(/\n/g, '<br>');
+
+                faqItem.innerHTML = `
+                    <div class="card-header py-2 cursor-pointer faq-question">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="fw-semibold">${faq.question}</span>
+                            <i class="bi bi-chevron-down text-muted"></i>
+                        </div>
+                    </div>
+                    <div class="card-body py-3 faq-answer" style="display: none;">
+                        ${answerText}
+                    </div>
+                `;
+
+                categoryContainer.appendChild(faqItem);
+
+                const question = faqItem.querySelector('.faq-question');
+                const answer = faqItem.querySelector('.faq-answer');
+                const icon = question.querySelector('.bi');
+
+                question.addEventListener('click', () => {
+                    const wasActive = faqItem.classList.contains('active');
+                    
+                    // Close all other FAQ items
+                    document.querySelectorAll('.faq-item.active').forEach(item => {
+                        item.classList.remove('active');
+                        const otherAnswer = item.querySelector('.faq-answer');
+                        const otherIcon = item.querySelector('.bi');
+                        otherAnswer.style.display = 'none';
+                        otherIcon.classList.remove('bi-chevron-up');
+                        otherIcon.classList.add('bi-chevron-down');
+                    });
+                    
+                    if (!wasActive) {
+                        faqItem.classList.add('active');
+                        answer.style.display = 'block';
+                        icon.classList.remove('bi-chevron-down');
+                        icon.classList.add('bi-chevron-up');
+                    }
+                });
+            });
+            faqContainer.appendChild(categoryContainer);
+        }
+    })
+    .catch(error => console.error('Error fetching FAQs:', error));
+    
+    // Search functionality
+    searchBar.addEventListener('input', (e) => {
+        const searchTerm = e.target.value.toLowerCase();
+        const allFaqItems = document.querySelectorAll('.faq-item');
+        const allCategoryTitles = document.querySelectorAll('.category-title');
+
+        let visibleCategories = new Set();
+
+        allFaqItems.forEach(item => {
+            const questionText = item.dataset.question;
+            const answerText = item.dataset.answer;
+            const categoryText = item.dataset.category;
+            
+            const isVisible = questionText.includes(searchTerm) || answerText.includes(searchTerm);
+            item.style.display = isVisible ? 'block' : 'none';
+
+            if (isVisible) {
+                visibleCategories.add(categoryText);
+            }
+        });
+
+        allCategoryTitles.forEach(title => {
+            const category = title.textContent.toLowerCase();
+            const isVisible = visibleCategories.has(category);
+            title.style.display = isVisible ? 'block' : 'none';
+        });
+    });
 }
 
 // Set up download result image functionality
