@@ -269,6 +269,28 @@ function setupInputValidation() {
                         showAlert('Essay marks cannot exceed 15', 'danger', this.closest('form').id);
                     }
                 }
+                // Computing/Engineering-specific max validations
+                else if (this.id === 'advMathAttemptedComp' || this.id === 'advMathCorrectComp') {
+                    if (value > 50) {
+                        this.value = 50;
+                        showAlert('Advanced Math questions cannot exceed 50', 'danger', this.closest('form').id);
+                    }
+                } else if (this.id === 'basicMathAttempted' || this.id === 'basicMathCorrect') {
+                    if (value > 20) {
+                        this.value = 20;
+                        showAlert('Basic Math questions cannot exceed 20', 'danger', this.closest('form').id);
+                    }
+                } else if (this.id === 'iqAttemptedComp' || this.id === 'iqCorrectComp') {
+                    if (value > 20) {
+                        this.value = 20;
+                        showAlert('IQ questions cannot exceed 20', 'danger', this.closest('form').id);
+                    }
+                } else if (this.id === 'englishAttemptedComp' || this.id === 'englishCorrectComp') {
+                    if (value > 30) {
+                        this.value = 30;
+                        showAlert('English questions cannot exceed 30', 'danger', this.closest('form').id);
+                    }
+                }
             }
             
             // Check if this is a "correct questions" input and validate against attempted
@@ -307,6 +329,43 @@ function setupInputValidation() {
             }
             else if (this.id === 'englishCorrect') {
                 const attempted = parseFloat(document.getElementById('englishAttempted').value);
+                if (!isNaN(attempted) && !isNaN(value) && value > attempted) {
+                    this.value = attempted;
+                    showAlert('Correct English cannot exceed attempted English', 'danger', 'nuForm');
+                    // Trigger recalculation with the adjusted value
+                    calculateNUAndAggregate();
+                }
+            }
+            // Computing/Engineering-specific validations
+            else if (this.id === 'advMathCorrectComp') {
+                const attempted = parseFloat(document.getElementById('advMathAttemptedComp').value);
+                if (!isNaN(attempted) && !isNaN(value) && value > attempted) {
+                    this.value = attempted;
+                    showAlert('Correct Advanced Math cannot exceed attempted Advanced Math', 'danger', 'nuForm');
+                    // Trigger recalculation with the adjusted value
+                    calculateNUAndAggregate();
+                }
+            }
+            else if (this.id === 'basicMathCorrect') {
+                const attempted = parseFloat(document.getElementById('basicMathAttempted').value);
+                if (!isNaN(attempted) && !isNaN(value) && value > attempted) {
+                    this.value = attempted;
+                    showAlert('Correct Basic Math cannot exceed attempted Basic Math', 'danger', 'nuForm');
+                    // Trigger recalculation with the adjusted value
+                    calculateNUAndAggregate();
+                }
+            }
+            else if (this.id === 'iqCorrectComp') {
+                const attempted = parseFloat(document.getElementById('iqAttemptedComp').value);
+                if (!isNaN(attempted) && !isNaN(value) && value > attempted) {
+                    this.value = attempted;
+                    showAlert('Correct IQ cannot exceed attempted IQ', 'danger', 'nuForm');
+                    // Trigger recalculation with the adjusted value
+                    calculateNUAndAggregate();
+                }
+            }
+            else if (this.id === 'englishCorrectComp') {
+                const attempted = parseFloat(document.getElementById('englishAttemptedComp').value);
                 if (!isNaN(attempted) && !isNaN(value) && value > attempted) {
                     this.value = attempted;
                     showAlert('Correct English cannot exceed attempted English', 'danger', 'nuForm');
@@ -363,6 +422,51 @@ function setupInputValidation() {
                 // Update placeholder for correct English input
                 updateCorrectPlaceholder('englishCorrect', value, 30);
             }
+            // Computing/Engineering-specific attempted validations
+            else if (this.id === 'advMathAttemptedComp') {
+                const correct = parseFloat(document.getElementById('advMathCorrectComp').value);
+                if (!isNaN(correct) && !isNaN(value) && value < correct) {
+                    document.getElementById('advMathCorrectComp').value = value;
+                    showAlert('Correct Advanced Math cannot exceed attempted Advanced Math', 'danger', 'nuForm');
+                    // Trigger recalculation with the adjusted value
+                    calculateNUAndAggregate();
+                }
+                // Update placeholder for correct Advanced Math input
+                updateCorrectPlaceholder('advMathCorrectComp', value, 50);
+            }
+            else if (this.id === 'basicMathAttempted') {
+                const correct = parseFloat(document.getElementById('basicMathCorrect').value);
+                if (!isNaN(correct) && !isNaN(value) && value < correct) {
+                    document.getElementById('basicMathCorrect').value = value;
+                    showAlert('Correct Basic Math cannot exceed attempted Basic Math', 'danger', 'nuForm');
+                    // Trigger recalculation with the adjusted value
+                    calculateNUAndAggregate();
+                }
+                // Update placeholder for correct Basic Math input
+                updateCorrectPlaceholder('basicMathCorrect', value, 20);
+            }
+            else if (this.id === 'iqAttemptedComp') {
+                const correct = parseFloat(document.getElementById('iqCorrectComp').value);
+                if (!isNaN(correct) && !isNaN(value) && value < correct) {
+                    document.getElementById('iqCorrectComp').value = value;
+                    showAlert('Correct IQ cannot exceed attempted IQ', 'danger', 'nuForm');
+                    // Trigger recalculation with the adjusted value
+                    calculateNUAndAggregate();
+                }
+                // Update placeholder for correct IQ input
+                updateCorrectPlaceholder('iqCorrectComp', value, 20);
+            }
+            else if (this.id === 'englishAttemptedComp') {
+                const correct = parseFloat(document.getElementById('englishCorrectComp').value);
+                if (!isNaN(correct) && !isNaN(value) && value < correct) {
+                    document.getElementById('englishCorrectComp').value = value;
+                    showAlert('Correct English cannot exceed attempted English', 'danger', 'nuForm');
+                    // Trigger recalculation with the adjusted value
+                    calculateNUAndAggregate();
+                }
+                // Update placeholder for correct English input
+                updateCorrectPlaceholder('englishCorrectComp', value, 30);
+            }
         });
     });
 }
@@ -411,18 +515,15 @@ function setupDynamicCalculation() {
             const isBusiness = document.getElementById('nuBusiness').checked;
             console.log('Is business:', isBusiness);
             
-            const computingInputsRow1 = document.getElementById('computingEngineeringInputsRow1');
-            const computingInputsRow2 = document.getElementById('computingEngineeringInputsRow2');
+            const computingEngineeringInputs = document.getElementById('computingEngineeringInputs');
             const businessInputs = document.getElementById('businessInputs');
             
             console.log('Elements found:', {
-                computingInputsRow1: !!computingInputsRow1,
-                computingInputsRow2: !!computingInputsRow2,
+                computingEngineeringInputs: !!computingEngineeringInputs,
                 businessInputs: !!businessInputs
             });
             
-            if (computingInputsRow1) computingInputsRow1.style.display = isBusiness ? 'none' : '';
-            if (computingInputsRow2) computingInputsRow2.style.display = isBusiness ? 'none' : '';
+            if (computingEngineeringInputs) computingEngineeringInputs.style.display = isBusiness ? 'none' : '';
             if (businessInputs) businessInputs.style.display = isBusiness ? '' : 'none';
         });
     });
@@ -468,8 +569,7 @@ function clearForm(formId) {
         // Reset program type to computing
         document.getElementById('nuComputing').checked = true;
         // Show computing/engineering inputs and hide business inputs
-        document.getElementById('computingEngineeringInputsRow1').style.display = '';
-        document.getElementById('computingEngineeringInputsRow2').style.display = '';
+        document.getElementById('computingEngineeringInputs').style.display = '';
         document.getElementById('businessInputs').style.display = 'none';
         // Show computing weights
         document.getElementById('nuComputingWeights').style.display = 'block';
@@ -529,6 +629,7 @@ function updateCorrectPlaceholder(correctInputId, attemptedValue, maxValue) {
 // Set up dynamic placeholder updates for business calculation inputs
 // This function adds event listeners to update placeholders when attempted values change
 function setupBusinessPlaceholderUpdates() {
+    // Business inputs
     // Advanced Maths attempted input
     const advMathAttempted = document.getElementById('advMathAttempted');
     if (advMathAttempted) {
@@ -553,6 +654,43 @@ function setupBusinessPlaceholderUpdates() {
         englishAttempted.addEventListener('input', function() {
             const value = parseFloat(this.value);
             updateCorrectPlaceholder('englishCorrect', value, 30);
+        });
+    }
+    
+    // Computing/Engineering inputs
+    // Advanced Math attempted input
+    const advMathAttemptedComp = document.getElementById('advMathAttemptedComp');
+    if (advMathAttemptedComp) {
+        advMathAttemptedComp.addEventListener('input', function() {
+            const value = parseFloat(this.value);
+            updateCorrectPlaceholder('advMathCorrectComp', value, 50);
+        });
+    }
+    
+    // Basic Math attempted input
+    const basicMathAttempted = document.getElementById('basicMathAttempted');
+    if (basicMathAttempted) {
+        basicMathAttempted.addEventListener('input', function() {
+            const value = parseFloat(this.value);
+            updateCorrectPlaceholder('basicMathCorrect', value, 20);
+        });
+    }
+    
+    // IQ attempted input
+    const iqAttemptedComp = document.getElementById('iqAttemptedComp');
+    if (iqAttemptedComp) {
+        iqAttemptedComp.addEventListener('input', function() {
+            const value = parseFloat(this.value);
+            updateCorrectPlaceholder('iqCorrectComp', value, 20);
+        });
+    }
+    
+    // English attempted input
+    const englishAttemptedComp = document.getElementById('englishAttemptedComp');
+    if (englishAttemptedComp) {
+        englishAttemptedComp.addEventListener('input', function() {
+            const value = parseFloat(this.value);
+            updateCorrectPlaceholder('englishCorrectComp', value, 30);
         });
     }
 }
@@ -642,21 +780,29 @@ function calculateNUAndAggregate() {
 
 // Calculate for Computing and Engineering programs
 function calculateComputingEngineeringAggregate() {
-    const totalAttemptedExceptEnglish = parseFloat(document.getElementById('totalAttemptedExceptEnglish').value);
-    let correctExceptEnglish = parseFloat(document.getElementById('correctExceptEnglish').value);
-    const totalAttemptedEnglish = parseFloat(document.getElementById('totalAttemptedEnglish').value);
-    let correctEnglish = parseFloat(document.getElementById('correctEnglish').value);
+    // Get attempted values for each section
+    const advMathAttempted = parseFloat(document.getElementById('advMathAttemptedComp').value);
+    const basicMathAttempted = parseFloat(document.getElementById('basicMathAttempted').value);
+    const iqAttempted = parseFloat(document.getElementById('iqAttemptedComp').value);
+    const englishAttempted = parseFloat(document.getElementById('englishAttemptedComp').value);
+    
+    // Get correct values (these may have been automatically adjusted by validation)
+    const advMathCorrect = parseFloat(document.getElementById('advMathCorrectComp').value);
+    const basicMathCorrect = parseFloat(document.getElementById('basicMathCorrect').value);
+    const iqCorrect = parseFloat(document.getElementById('iqCorrectComp').value);
+    const englishCorrect = parseFloat(document.getElementById('englishCorrectComp').value);
+    
+    // Get academic percentages
     const matricPercentageNU = parseFloat(document.getElementById('matricPercentageNU').value);
     const fscPercentageNU = parseFloat(document.getElementById('fscPercentageNU').value);
     const isProgramTypeComputing = document.getElementById('nuComputing').checked;
     
     // Check if at least one input has a value
-    const hasAnyValue = !isNaN(totalAttemptedExceptEnglish) || 
-                        !isNaN(correctExceptEnglish) || 
-                        !isNaN(totalAttemptedEnglish) || 
-                        !isNaN(correctEnglish) || 
-                        !isNaN(matricPercentageNU) || 
-                        !isNaN(fscPercentageNU);
+    const hasAnyValue = !isNaN(advMathAttempted) || !isNaN(advMathCorrect) || 
+                        !isNaN(basicMathAttempted) || !isNaN(basicMathCorrect) ||
+                        !isNaN(iqAttempted) || !isNaN(iqCorrect) ||
+                        !isNaN(englishAttempted) || !isNaN(englishCorrect) ||
+                        !isNaN(matricPercentageNU) || !isNaN(fscPercentageNU);
     
     if (!hasAnyValue) {
         document.getElementById('nuResult').style.display = 'none';
@@ -673,19 +819,6 @@ function calculateComputingEngineeringAggregate() {
         showAlert('Matric Percentage cannot be greater than 100.', 'danger', 'nuForm');
         return;
     }
-    
-    // Validate that correct questions don't exceed attempted questions
-    if (!isNaN(totalAttemptedExceptEnglish) && !isNaN(correctExceptEnglish) && correctExceptEnglish > totalAttemptedExceptEnglish) {
-        showAlert('Correct questions cannot exceed attempted questions', 'danger', 'nuForm');
-        document.getElementById('correctExceptEnglish').value = totalAttemptedExceptEnglish;
-        correctExceptEnglish = totalAttemptedExceptEnglish;
-    }
-    
-    if (!isNaN(totalAttemptedEnglish) && !isNaN(correctEnglish) && correctEnglish > totalAttemptedEnglish) {
-        showAlert('Correct questions cannot exceed attempted questions', 'danger', 'nuForm');
-        document.getElementById('correctEnglish').value = totalAttemptedEnglish;
-        correctEnglish = totalAttemptedEnglish;
-    }
 
     // Calculate with available values
     let negativeMarks = 0;
@@ -693,17 +826,35 @@ function calculateComputingEngineeringAggregate() {
     let finalMarksNU = 0;
     let isPartial = false;
     
-    // Calculate negative marks if we have both attempted and correct
-    if (!isNaN(totalAttemptedExceptEnglish) && !isNaN(correctExceptEnglish)) {
-        negativeMarks += (totalAttemptedExceptEnglish - correctExceptEnglish) * (1/4);
-        marks += correctExceptEnglish;
+    // Calculate marks and negative marking for each section
+    // Advanced Math (50 MCQs)
+    if (!isNaN(advMathAttempted) && !isNaN(advMathCorrect)) {
+        marks += advMathCorrect;
+        negativeMarks += (advMathAttempted - advMathCorrect) * (1/4); // 0.25 negative marking
     } else {
         isPartial = true;
     }
     
-    if (!isNaN(totalAttemptedEnglish) && !isNaN(correctEnglish)) {
-        negativeMarks += (totalAttemptedEnglish - correctEnglish) * ((10/30)/4);
-        marks += (correctEnglish * (10/30));
+    // Basic Math (20 MCQs)
+    if (!isNaN(basicMathAttempted) && !isNaN(basicMathCorrect)) {
+        marks += basicMathCorrect;
+        negativeMarks += (basicMathAttempted - basicMathCorrect) * (1/4); // 0.25 negative marking
+    } else {
+        isPartial = true;
+    }
+    
+    // IQ (20 MCQs)
+    if (!isNaN(iqAttempted) && !isNaN(iqCorrect)) {
+        marks += iqCorrect;
+        negativeMarks += (iqAttempted - iqCorrect) * (1/4); // 0.25 negative marking
+    } else {
+        isPartial = true;
+    }
+    
+    // English (30 MCQs, worth 10 marks)
+    if (!isNaN(englishAttempted) && !isNaN(englishCorrect)) {
+        marks += (englishCorrect * (10/30)); // English is worth 10 marks out of 30 questions
+        negativeMarks += (englishAttempted - englishCorrect) * ((10/30)/4); // 0.25 negative marking on 10 marks
     } else {
         isPartial = true;
     }

@@ -204,43 +204,63 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <!-- NAT Test Marks and Academic Record Sections -->
                                     <div class="row g-3">
-                                        <!-- NU/NAT Marks -->
-                                        <div class="col-md-4 d-flex flex-column mb-3">
+                                        <!-- Test Marks Section -->
+                                        <div class="col-12 col-lg-4">
+                                            <div class="card h-100">
+                                                <div class="card-header">
+                                                    <h6 class="card-title mb-0">
+                                                        <i class="bi bi-graph-up me-2"></i>Test Marks
+                                                    </h6>
+                                                </div>
+                                                <div class="card-body d-flex flex-column justify-content-center">
+                                                    <div class="row g-3">
+                                                        <div class="col-12">
                                             <label for="nuNATMarks" class="form-label">
                                             NU/NAT Marks
                                             <i class="bi bi-info-circle" data-bs-toggle="tooltip" title="NU-Test marks should be entered after negative marking"></i>
                                             </label>
-
-                                            <input type="number" class="form-control calc-input mt-auto" id="nuNATMarks"
+                                                            <input type="number" class="form-control calc-input" id="nuNATMarks"
                                             step="0.01" data-calc="nat" min="0" max="100"
-                                            inputmode="decimal" pattern="[0-9]*[.,]?[0-9]*" placeholder="Max: 100">
+                                                                inputmode="decimal" pattern="[0-9]*[.,]?[0-9]*" placeholder="0-100">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
 
-                                        <!-- Matric Percentage -->
-                                        <div class="col-md-4 d-flex flex-column mb-3">
-                                            <label for="matricPercentage" class="form-label"> SSC/O-Level/Equivalence % </label>
-
-                                            <input type="number" class="form-control calc-input mt-auto" id="matricPercentage"
+                                        <!-- Academic Record Section -->
+                                        <div class="col-12 col-lg-8">
+                                            <div class="card h-100">
+                                                <div class="card-header">
+                                                    <h6 class="card-title mb-0">
+                                                        <i class="bi bi-mortarboard me-2"></i>Academic Record
+                                                    </h6>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="row g-3">
+                                                        <div class="col-12 col-md-6">
+                                                            <label for="matricPercentage" class="form-label">SSC/O-Level %</label>
+                                                            <input type="number" class="form-control calc-input" id="matricPercentage"
                                             step="0.01" data-calc="nat" min="0" max="100"
-                                            inputmode="decimal" pattern="[0-9]*[.,]?[0-9]*" placeholder="Max: 100">
+                                                                inputmode="decimal" pattern="[0-9]*[.,]?[0-9]*" placeholder="0-100">
                                         </div>
-
-                                        <!-- FSC Percentage -->
-                                        <div class="col-md-4 d-flex flex-column mb-3">
+                                                        <div class="col-12 col-md-6">
                                             <label for="fscPercentage" class="form-label">
-                                            HSSC/A-Level/Equivalence%
+                                            HSSC/A-Level %
                                             <i class="bi bi-info-circle" data-bs-toggle="tooltip"
-                                                title="If HSSC Part 2/A-Level result is not announced, enter Part 1/O-Level result."></i>
+                                                title="Part 1/O-Levels if result pending"></i>
                                             </label>
-
-                                            <span class="badge bg-secondary align-self-star">Part 1/O-Levels if result pending</span>
-
-                                            <input type="number" class="form-control calc-input mt-auto" id="fscPercentage"
+                                                            
+                                                            <input type="number" class="form-control calc-input" id="fscPercentage"
                                             step="0.01" data-calc="nat" min="0" max="100"
-                                            inputmode="decimal" pattern="[0-9]*[.,]?[0-9]*">
+                                                                inputmode="decimal" pattern="[0-9]*[.,]?[0-9]*" placeholder="0-100">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
-                                        
                                     </div>
 
                                         
@@ -314,53 +334,135 @@
                                             </div>
                                         </div>
                                     </div>
-                                  <!-- Row 1 -->
-                                    <div class="row g-3" id="computingEngineeringInputsRow1">
-                                        <!-- Total Attempted (Except English) -->
-                                        <div class="col-md-4 d-flex flex-column">
-                                            <label for="totalAttemptedExceptEnglish" class="form-label">Attempted Questions</label>
-                                             <span class="badge bg-secondary">Except English</span>
-                                            <input type="number" class="form-control calc-input mt-auto" id="totalAttemptedExceptEnglish" step="1" data-calc="nu" min="0" max="90" inputmode="numeric" pattern="[0-9]*" placeholder="Max: 90">
+                                  <!-- Computing/Engineering-specific inputs -->
+                                    <div id="computingEngineeringInputs" style="display: none;">
+                                        <!-- Advanced Math Section -->
+                                        <div class="row g-3 mb-3">
+                                            <div class="col-12 col-lg-6">
+                                                <div class="card h-100">
+                                                    <div class="card-header">
+                                                        <h6 class="card-title mb-0">
+                                                            <i class="bi bi-calculator me-2"></i>Advanced Math
+                                                        </h6>
+                                                        <small class="text-muted">50 MCQs</small>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="row g-2">
+                                                            <div class="col-6">
+                                                                <label for="advMathAttemptedComp" class="form-label">Attempted</label>
+                                                                <input type="number" class="form-control calc-input" id="advMathAttemptedComp" step="1" data-calc="nu" min="0" max="50" inputmode="numeric" pattern="[0-9]*" placeholder="0-50">
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <label for="advMathCorrectComp" class="form-label">Correct</label>
+                                                                <input type="number" class="form-control calc-input" id="advMathCorrectComp" step="1" data-calc="nu" min="0" max="50" inputmode="numeric" pattern="[0-9]*" placeholder="0-50">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Basic Math Section -->
+                                            <div class="col-12 col-lg-6">
+                                                <div class="card h-100">
+                                                    <div class="card-header">
+                                                        <h6 class="card-title mb-0">
+                                                            <i class="bi bi-plus-circle me-2"></i>Basic Math
+                                                        </h6>
+                                                        <small class="text-muted">20 MCQs</small>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="row g-2">
+                                                            <div class="col-6">
+                                                                <label for="basicMathAttempted" class="form-label">Attempted</label>
+                                                                <input type="number" class="form-control calc-input" id="basicMathAttempted" step="1" data-calc="nu" min="0" max="20" inputmode="numeric" pattern="[0-9]*" placeholder="0-20">
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <label for="basicMathCorrect" class="form-label">Correct</label>
+                                                                <input type="number" class="form-control calc-input" id="basicMathCorrect" step="1" data-calc="nu" min="0" max="20" inputmode="numeric" pattern="[0-9]*" placeholder="0-20">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
 
-                                        <!-- Correct (Except English) -->
-                                        <div class="col-md-4 d-flex flex-column">
-                                            <label for="correctExceptEnglish" class="form-label">Correct Questions</label>
-                                             <span class="badge bg-secondary">Except English</span>
-                                            <input type="number" class="form-control calc-input mt-auto" id="correctExceptEnglish" step="1" data-calc="nu" min="0" max="90" inputmode="numeric" pattern="[0-9]*" placeholder="Max: 90">
+                                        <!-- IQ Section -->
+                                        <div class="row g-3 mb-3">
+                                            <div class="col-12 col-lg-6">
+                                                <div class="card h-100">
+                                                    <div class="card-header">
+                                                        <h6 class="card-title mb-0">
+                                                            <i class="bi bi-lightbulb me-2"></i>IQ
+                                                        </h6>
+                                                        <small class="text-muted">20 MCQs</small>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="row g-2">
+                                                            <div class="col-6">
+                                                                <label for="iqAttemptedComp" class="form-label">Attempted</label>
+                                                                <input type="number" class="form-control calc-input" id="iqAttemptedComp" step="1" data-calc="nu" min="0" max="20" inputmode="numeric" pattern="[0-9]*" placeholder="0-20">
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <label for="iqCorrectComp" class="form-label">Correct</label>
+                                                                <input type="number" class="form-control calc-input" id="iqCorrectComp" step="1" data-calc="nu" min="0" max="20" inputmode="numeric" pattern="[0-9]*" placeholder="0-20">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- English Section -->
+                                            <div class="col-12 col-lg-6">
+                                                <div class="card h-100">
+                                                    <div class="card-header">
+                                                        <h6 class="card-title mb-0">
+                                                            <i class="bi bi-translate me-2"></i>English
+                                                        </h6>
+                                                        <small class="text-muted">30 MCQs</small>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="row g-2">
+                                                            <div class="col-6">
+                                                                <label for="englishAttemptedComp" class="form-label">Attempted</label>
+                                                                <input type="number" class="form-control calc-input" id="englishAttemptedComp" step="1" data-calc="nu" min="0" max="30" inputmode="numeric" pattern="[0-9]*" placeholder="0-30">
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <label for="englishCorrectComp" class="form-label">Correct</label>
+                                                                <input type="number" class="form-control calc-input" id="englishCorrectComp" step="1" data-calc="nu" min="0" max="30" inputmode="numeric" pattern="[0-9]*" placeholder="0-30">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
 
-                                        <!-- Matric Percentage -->
-                                        <div class="col-md-4 d-flex flex-column">
-                                            <label for="matricPercentageNU" class="form-label">SSC/O-Level/Equivalence %</label>
-                                            <input type="number" class="form-control calc-input mt-auto" id="matricPercentageNU" step="0.01" data-calc="nu" min="0" max="100" inputmode="decimal" pattern="[0-9]*[.,]?[0-9]*" placeholder="Max: 100">
-                                        </div>
-                                    </div>
-
-                                    <!-- Row 2 -->
-                                    <div class="row g-3 mt-2" id="computingEngineeringInputsRow2">
-                                        <!-- Total Attempted (English) -->
-                                        <div class="col-md-4 d-flex flex-column">
-                                            <label for="totalAttemptedEnglish" class="form-label">Attempted Questions</label>
-                                             <span class="badge bg-secondary">Only English</span>
-                                            <input type="number" class="form-control calc-input mt-auto" id="totalAttemptedEnglish" step="1" data-calc="nu" min="0" max="30" inputmode="numeric" pattern="[0-9]*" placeholder="Max: 30">
-                                        </div>
-
-                                        <!-- Correct (English) -->
-                                        <div class="col-md-4 d-flex flex-column">
-                                            <label for="correctEnglish" class="form-label">Correct Questions</label>
-                                             <span class="badge bg-secondary">Only English</span>
-                                            <input type="number" class="form-control calc-input mt-auto" id="correctEnglish" step="1" data-calc="nu" min="0" max="30" inputmode="numeric" pattern="[0-9]*" placeholder="Max: 30">
-                                        </div>
-
-                                        <!-- FSC Percentage -->
-                                        <div class="col-md-4 d-flex flex-column">
-                                            <label for="fscPercentageNU" class="form-label">
-                                            HSSC/A-Level/Equivalence%
-                                            <i class="bi bi-info-circle" data-bs-toggle="tooltip" title="if (HSSC Part 2/A-Level) result is not announced, enter HSSC Part 1/O-Level result."></i>
-                                            </label>
-                                             <span class="badge bg-secondary">Part 1/O-Levels if result pending</span>
-                                            <input type="number" class="form-control calc-input mt-auto" id="fscPercentageNU" step="0.01" data-calc="nu" min="0" max="100" inputmode="decimal" pattern="[0-9]*[.,]?[0-9]*" placeholder="Max: 100">
+                                        <!-- Academic Record Section -->
+                                        <div class="row g-3">
+                                            <div class="col-12">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <h6 class="card-title mb-0">
+                                                            <i class="bi bi-mortarboard me-2"></i>Academic Record
+                                                        </h6>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="row g-3">
+                                                            <div class="col-12 col-lg-6">
+                                            <label for="matricPercentageNU" class="form-label">SSC/O-Level %</label>
+                                                                <input type="number" class="form-control calc-input" id="matricPercentageNU" step="0.01" data-calc="nu" min="0" max="100" inputmode="decimal" pattern="[0-9]*[.,]?[0-9]*" placeholder="0-100">
+                                                            </div>
+                                                            <div class="col-12 col-lg-6">
+                                                                <label for="fscPercentageNU" class="form-label">
+                                                                    HSSC/A-Level %
+                                                                    <i class="bi bi-info-circle" data-bs-toggle="tooltip" title="Part 1/O-Levels if result pending"></i>
+                                                                </label>
+                                                                
+                                                                <input type="number" class="form-control calc-input" id="fscPercentageNU" step="0.01" data-calc="nu" min="0" max="100" inputmode="decimal" pattern="[0-9]*[.,]?[0-9]*" placeholder="0-100">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
 
@@ -474,15 +576,15 @@
                                                     <div class="card-body">
                                                         <div class="row g-3">
                                                             <div class="col-12 col-lg-6">
-                                                                <label for="sscPercentage" class="form-label">SSC/O-Level/Equivalence %</label>
+                                                                <label for="sscPercentage" class="form-label">SSC/O-Level %</label>
                                                                 <input type="number" class="form-control calc-input" id="sscPercentage" step="0.01" data-calc="nu" min="0" max="100" inputmode="decimal" pattern="[0-9]*[.,]?[0-9]*" placeholder="0-100">
                                                             </div>
                                                             <div class="col-12 col-lg-6">
                                                                 <label for="hsscPercentage" class="form-label">
-                                                                    HSSC/A-Level/Equivalence%
-                                                                    <i class="bi bi-info-circle" data-bs-toggle="tooltip" title="if (HSSC Part 2/A-Level) result is not announced, enter HSSC Part 1/O-Level result."></i>
-                                                                </label>
-                                                                <span class="badge bg-secondary">Part 1/O-Levels if result pending</span>
+                                            HSSC/A-Level %
+                                            <i class="bi bi-info-circle" data-bs-toggle="tooltip" title="Part 1/O-Levels if result pending"></i>
+                                            </label>
+                                            
                                                                 <input type="number" class="form-control calc-input" id="hsscPercentage" step="0.01" data-calc="nu" min="0" max="100" inputmode="decimal" pattern="[0-9]*[.,]?[0-9]*" placeholder="0-100">
                                                             </div>
                                                         </div>
