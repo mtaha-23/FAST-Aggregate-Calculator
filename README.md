@@ -1,15 +1,11 @@
 # FAST NUCES Aggregate Calculator
 
-[Click to view the Calculator](https://mtaha-23.github.io/FAST-Aggregate-Calculator/)  
-
----
+## [Click to view the Calculator](https://mtaha-23.github.io/FAST-Aggregate-Calculator/)  
 
 ## About
 
 The **FAST NUCES Aggregate Calculator** helps prospective students estimate their admission aggregate for FAST National University of Computer and Emerging Sciences (NUCES).  
 It supports both NU Test and NAT marks, and provides an easy way to check your eligibility for various programs and campuses.
-
----
 
 ## Features
 
@@ -34,14 +30,10 @@ It supports both NU Test and NAT marks, and provides an easy way to check your e
 - **Responsive Design**  
   Fully mobile-friendly and works on all modern browsers.
 
----
-
 ## Author
 
 Made by [Taha](https://www.instagram.com/taha.insights)  
 [Portfolio](https://mtaha-23.github.io/Portfolio/)
-
----
 
 ## Disclaimer
 
