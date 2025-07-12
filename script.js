@@ -805,10 +805,10 @@ function calculateComputingEngineeringAggregate() {
     const englishAttempted = parseFloat(document.getElementById('englishAttemptedComp').value);
     
     // Get correct values (these may have been automatically adjusted by validation)
-    const advancedMathCorrect = parseFloat(document.getElementById('advMathCorrectComp').value);
-    const basicMathCorrect = parseFloat(document.getElementById('basicMathCorrect').value);
-    const iqCorrect = parseFloat(document.getElementById('iqCorrectComp').value);
-    const englishCorrect = parseFloat(document.getElementById('englishCorrectComp').value);
+    let advancedMathCorrect = parseFloat(document.getElementById('advMathCorrectComp').value);
+    let basicMathCorrect = parseFloat(document.getElementById('basicMathCorrect').value);
+    let iqCorrect = parseFloat(document.getElementById('iqCorrectComp').value);
+    let englishCorrect = parseFloat(document.getElementById('englishCorrectComp').value);
     
     // Get academic percentages
     const matricPercentageNU = parseFloat(document.getElementById('matricPercentageNU').value);
@@ -955,9 +955,9 @@ function calculateBusinessAggregate() {
     const englishAttempted = parseFloat(document.getElementById('englishAttempted').value);
     
     // Get correct values (these may have been automatically adjusted by validation)
-    const mathsCorrect = parseFloat(document.getElementById('advMathCorrect').value);
-    const iqCorrect = parseFloat(document.getElementById('iqCorrect').value);
-    const englishCorrect = parseFloat(document.getElementById('englishCorrect').value);
+    let mathsCorrect = parseFloat(document.getElementById('advMathCorrect').value);
+    let iqCorrect = parseFloat(document.getElementById('iqCorrect').value);
+    let englishCorrect = parseFloat(document.getElementById('englishCorrect').value);
     
     // Get other values
     const essayMarks = parseFloat(document.getElementById('essay').value);
