@@ -150,7 +150,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                   
                                     <div class="col-md-4">
                                         <div class="card h-100 option-card" data-bs-toggle="pill" data-bs-target="#estimate">
                                             <div class="card-body text-center p-4">
@@ -177,7 +176,7 @@
                                         <label class="form-label">Program Type</label>
                                         <div class="btn-group w-100" role="group">
                                             <input type="radio" class="btn-check" name="natProgramType" id="natComputing" value="computing" checked>
-                                            <label class="btn btn-outline-primary" for="natComputing">Computing</label>
+                                            <label class="btn btn-outline-primary" for="natComputing">Computing/Business</label>
                                             <input type="radio" class="btn-check" name="natProgramType" id="natEngineering" value="engineering">
                                             <label class="btn btn-outline-primary" for="natEngineering">Engineering</label>
                                         </div>
@@ -278,6 +277,8 @@
                                             <label class="btn btn-outline-primary" for="nuComputing">Computing</label>
                                             <input type="radio" class="btn-check" name="nuProgramType" id="nuEngineering" value="engineering">
                                             <label class="btn btn-outline-primary" for="nuEngineering">Engineering</label>
+                                            <input type="radio" class="btn-check" name="nuProgramType" id="nuBusiness" value="business">
+                                            <label class="btn btn-outline-primary" for="nuBusiness">Business</label>
                                         </div>
                                         <!-- Add weights information -->
                                         <div class="weights-info mt-1">
@@ -301,10 +302,20 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div id="nuBusinessWeights" class="weights-card p-1 mb-0" style="display: none;">
+                                                <div class="d-flex align-items-center">
+                                                    <i class="bi bi-info-circle-fill me-1 text-primary small-icon"></i>
+                                                    <div class="weights-details">
+                                                        <span class="badge bg-primary me-1">NU Test: 50%</span>
+                                                        <span class="badge bg-primary me-1">FSc: 40%</span>
+                                                        <span class="badge bg-primary">Matric: 10%</span>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                   <!-- Row 1 -->
-                                    <div class="row g-3">
+                                    <div class="row g-3" id="computingEngineeringInputsRow1">
                                         <!-- Total Attempted (Except English) -->
                                         <div class="col-md-4 d-flex flex-column">
                                             <label for="totalAttemptedExceptEnglish" class="form-label">Attempted Questions</label>
@@ -327,7 +338,7 @@
                                     </div>
 
                                     <!-- Row 2 -->
-                                    <div class="row g-3 mt-2">
+                                    <div class="row g-3 mt-2" id="computingEngineeringInputsRow2">
                                         <!-- Total Attempted (English) -->
                                         <div class="col-md-4 d-flex flex-column">
                                             <label for="totalAttemptedEnglish" class="form-label">Attempted Questions</label>
@@ -350,6 +361,72 @@
                                             </label>
                                              <span class="badge bg-secondary">Part 1/O-Levels if result pending</span>
                                             <input type="number" class="form-control calc-input mt-auto" id="fscPercentageNU" step="0.01" data-calc="nu" min="0" max="100" inputmode="decimal" pattern="[0-9]*[.,]?[0-9]*" placeholder="Max: 100">
+                                        </div>
+                                    </div>
+
+                                    <!-- Business-specific inputs -->
+                                    <div class="row g-3 mt-2" id="businessInputs" style="display: none;">
+                                        <!-- Attempted Maths -->
+                                        <div class="col-md-4 d-flex flex-column">
+                                            <label for="attemptedMaths" class="form-label">Attempted Maths</label>
+                                            <input type="number" class="form-control calc-input mt-auto" id="attemptedMaths" step="1" data-calc="nu" min="0" max="50" inputmode="numeric" pattern="[0-9]*" placeholder="Max: 50">
+                                        </div>
+
+                                        <!-- Correct Maths -->
+                                        <div class="col-md-4 d-flex flex-column">
+                                            <label for="correctMaths" class="form-label">Correct Maths</label>
+                                            <input type="number" class="form-control calc-input mt-auto" id="correctMaths" step="1" data-calc="nu" min="0" max="50" inputmode="numeric" pattern="[0-9]*" placeholder="Max: 50">
+                                        </div>
+
+                                        <!-- Attempted IQ -->
+                                        <div class="col-md-4 d-flex flex-column">
+                                            <label for="attemptedIQ" class="form-label">Attempted IQ</label>
+                                            <input type="number" class="form-control calc-input mt-auto" id="attemptedIQ" step="1" data-calc="nu" min="0" max="25" inputmode="numeric" pattern="[0-9]*" placeholder="Max: 25">
+                                        </div>
+                                    </div>
+
+                                    <div class="row g-3 mt-2" id="businessInputsRow2" style="display: none;">
+                                        <!-- Correct IQ -->
+                                        <div class="col-md-4 d-flex flex-column">
+                                            <label for="correctIQ" class="form-label">Correct IQ</label>
+                                            <input type="number" class="form-control calc-input mt-auto" id="correctIQ" step="1" data-calc="nu" min="0" max="25" inputmode="numeric" pattern="[0-9]*" placeholder="Max: 25">
+                                        </div>
+
+                                        <!-- Attempted English -->
+                                        <div class="col-md-4 d-flex flex-column">
+                                            <label for="attemptedEnglish" class="form-label">Attempted English</label>
+                                            <input type="number" class="form-control calc-input mt-auto" id="attemptedEnglish" step="1" data-calc="nu" min="0" max="30" inputmode="numeric" pattern="[0-9]*" placeholder="Max: 30">
+                                        </div>
+                                        
+                                        <!-- Correct English -->
+                                        <div class="col-md-4 d-flex flex-column">
+                                            <label for="correctEnglishBusiness" class="form-label">Correct English</label>
+                                            <input type="number" class="form-control calc-input mt-auto" id="correctEnglishBusiness" step="1" data-calc="nu" min="0" max="30" inputmode="numeric" pattern="[0-9]*" placeholder="Max: 30">
+                                        </div>
+                                    </div>
+
+                                    <div class="row g-3 mt-2" id="businessInputsRow3" style="display: none;">
+                                        
+                                        <!-- Essay -->
+                                        <div class="col-md-4 d-flex flex-column">
+                                            <label for="essay" class="form-label">Essay</label>
+                                            <input type="number" class="form-control calc-input mt-auto" id="essay" step="0.01" data-calc="nu" min="0" max="15" inputmode="decimal" pattern="[0-9]*[.,]?[0-9]*" placeholder="Max: 15">
+                                        </div>
+
+                                        <!-- SSC Percentage -->
+                                        <div class="col-md-4 d-flex flex-column">
+                                            <label for="sscPercentage" class="form-label">SSC/O-Level/Equivalence %</label>
+                                            <input type="number" class="form-control calc-input mt-auto" id="sscPercentage" step="0.01" data-calc="nu" min="0" max="100" inputmode="decimal" pattern="[0-9]*[.,]?[0-9]*" placeholder="Max: 100">
+                                        </div>
+
+                                        <!-- HSSC Percentage -->
+                                        <div class="col-md-4 d-flex flex-column">
+                                            <label for="hsscPercentage" class="form-label">
+                                            HSSC/A-Level/Equivalence%
+                                            <i class="bi bi-info-circle" data-bs-toggle="tooltip" title="if (HSSC Part 2/A-Level) result is not announced, enter HSSC Part 1/O-Level result."></i>
+                                            </label>
+                                             <span class="badge bg-secondary">Part 1/O-Levels if result pending</span>
+                                            <input type="number" class="form-control calc-input mt-auto" id="hsscPercentage" step="0.01" data-calc="nu" min="0" max="100" inputmode="decimal" pattern="[0-9]*[.,]?[0-9]*" placeholder="Max: 100">
                                         </div>
                                     </div>
                                     

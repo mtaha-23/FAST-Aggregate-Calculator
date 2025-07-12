@@ -246,6 +246,29 @@ function setupInputValidation() {
                     this.value = 100;
                     showAlert('Value cannot be greater than 100', 'danger', this.closest('form').id);
                 }
+                
+                // Business-specific max validations
+                if (this.id === 'attemptedMaths' || this.id === 'correctMaths') {
+                    if (value > 50) {
+                        this.value = 50;
+                        showAlert('Maths questions cannot exceed 50', 'danger', this.closest('form').id);
+                    }
+                } else if (this.id === 'attemptedIQ' || this.id === 'correctIQ') {
+                    if (value > 25) {
+                        this.value = 25;
+                        showAlert('IQ questions cannot exceed 25', 'danger', this.closest('form').id);
+                    }
+                } else if (this.id === 'attemptedEnglish' || this.id === 'correctEnglishBusiness') {
+                    if (value > 30) {
+                        this.value = 30;
+                        showAlert('English questions cannot exceed 30', 'danger', this.closest('form').id);
+                    }
+                } else if (this.id === 'essay') {
+                    if (value > 15) {
+                        this.value = 15;
+                        showAlert('Essay marks cannot exceed 15', 'danger', this.closest('form').id);
+                    }
+                }
             }
             
             // Check if this is a "correct questions" input and validate against attempted
@@ -263,6 +286,35 @@ function setupInputValidation() {
                     showAlert('Correct questions cannot exceed attempted questions', 'danger', 'nuForm');
                 }
             }
+            // Business-specific validations
+            else if (this.id === 'correctMaths') {
+                const attempted = parseFloat(document.getElementById('attemptedMaths').value);
+                if (!isNaN(attempted) && !isNaN(value) && value > attempted) {
+                    this.value = attempted;
+                    showAlert('Correct Maths cannot exceed attempted Maths', 'danger', 'nuForm');
+                }
+            }
+            else if (this.id === 'correctIQ') {
+                const attempted = parseFloat(document.getElementById('attemptedIQ').value);
+                if (!isNaN(attempted) && !isNaN(value) && value > attempted) {
+                    this.value = attempted;
+                    showAlert('Correct IQ cannot exceed attempted IQ', 'danger', 'nuForm');
+                }
+            }
+            else if (this.id === 'correctEnglish') {
+                const attempted = parseFloat(document.getElementById('totalAttemptedEnglish').value);
+                if (!isNaN(attempted) && !isNaN(value) && value > attempted) {
+                    this.value = attempted;
+                    showAlert('Correct English cannot exceed attempted English', 'danger', 'nuForm');
+                }
+            }
+            else if (this.id === 'correctEnglishBusiness') {
+                const attempted = parseFloat(document.getElementById('attemptedEnglish').value);
+                if (!isNaN(attempted) && !isNaN(value) && value > attempted) {
+                    this.value = attempted;
+                    showAlert('Correct English cannot exceed attempted English', 'danger', 'nuForm');
+                }
+            }
             // Also check if this is an "attempted questions" input and validate against correct
             else if (this.id === 'totalAttemptedExceptEnglish') {
                 const correct = parseFloat(document.getElementById('correctExceptEnglish').value);
@@ -276,6 +328,28 @@ function setupInputValidation() {
                 if (!isNaN(correct) && !isNaN(value) && value < correct) {
                     document.getElementById('correctEnglish').value = value;
                     showAlert('Correct questions cannot exceed attempted questions', 'danger', 'nuForm');
+                }
+            }
+            // Business-specific attempted validations
+            else if (this.id === 'attemptedMaths') {
+                const correct = parseFloat(document.getElementById('correctMaths').value);
+                if (!isNaN(correct) && !isNaN(value) && value < correct) {
+                    document.getElementById('correctMaths').value = value;
+                    showAlert('Correct Maths cannot exceed attempted Maths', 'danger', 'nuForm');
+                }
+            }
+            else if (this.id === 'attemptedIQ') {
+                const correct = parseFloat(document.getElementById('correctIQ').value);
+                if (!isNaN(correct) && !isNaN(value) && value < correct) {
+                    document.getElementById('correctIQ').value = value;
+                    showAlert('Correct IQ cannot exceed attempted IQ', 'danger', 'nuForm');
+                }
+            }
+            else if (this.id === 'attemptedEnglish') {
+                const correct = parseFloat(document.getElementById('correctEnglishBusiness').value);
+                if (!isNaN(correct) && !isNaN(value) && value < correct) {
+                    document.getElementById('correctEnglishBusiness').value = value;
+                    showAlert('Correct English cannot exceed attempted English', 'danger', 'nuForm');
                 }
             }
         });
@@ -313,12 +387,38 @@ function setupDynamicCalculation() {
     
     // Add event listeners for NU program type radio buttons
     const nuProgramTypeRadios = document.querySelectorAll('input[name="nuProgramType"]');
+    console.log('Found NU program type radios:', nuProgramTypeRadios.length);
     nuProgramTypeRadios.forEach(radio => {
         radio.addEventListener('change', function() {
+            console.log('NU program type changed to:', this.value);
             calculateNUAndAggregate();
             // Show/hide appropriate weights info
             document.getElementById('nuComputingWeights').style.display = this.value === 'computing' ? 'block' : 'none';
             document.getElementById('nuEngineeringWeights').style.display = this.value === 'engineering' ? 'block' : 'none';
+            document.getElementById('nuBusinessWeights').style.display = this.value === 'business' ? 'block' : 'none';
+            // Show/hide appropriate input fields
+            const isBusiness = document.getElementById('nuBusiness').checked;
+            console.log('Is business:', isBusiness);
+            
+            const computingInputsRow1 = document.getElementById('computingEngineeringInputsRow1');
+            const computingInputsRow2 = document.getElementById('computingEngineeringInputsRow2');
+            const businessInputs = document.getElementById('businessInputs');
+            const businessInputsRow2 = document.getElementById('businessInputsRow2');
+            const businessInputsRow3 = document.getElementById('businessInputsRow3');
+            
+            console.log('Elements found:', {
+                computingInputsRow1: !!computingInputsRow1,
+                computingInputsRow2: !!computingInputsRow2,
+                businessInputs: !!businessInputs,
+                businessInputsRow2: !!businessInputsRow2,
+                businessInputsRow3: !!businessInputsRow3
+            });
+            
+            if (computingInputsRow1) computingInputsRow1.style.display = isBusiness ? 'none' : '';
+            if (computingInputsRow2) computingInputsRow2.style.display = isBusiness ? 'none' : '';
+            if (businessInputs) businessInputs.style.display = isBusiness ? '' : 'none';
+            if (businessInputsRow2) businessInputsRow2.style.display = isBusiness ? '' : 'none';
+            if (businessInputsRow3) businessInputsRow3.style.display = isBusiness ? '' : 'none';
         });
     });
 }
@@ -360,6 +460,18 @@ function clearForm(formId) {
         if (buttonsContainer) {
             buttonsContainer.remove();
         }
+        // Reset program type to computing
+        document.getElementById('nuComputing').checked = true;
+        // Show computing/engineering inputs and hide business inputs
+        document.getElementById('computingEngineeringInputsRow1').style.display = '';
+        document.getElementById('computingEngineeringInputsRow2').style.display = '';
+        document.getElementById('businessInputs').style.display = 'none';
+        document.getElementById('businessInputsRow2').style.display = 'none';
+        document.getElementById('businessInputsRow3').style.display = 'none';
+        // Show computing weights
+        document.getElementById('nuComputingWeights').style.display = 'block';
+        document.getElementById('nuEngineeringWeights').style.display = 'none';
+        document.getElementById('nuBusinessWeights').style.display = 'none';
     }
 }
 
@@ -462,10 +574,23 @@ function calculateAggregateWithNU() {
 
 // Calculate NU Marks and Aggregate
 function calculateNUAndAggregate() {
+    const isProgramTypeComputing = document.getElementById('nuComputing').checked;
+    const isProgramTypeEngineering = document.getElementById('nuEngineering').checked;
+    const isProgramTypeBusiness = document.getElementById('nuBusiness').checked;
+    
+    if (isProgramTypeBusiness) {
+        calculateBusinessAggregate();
+    } else {
+        calculateComputingEngineeringAggregate();
+    }
+}
+
+// Calculate for Computing and Engineering programs
+function calculateComputingEngineeringAggregate() {
     const totalAttemptedExceptEnglish = parseFloat(document.getElementById('totalAttemptedExceptEnglish').value);
-    const correctExceptEnglish = parseFloat(document.getElementById('correctExceptEnglish').value);
+    let correctExceptEnglish = parseFloat(document.getElementById('correctExceptEnglish').value);
     const totalAttemptedEnglish = parseFloat(document.getElementById('totalAttemptedEnglish').value);
-    const correctEnglish = parseFloat(document.getElementById('correctEnglish').value);
+    let correctEnglish = parseFloat(document.getElementById('correctEnglish').value);
     const matricPercentageNU = parseFloat(document.getElementById('matricPercentageNU').value);
     const fscPercentageNU = parseFloat(document.getElementById('fscPercentageNU').value);
     const isProgramTypeComputing = document.getElementById('nuComputing').checked;
@@ -539,7 +664,7 @@ function calculateNUAndAggregate() {
         if (isProgramTypeComputing) {
             aggregateValue += finalMarksNU * (1/2);    //50% for computing
         } else {
-            aggregateValue += finalMarksNU * (0.33); // 30% for engineering
+            aggregateValue += finalMarksNU * (0.33); // 33% for engineering
         }
         aggregateComponents++;
         
@@ -588,6 +713,142 @@ function calculateNUAndAggregate() {
     
     // Show test marks
     document.getElementById('nuTestMarksNU').textContent = !isNaN(marks) ? marks.toFixed(2) : "N/A";
+    
+    // Show negative marks
+    document.getElementById('negativeMarksNU').textContent = !isNaN(negativeMarks) ? negativeMarks.toFixed(2) : "N/A";
+}
+
+// Calculate for Business programs
+function calculateBusinessAggregate() {
+    const attemptedMaths = parseFloat(document.getElementById('attemptedMaths').value);
+    const correctMaths = parseFloat(document.getElementById('correctMaths').value);
+    const attemptedIQ = parseFloat(document.getElementById('attemptedIQ').value);
+    const correctIQ = parseFloat(document.getElementById('correctIQ').value);
+    const essay = parseFloat(document.getElementById('essay').value);
+    const attemptedEnglish = parseFloat(document.getElementById('attemptedEnglish').value);
+    const correctEnglish = parseFloat(document.getElementById('correctEnglishBusiness').value);
+    const sscPercentage = parseFloat(document.getElementById('sscPercentage').value);
+    const hsscPercentage = parseFloat(document.getElementById('hsscPercentage').value);
+    
+    // Check if at least one input has a value
+    const hasAnyValue = !isNaN(attemptedMaths) || !isNaN(correctMaths) || 
+                        !isNaN(attemptedIQ) || !isNaN(correctIQ) || 
+                        !isNaN(essay) || !isNaN(attemptedEnglish) || 
+                        !isNaN(correctEnglish) || !isNaN(sscPercentage) || 
+                        !isNaN(hsscPercentage);
+    
+    if (!hasAnyValue) {
+        document.getElementById('nuResult').style.display = 'none';
+        return;
+    }
+
+    // Validate percentage values if entered
+    if (!isNaN(sscPercentage) && sscPercentage > 100) {
+        showAlert('SSC Percentage cannot be greater than 100.', 'danger', 'nuForm');
+        return;
+    }
+    
+    if (!isNaN(hsscPercentage) && hsscPercentage > 100) {
+        showAlert('HSSC Percentage cannot be greater than 100.', 'danger', 'nuForm');
+        return;
+    }
+    
+    // Validate that correct questions don't exceed attempted questions
+    if (!isNaN(attemptedMaths) && !isNaN(correctMaths) && correctMaths > attemptedMaths) {
+        showAlert('Correct Maths cannot exceed attempted Maths', 'danger', 'nuForm');
+        document.getElementById('correctMaths').value = attemptedMaths;
+        correctMaths = attemptedMaths;
+    }
+    
+    if (!isNaN(attemptedIQ) && !isNaN(correctIQ) && correctIQ > attemptedIQ) {
+        showAlert('Correct IQ cannot exceed attempted IQ', 'danger', 'nuForm');
+        document.getElementById('correctIQ').value = attemptedIQ;
+        correctIQ = attemptedIQ;
+    }
+    
+    if (!isNaN(attemptedEnglish) && !isNaN(correctEnglish) && correctEnglish > attemptedEnglish) {
+        showAlert('Correct English cannot exceed attempted English', 'danger', 'nuForm');
+        document.getElementById('correctEnglish').value = attemptedEnglish;
+        correctEnglish = attemptedEnglish;
+    }
+
+    // Calculate business aggregate
+    let totalMarks = 0;
+    let negativeMarks = 0;
+    let isPartial = false;
+    
+    // Maths calculation (50 questions, 50 marks)
+    if (!isNaN(attemptedMaths) && !isNaN(correctMaths)) {
+        totalMarks += correctMaths;
+        negativeMarks += (attemptedMaths - correctMaths) * (1/4); // 1/4 negative marking
+    } else {
+        isPartial = true;
+    }
+    
+    // IQ calculation (25 questions, 25 marks)
+    if (!isNaN(attemptedIQ) && !isNaN(correctIQ)) {
+        totalMarks += correctIQ;
+        negativeMarks += (attemptedIQ - correctIQ) * (1/4); // 1/4 negative marking
+    } else {
+        isPartial = true;
+    }
+    
+    // Essay (15 marks)
+    if (!isNaN(essay)) {
+        totalMarks += essay;
+    } else {
+        isPartial = true;
+    }
+    
+    // English calculation (30 questions, 10 marks)
+    if (!isNaN(attemptedEnglish) && !isNaN(correctEnglish)) {
+        totalMarks += (correctEnglish * (10/30)); // English is worth 10 marks out of 30 questions
+        negativeMarks += (attemptedEnglish - correctEnglish) * ((10/30)/4); // 1/4 negative marking on 10 marks
+    } else {
+        isPartial = true;
+    }
+    
+    // Calculate final NU test marks after negative marking
+    const finalNUMarks = totalMarks - negativeMarks;
+    
+    // Calculate aggregate (NU Test: 50%, HSSC: 40%, SSC: 10%)
+    let aggregateValue = 0;
+    
+    if (!isNaN(finalNUMarks)) {
+        aggregateValue += finalNUMarks * 0.5; // 50% for NU test
+    }
+    
+    if (!isNaN(hsscPercentage)) {
+        aggregateValue += hsscPercentage * 0.4; // 40% for HSSC
+    } else {
+        isPartial = true;
+    }
+    
+    if (!isNaN(sscPercentage)) {
+        aggregateValue += sscPercentage * 0.1; // 10% for SSC
+    } else {
+        isPartial = true;
+    }
+
+    // Display results
+    document.getElementById('nuResult').style.display = 'block';
+    
+    // Update the title based on whether calculation is partial
+    const titleElement = document.querySelector('#nuResult .card-title');
+    if (isPartial) {
+        titleElement.textContent = "Your Result (Partial Calculation)";
+    } else {
+        titleElement.textContent = "Final Result";
+    }
+    
+    // Show final aggregate
+    document.getElementById('finalMarksNU').textContent = !isNaN(aggregateValue) ? aggregateValue.toFixed(2) : "N/A";
+    
+    // Show final NU marks after negative marking
+    document.getElementById('NU_Marks_after_negative_marking').textContent = !isNaN(finalNUMarks) ? finalNUMarks.toFixed(2) : "N/A";
+    
+    // Show total NU test marks
+    document.getElementById('nuTestMarksNU').textContent = !isNaN(totalMarks) ? totalMarks.toFixed(2) : "N/A";
     
     // Show negative marks
     document.getElementById('negativeMarksNU').textContent = !isNaN(negativeMarks) ? negativeMarks.toFixed(2) : "N/A";
@@ -832,7 +1093,12 @@ function generatePDF(resultType) {
         
     } else if (resultType === 'nu') {
         const isProgramTypeComputing = document.getElementById('nuComputing').checked;
-        const programType = isProgramTypeComputing ? 'COMPUTING': 'ENGINEERING';
+        const isProgramTypeEngineering = document.getElementById('nuEngineering').checked;
+        const isProgramTypeBusiness = document.getElementById('nuBusiness').checked;
+        
+        let programType = 'COMPUTING';
+        if (isProgramTypeEngineering) programType = 'ENGINEERING';
+        else if (isProgramTypeBusiness) programType = 'BUSINESS';
 
         doc.text('NU Marks Calculation Results', 105, 55, { align: 'center' });
         doc.setFontSize(12);
@@ -843,8 +1109,10 @@ function generatePDF(resultType) {
         doc.setTextColor(100, 100, 100);
         if (isProgramTypeComputing) {
             doc.text('Weights: NU Test (50%), FSc (40%), Matric (10%)', 20, 72);
-        } else {
+        } else if (isProgramTypeEngineering) {
             doc.text('Weights: NU Test (33%), FSc (50%), Matric (17%)', 20, 72);
+        } else if (isProgramTypeBusiness) {
+            doc.text('Weights: NU Test (50%), HSSC (40%), SSC (10%)', 20, 72);
         }
         
         // Add input values
@@ -852,19 +1120,43 @@ function generatePDF(resultType) {
         doc.setTextColor(0, 0, 0);
         doc.text('Input Values:', 20, 85);
         
-        const totalAttemptedExceptEnglish = document.getElementById('totalAttemptedExceptEnglish').value || 'Not provided';
-        const correctExceptEnglish = document.getElementById('correctExceptEnglish').value || 'Not provided';
-        const totalAttemptedEnglish = document.getElementById('totalAttemptedEnglish').value || 'Not provided';
-        const correctEnglish = document.getElementById('correctEnglish').value || 'Not provided';
-        const matricPercentageNU = document.getElementById('matricPercentageNU').value || 'Not provided';
-        const fscPercentageNU = document.getElementById('fscPercentageNU').value || 'Not provided';
-        
-        doc.text(`Total Attempted Questions (except English): ${totalAttemptedExceptEnglish}`, 30, 95);
-        doc.text(`Correct Questions (except English): ${correctExceptEnglish}`, 30, 105);
-        doc.text(`Total Attempted Questions (only English): ${totalAttemptedEnglish}`, 30, 115);
-        doc.text(`Correct Questions (only English): ${correctEnglish}`, 30, 125);
-        doc.text(`Matric Percentage: ${matricPercentageNU}`, 30, 135);
-        doc.text(`FSc Percentage: ${fscPercentageNU}`, 30, 145);
+        if (isProgramTypeBusiness) {
+            // Business inputs
+            const attemptedMaths = document.getElementById('attemptedMaths').value || 'Not provided';
+            const correctMaths = document.getElementById('correctMaths').value || 'Not provided';
+            const attemptedIQ = document.getElementById('attemptedIQ').value || 'Not provided';
+            const correctIQ = document.getElementById('correctIQ').value || 'Not provided';
+            const essay = document.getElementById('essay').value || 'Not provided';
+            const attemptedEnglish = document.getElementById('attemptedEnglish').value || 'Not provided';
+            const correctEnglish = document.getElementById('correctEnglishBusiness').value || 'Not provided';
+            const sscPercentage = document.getElementById('sscPercentage').value || 'Not provided';
+            const hsscPercentage = document.getElementById('hsscPercentage').value || 'Not provided';
+            
+            doc.text(`Attempted Maths: ${attemptedMaths}`, 30, 95);
+            doc.text(`Correct Maths: ${correctMaths}`, 30, 105);
+            doc.text(`Attempted IQ: ${attemptedIQ}`, 30, 115);
+            doc.text(`Correct IQ: ${correctIQ}`, 30, 125);
+            doc.text(`Essay: ${essay}`, 30, 135);
+            doc.text(`Attempted English: ${attemptedEnglish}`, 30, 145);
+            doc.text(`Correct English: ${correctEnglish}`, 30, 155);
+            doc.text(`SSC Percentage: ${sscPercentage}`, 30, 165);
+            doc.text(`HSSC Percentage: ${hsscPercentage}`, 30, 175);
+        } else {
+            // Computing/Engineering inputs
+            const totalAttemptedExceptEnglish = document.getElementById('totalAttemptedExceptEnglish').value || 'Not provided';
+            const correctExceptEnglish = document.getElementById('correctExceptEnglish').value || 'Not provided';
+            const totalAttemptedEnglish = document.getElementById('totalAttemptedEnglish').value || 'Not provided';
+            const correctEnglish = document.getElementById('correctEnglish').value || 'Not provided';
+            const matricPercentageNU = document.getElementById('matricPercentageNU').value || 'Not provided';
+            const fscPercentageNU = document.getElementById('fscPercentageNU').value || 'Not provided';
+            
+            doc.text(`Total Attempted Questions (except English): ${totalAttemptedExceptEnglish}`, 30, 95);
+            doc.text(`Correct Questions (except English): ${correctExceptEnglish}`, 30, 105);
+            doc.text(`Total Attempted Questions (only English): ${totalAttemptedEnglish}`, 30, 115);
+            doc.text(`Correct Questions (only English): ${correctEnglish}`, 30, 125);
+            doc.text(`Matric Percentage: ${matricPercentageNU}`, 30, 135);
+            doc.text(`FSc Percentage: ${fscPercentageNU}`, 30, 145);
+        }
         
         // Add results
         const finalMarksNU = document.getElementById('finalMarksNU').textContent;
@@ -872,16 +1164,16 @@ function generatePDF(resultType) {
         const negativeMarksNU = document.getElementById('negativeMarksNU').textContent;
         
         doc.setFontSize(14);
-        doc.text('Final Results:', 20, 155);
+        doc.text('Final Results:', 20, isProgramTypeBusiness ? 185 : 155);
         
         doc.setFontSize(12);
         doc.setTextColor(0, 0, 0);
-        doc.text(`NU Test Marks: ${nuTestMarksNU}`, 30, 165);
-        doc.text(`Negative Marks: ${negativeMarksNU}`, 30, 175);
+        doc.text(`NU Test Marks: ${nuTestMarksNU}`, 30, isProgramTypeBusiness ? 195 : 165);
+        doc.text(`Negative Marks: ${negativeMarksNU}`, 30, isProgramTypeBusiness ? 205 : 175);
         
         doc.setFontSize(16);
         doc.setTextColor(13, 71, 161);
-        doc.text(`Final Aggregate: ${finalMarksNU}`, 105, 190, { align: 'center' });
+        doc.text(`Final Aggregate: ${finalMarksNU}`, 105, isProgramTypeBusiness ? 225 : 190, { align: 'center' });
     }
     
     // Add calculator link
@@ -933,7 +1225,9 @@ function initCopyPdfClearButtons() {
       const finalMarks = document.getElementById('finalMarksNU').textContent;
       const nuTestMarks = document.getElementById('nuTestMarksNU').textContent;
       const negativeMarks = document.getElementById('negativeMarksNU').textContent;
-      return `I calculated my FAST NUCES results - Final Aggregate: ${finalMarks}, NU Test Marks: ${nuTestMarks}, Negative Marks: ${negativeMarks}. Calculate yours at https://mtaha-23.github.io/FAST-Aggregate-Calculator/`;
+      const isBusiness = document.getElementById('nuBusiness').checked;
+      const programType = isBusiness ? "Business" : "Computing/Engineering";
+      return `I calculated my FAST NUCES ${programType} results - Final Aggregate: ${finalMarks}, NU Test Marks: ${nuTestMarks}, Negative Marks: ${negativeMarks}. Calculate yours at https://mtaha-23.github.io/FAST-Aggregate-Calculator/`;
     }
     return '';
   }
@@ -1039,8 +1333,11 @@ function setupProgramTypeRadios() {
     // NU program type radio buttons
     const nuComputingRadio = document.getElementById('nuComputing');
     const nuEngineeringRadio = document.getElementById('nuEngineering');
+    const nuBusinessRadio = document.getElementById('nuBusiness');
+
     const nuComputingWeights = document.getElementById('nuComputingWeights');
     const nuEngineeringWeights = document.getElementById('nuEngineeringWeights');
+    const nuBusinessWeights = document.getElementById('nuBusinessWeights');
 
     // Function to handle NAT program type change
     function handleNATProgramTypeChange() {
@@ -1058,9 +1355,15 @@ function setupProgramTypeRadios() {
         if (nuComputingRadio.checked) {
             nuComputingWeights.style.display = 'block';
             nuEngineeringWeights.style.display = 'none';
-        } else {
+            nuBusinessWeights.style.display = 'none';
+        } else if (nuEngineeringRadio.checked) {
             nuComputingWeights.style.display = 'none';
             nuEngineeringWeights.style.display = 'block';
+            nuBusinessWeights.style.display = 'none';
+        } else if (nuBusinessRadio.checked) {
+            nuComputingWeights.style.display = 'none';
+            nuEngineeringWeights.style.display = 'none';
+            nuBusinessWeights.style.display = 'block';
         }
     }
 
@@ -1073,9 +1376,10 @@ function setupProgramTypeRadios() {
     }
 
     // Add event listeners for NU radio buttons
-    if (nuComputingRadio && nuEngineeringRadio) {
+    if (nuComputingRadio && nuEngineeringRadio && nuBusinessRadio) {
         nuComputingRadio.addEventListener('change', handleNUProgramTypeChange);
         nuEngineeringRadio.addEventListener('change', handleNUProgramTypeChange);
+        nuBusinessRadio.addEventListener('change', handleNUProgramTypeChange);
         // Initialize NU weights visibility
         handleNUProgramTypeChange();
     }
@@ -1104,9 +1408,13 @@ function downloadResultImage(resultType) {
         const finalNU = document.getElementById("NU_Marks_after_negative_marking").innerText || "—";
         const rawNU = document.getElementById("nuTestMarksNU").innerText || "—";
         const negative = document.getElementById("negativeMarksNU").innerText || "—";
+        
+        // Check if it's business program
+        const isBusiness = document.getElementById('nuBusiness').checked;
+        const programType = isBusiness ? "Business" : "Computing/Engineering";
 
         tempDiv.innerHTML = `
-            <h3 style="text-align:center; margin-bottom: 8px; color: white;">Final Result</h3>
+            <h3 style="text-align:center; margin-bottom: 8px; color: white;">Final Result (${programType})</h3>
             ${watermarkHTML}
             <div style="display: flex; flex-direction: column; gap: 15px; align-items: center;">
                 <div style="width: 100%; background-color: #2e7d32; padding: 15px; border-radius: 12px; text-align: center;">
