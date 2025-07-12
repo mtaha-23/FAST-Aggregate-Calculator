@@ -1393,7 +1393,7 @@ footer p {
 /* Dark mode for business calculation cards */
 .dark-theme .card {
   background-color: var(--card-bg);
-  border-color: var(--border-color);
+  
   color: var(--text-primary);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
@@ -1404,10 +1404,7 @@ footer p {
   color: var(--text-primary);
 }
 
-.dark-theme .card-body {
-  background-color: var(--card-bg);
-  color: var(--text-primary);
-}
+
 
 /* Dark mode for button groups */
 .dark-theme .btn-group {
@@ -1472,7 +1469,6 @@ footer p {
 .dark-theme .form-control:focus {
   background-color: var(--input-bg);
   color: var(--text-primary);
-  border-color: var(--primary-color);
 }
 
 .dark-theme .form-control::placeholder {
