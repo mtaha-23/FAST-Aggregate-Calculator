@@ -841,6 +841,57 @@ footer p {
   border-color: var(--primary-color);
 }
 
+/* Dark mode for business calculation cards */
+.dark-theme .card {
+  background-color: var(--card-bg);
+  border-color: var(--border-color);
+  color: var(--text-primary);
+}
+
+.dark-theme .card-header {
+  background-color: rgba(33, 150, 243, 0.1);
+  border-bottom-color: var(--border-color);
+  color: var(--text-primary);
+}
+
+.dark-theme .card-body {
+  background-color: var(--card-bg);
+  color: var(--text-primary);
+}
+
+.dark-theme .card-title {
+  color: var(--text-primary);
+}
+
+.dark-theme .form-label {
+  color: var(--text-primary);
+}
+
+.dark-theme .form-control {
+  background-color: var(--input-bg);
+  color: var(--text-primary);
+  border-color: var(--border-color);
+}
+
+.dark-theme .form-control:focus {
+  background-color: var(--input-bg);
+  color: var(--text-primary);
+  border-color: var(--primary-color);
+}
+
+.dark-theme .form-control::placeholder {
+  color: #888;
+}
+
+.dark-theme .text-muted {
+  color: #aaaaaa !important;
+}
+
+.dark-theme .badge.bg-secondary {
+  background-color: #6c757d !important;
+  color: var(--text-light) !important;
+}
+
 /* Dark mode for modal */
 .dark-theme .modal-content {
   background-color: var(--card-bg);
