@@ -1648,10 +1648,16 @@ function downloadResultImage(resultType) {
         const rawNU = document.getElementById("nuTestMarksNU").innerText || "—";
         const negative = document.getElementById("negativeMarksNU").innerText || "—";
         
+        let programType;
         // Check if it's business program
         const isBusiness = document.getElementById('nuBusiness').checked;
-        const programType = isBusiness ? "Business" : "Computing/Engineering";
-
+        if (isBusiness)
+            programType = "Business";
+        else if (document.getElementById('nuComputing').checked)
+            programType = "Computing";
+        else
+            programType = "Engineering";
+        
         tempDiv.innerHTML = `
             <h3 style="text-align:center; margin-bottom: 8px; color: white;">Final Result (${programType})</h3>
             ${watermarkHTML}
