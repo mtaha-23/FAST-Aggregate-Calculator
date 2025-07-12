@@ -489,6 +489,10 @@ function setupDynamicCalculation() {
             // Show/hide appropriate weights info
             document.getElementById('natComputingWeights').style.display = this.value === 'computing' ? 'block' : 'none';
             document.getElementById('natEngineeringWeights').style.display = this.value === 'engineering' ? 'block' : 'none';
+            
+            // Show/hide appropriate degree options
+            document.getElementById('natComputingBusinessDegree').style.display = this.value === 'computing' ? 'block' : 'none';
+            document.getElementById('engineeringDegrees').style.display = this.value === 'engineering' ? 'block' : 'none';
         });
     });
     
@@ -511,6 +515,12 @@ function setupDynamicCalculation() {
             document.getElementById('nuComputingWeights').style.display = this.value === 'computing' ? 'block' : 'none';
             document.getElementById('nuEngineeringWeights').style.display = this.value === 'engineering' ? 'block' : 'none';
             document.getElementById('nuBusinessWeights').style.display = this.value === 'business' ? 'block' : 'none';
+            
+            // Show/hide appropriate degree options
+            document.getElementById('nuComputingDegrees').style.display = this.value === 'computing' ? 'block' : 'none';
+            document.getElementById('nuBusinessDegrees').style.display = this.value === 'business' ? 'block' : 'none';
+            document.getElementById('nuEngineeringDegrees').style.display = this.value === 'engineering' ? 'block' : 'none';
+            
             // Show/hide appropriate input fields
             const isBusiness = document.getElementById('nuBusiness').checked;
             console.log('Is business:', isBusiness);
@@ -1555,9 +1565,15 @@ function setupProgramTypeRadios() {
         if (natComputingRadio.checked) {
             natComputingWeights.style.display = 'block';
             natEngineeringWeights.style.display = 'none';
+            // Show computing and business degrees
+            document.getElementById('natComputingBusinessDegree').style.display = 'block';
+            document.getElementById('engineeringDegrees').style.display = 'none';
         } else {
             natComputingWeights.style.display = 'none';
             natEngineeringWeights.style.display = 'block';
+            // Show engineering degrees
+            document.getElementById('natComputingBusinessDegree').style.display = 'none';
+            document.getElementById('engineeringDegrees').style.display = 'block';
         }
     }
 
@@ -1567,14 +1583,26 @@ function setupProgramTypeRadios() {
             nuComputingWeights.style.display = 'block';
             nuEngineeringWeights.style.display = 'none';
             nuBusinessWeights.style.display = 'none';
+            // Show computing degrees
+            document.getElementById('nuComputingDegrees').style.display = 'block';
+            document.getElementById('nuBusinessDegrees').style.display = 'none';
+            document.getElementById('nuEngineeringDegrees').style.display = 'none';
         } else if (nuEngineeringRadio.checked) {
             nuComputingWeights.style.display = 'none';
             nuEngineeringWeights.style.display = 'block';
             nuBusinessWeights.style.display = 'none';
+            // Show engineering degrees
+            document.getElementById('nuComputingDegrees').style.display = 'none';
+            document.getElementById('nuBusinessDegrees').style.display = 'none';
+            document.getElementById('nuEngineeringDegrees').style.display = 'block';
         } else if (nuBusinessRadio.checked) {
             nuComputingWeights.style.display = 'none';
             nuEngineeringWeights.style.display = 'none';
             nuBusinessWeights.style.display = 'block';
+            // Show business degrees
+            document.getElementById('nuComputingDegrees').style.display = 'none';
+            document.getElementById('nuBusinessDegrees').style.display = 'block';
+            document.getElementById('nuEngineeringDegrees').style.display = 'none';
         }
     }
 

@@ -34,8 +34,6 @@
 </head>
 <body>
     <div class="main-container">
-        <div class="lightning-layer-1"></div>
-        <div class="lightning-layer-2"></div>
         <div class="container">
             <!-- Header -->
             <header class="text-center">
@@ -119,7 +117,7 @@
                                         <span class="badge bg-primary"><i class="bi bi-star me-1"></i>Trusted by thousands</span>
                                     </div>
                                 </div>
-
+                               
                                 <!-- WhatsApp Group - Compact -->
                                 <div class="row mb-3">
                                     <div class="col-12">
@@ -129,7 +127,7 @@
                                                     <div class="d-flex align-items-center gap-2">
                                                         <i class="bi bi-whatsapp fs-4 text-success"></i>
                                                         <span class="fw-semibold">Join Admission 2025 WhatsApp Group</span>
-                                                    </div>
+                                </div>
                                                     <a href="https://chat.whatsapp.com/FMvyyETMXLr9gMXbNLsHd2?mode=r_c" target="_blank" class="btn btn-success btn-sm">
                                                         <i class="bi bi-arrow-right-circle me-1"></i>Join Now
                                                     </a>
@@ -138,7 +136,7 @@
                                         </div>
                                     </div>
                                 </div>
-
+                           
                                 <!-- Calculator Options - Compact Grid -->
                                 <div class="row g-2 mb-3">
                                     <div class="col-md-4">
@@ -178,8 +176,8 @@
                                         </div>
                                     </div>
                                 </div>
-
-
+                                
+                                
                             </div>
 
                             <!-- NAT Marks Tab -->
@@ -220,6 +218,33 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <!-- Degree Options -->
+                                        <div class="degree-options mt-2">
+                                            <div id="natComputingBusinessDegree" class="degree-cards">
+                                                <label class="form-label small mb-2">Degrees:</label>
+                                                <div class="d-flex flex-wrap gap-1">
+                                                    <span class="badge bg-success">CS</span>
+                                                    <span class="badge bg-success">SE</span>
+                                                    <span class="badge bg-success">AI</span>
+                                                    <span class="badge bg-success">CYS</span>
+                                                    <span class="badge bg-success">DS</span>
+                                                    <span class="badge bg-primary">BBA</span>
+                                                    <span class="badge bg-primary">BA</span>
+                                                    <span class="badge bg-primary">AF</span>
+                                                    <span class="badge bg-primary">FT</span>
+                                                </div>
+                                            </div>
+                                           
+                                            <div id="engineeringDegrees" class="degree-cards" style="display: none;">
+                                                <label class="form-label small mb-2">Degrees:</label>
+                                                <div class="d-flex flex-wrap gap-1">
+                                                    <span class="badge bg-warning text-dark">CV</span>
+                                                    <span class="badge bg-warning text-dark">EE</span>
+                                                    <span class="badge bg-warning text-dark">CE</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
                                     </div>
                                                                         <!-- NAT Test Marks and Academic Record Sections -->
                                     <div class="row g-2">
@@ -312,6 +337,7 @@
                                             <input type="radio" class="btn-check" name="nuProgramType" id="nuBusiness" value="business">
                                             <label class="btn btn-outline-primary" for="nuBusiness">Business</label>
                                         </div>
+                                        
                                         <!-- Add weights information -->
                                         <div class="weights-info mt-1">
                                             <div id="nuComputingWeights" class="weights-card p-1 mb-0">
@@ -346,6 +372,38 @@
                                             </div>
                                         </div>
                                     </div>
+                                        
+                                    <!-- Degree Options -->
+                                    <div class="degree-options mt-2">
+                                        <div id="nuComputingDegrees" class="degree-cards">
+                                            <label class="form-label small mb-2">Degrees:</label>
+                                            <div class="d-flex flex-wrap gap-1">
+                                                <span class="badge bg-success">CS</span>
+                                                <span class="badge bg-success">SE</span>
+                                                <span class="badge bg-success">AI</span>
+                                                <span class="badge bg-success">CYS</span>
+                                                <span class="badge bg-success">DS</span>
+                                            </div>
+                                        </div>
+                                        <div id="nuBusinessDegrees" class="degree-cards" style="display: none;">
+                                            <label class="form-label small mb-2">Degrees:</label>
+                                            <div class="d-flex flex-wrap gap-1">
+                                                <span class="badge bg-primary">BBA</span>
+                                                <span class="badge bg-primary">BA</span>
+                                                <span class="badge bg-primary">AF</span>
+                                                <span class="badge bg-primary">FT</span>
+                                            </div>
+                                        </div>
+                                        <div id="nuEngineeringDegrees" class="degree-cards" style="display: none;">
+                                            <label class="form-label small mb-2">Degrees:</label>
+                                            <div class="d-flex flex-wrap gap-1">
+                                                <span class="badge bg-warning text-dark">CV</span>
+                                                <span class="badge bg-warning text-dark">EE</span>
+                                                <span class="badge bg-warning text-dark">CE</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
                                   <!-- Computing/Engineering-specific inputs -->
                                     <div id="computingEngineeringInputs" style="display: none;">
                                         <!-- Advanced Math Section -->
@@ -792,49 +850,49 @@
                                     <div class="col-12">
                                         <div class="card shadow-sm">
                                             <div class="card-body p-2 p-md-3">
-                                                <form id="feedbackForm">
+                                    <form id="feedbackForm">
                                                     <!-- Rating Section -->
                                                     <div class="mb-2">
                                                         <label class="form-label fw-semibold mb-1">
                                                             <i class="bi bi-star-fill text-warning me-1"></i>
                                                             How helpful was this calculator?
                                                         </label>
-                                                        <div class="rating-container">
+                                            <div class="rating-container">
                                                             <div class="rating-options d-flex justify-content-between align-items-center">
                                                                 <div class="form-check form-check-inline rating-option">
-                                                                    <input type="radio" name="rating" value="1" class="form-check-input" id="rating1">
+                                                    <input type="radio" name="rating" value="1" class="form-check-input" id="rating1">
                                                                     <label class="form-check-label rating-label" for="rating1">
                                                                         <span class="rating-number">1</span>
                                                                     </label>
-                                                                </div>
+                                                </div>
                                                                 <div class="form-check form-check-inline rating-option">
-                                                                    <input type="radio" name="rating" value="2" class="form-check-input" id="rating2">
+                                                    <input type="radio" name="rating" value="2" class="form-check-input" id="rating2">
                                                                     <label class="form-check-label rating-label" for="rating2">
                                                                         <span class="rating-number">2</span>
                                                                     </label>
-                                                                </div>
+                                                </div>
                                                                 <div class="form-check form-check-inline rating-option">
-                                                                    <input type="radio" name="rating" value="3" class="form-check-input" id="rating3">
+                                                    <input type="radio" name="rating" value="3" class="form-check-input" id="rating3">
                                                                     <label class="form-check-label rating-label" for="rating3">
                                                                         <span class="rating-number">3</span>
                                                                     </label>
-                                                                </div>
+                                                </div>
                                                                 <div class="form-check form-check-inline rating-option">
-                                                                    <input type="radio" name="rating" value="4" class="form-check-input" id="rating4">
+                                                    <input type="radio" name="rating" value="4" class="form-check-input" id="rating4">
                                                                     <label class="form-check-label rating-label" for="rating4">
                                                                         <span class="rating-number">4</span>
                                                                     </label>
-                                                                </div>
+                                                </div>
                                                                 <div class="form-check form-check-inline rating-option">
-                                                                    <input type="radio" name="rating" value="5" class="form-check-input" id="rating5">
+                                                    <input type="radio" name="rating" value="5" class="form-check-input" id="rating5">
                                                                     <label class="form-check-label rating-label" for="rating5">
                                                                         <span class="rating-number">5</span>
                                                                     </label>
                                                                 </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
+                                                </div>
+                                            </div>
+                                        </div>
+                            
                                                     <!-- Contact Information -->
                                                     <div class="mb-2">
                                                         <label for="email" class="form-label fw-semibold">
@@ -849,8 +907,8 @@
                                                             <i class="bi bi-chat-text me-1"></i>Additional Comments (optional)
                                                         </label>
                                                         <textarea id="comments" class="form-control form-control-sm feedback-textarea" rows="2" placeholder="Share your thoughts, suggestions, or report any issues..."></textarea>
-                                                    </div>
-
+                                        </div>
+                            
                                                     <!-- Submit Button -->
                                                     <div class="text-center">
                                                         <button type="submit" class="btn btn-primary btn-sm px-3 feedback-submit-btn">
