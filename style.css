@@ -1192,7 +1192,7 @@ footer p {
   --border-color: #e0e0e0;
   --success-color: #4caf50;
   --info-color: #03a9f4;
-  --warning-color: #ff9800;
+  --warning-color: #f44336;
   --danger-color: #f44336;
   --background-color: #e3f2fd;
   --card-bg: #ffffff;
@@ -1215,7 +1215,7 @@ footer p {
   --border-color: #555555;
   --success-color: #66bb6a;
   --info-color: #29b6f6;
-  --warning-color: #ffa726;
+  --warning-color: #ef5350;
   --danger-color: #ef5350;
   --background-color: #121212;
   --card-bg: #1e1e1e;

@@ -242,10 +242,8 @@ function setupInputValidation() {
                 if (value < 0) {
                     this.value = 0;
                     showAlert('Value cannot be less than 0', 'danger', this.closest('form').id);
-                } else if (value > 100) {
-                    this.value = 100;
-                    showAlert('Value cannot be greater than 100', 'danger', this.closest('form').id);
                 }
+                // Remove the 100 limit check here - let calculation functions handle it
                 
                 // Business-specific max validations
                 if (this.id === 'advMathAttempted' || this.id === 'advMathCorrect') {
@@ -719,38 +717,48 @@ function calculateAggregateWithNU() {
     let componentsUsed = 0;
     
     if (!isNaN(nuNATMarks)) {
+        let adjustedNuNATMarks = nuNATMarks;
+        if (nuNATMarks > 100) {
+            document.getElementById('nuNATMarks').value = 100;
+            adjustedNuNATMarks = 100;
+            showAlert('NU/NAT Marks have been set to 100.', 'warning', 'natForm');
+        }
         if (isProgramTypeComputing) {
-            finalAggregate += nuNATMarks * (1/2);   //50% for computing
+            finalAggregate += adjustedNuNATMarks * (1/2);   //50% for computing
         } else {
-            finalAggregate += nuNATMarks * (0.33);  //33% for engineering
+            finalAggregate += adjustedNuNATMarks * (0.33);  //33% for engineering
         }
         hasAnyValue = true;
         componentsUsed++;
     }
     
     if (!isNaN(fscPercentage)) {
+        let adjustedFscPercentage = fscPercentage;
         if (fscPercentage > 100) {
-            showAlert('FSC Percentage cannot be greater than 100.', 'danger', 'natForm');
-            return;
+            document.getElementById('fscPercentage').value = 100;
+            adjustedFscPercentage = 100;
+            showAlert('FSC Percentage has been set to 100.', 'warning', 'natForm');
         }
         if (isProgramTypeComputing) {
-            finalAggregate += fscPercentage * (4/10);  //40% for computing
+            finalAggregate += adjustedFscPercentage * (4/10);  //40% for computing
         } else {
-            finalAggregate += fscPercentage * (0.5); // 50% for engineering
+            finalAggregate += adjustedFscPercentage * (0.5); // 50% for engineering
         }
         hasAnyValue = true;
         componentsUsed++;
     }
     
     if (!isNaN(matricPercentage)) {
+        let adjustedMatricPercentage = matricPercentage;
         if (matricPercentage > 100) {
-            showAlert('Matric Percentage cannot be greater than 100.', 'danger', 'natForm');
-            return;
+            document.getElementById('matricPercentage').value = 100;
+            adjustedMatricPercentage = 100;
+            showAlert('Matric Percentage has been set to 100.', 'warning', 'natForm');
         }
         if (isProgramTypeComputing) {
-            finalAggregate += matricPercentage * (1/10);  //10% for computing
+            finalAggregate += adjustedMatricPercentage * (1/10);  //10% for computing
         } else {
-            finalAggregate += matricPercentage * (0.17); // 17% for engineering
+            finalAggregate += adjustedMatricPercentage * (0.17); // 17% for engineering
         }
         hasAnyValue = true;
         componentsUsed++;
@@ -819,15 +827,20 @@ function calculateComputingEngineeringAggregate() {
         return;
     }
 
-    // Validate percentage values if entered
+    // Validate percentage values if entered and set to 100 if exceeded
+    let adjustedFscPercentageNU = fscPercentageNU;
+    let adjustedMatricPercentageNU = matricPercentageNU;
+    
     if (!isNaN(fscPercentageNU) && fscPercentageNU > 100) {
-        showAlert('FSC Percentage cannot be greater than 100.', 'danger', 'nuForm');
-        return;
+        document.getElementById('fscPercentageNU').value = 100;
+        adjustedFscPercentageNU = 100;
+        showAlert('FSC Percentage has been set to 100.', 'warning', 'nuForm');
     }
     
     if (!isNaN(matricPercentageNU) && matricPercentageNU > 100) {
-        showAlert('Matric Percentage cannot be greater than 100.', 'danger', 'nuForm');
-        return;
+        document.getElementById('matricPercentageNU').value = 100;
+        adjustedMatricPercentageNU = 100;
+        showAlert('Matric Percentage has been set to 100.', 'warning', 'nuForm');
     }
 
     // Calculate with available values
@@ -886,9 +899,9 @@ function calculateComputingEngineeringAggregate() {
         
         if (!isNaN(matricPercentageNU)) {
             if (isProgramTypeComputing) {
-                aggregateValue += matricPercentageNU * (1/10);  //10% for computing
+                aggregateValue += adjustedMatricPercentageNU * (1/10);  //10% for computing
             } else {
-                aggregateValue += matricPercentageNU * (0.17); // 17% for engineering
+                aggregateValue += adjustedMatricPercentageNU * (0.17); // 17% for engineering
             }
             aggregateComponents++;
         } else {
@@ -897,9 +910,9 @@ function calculateComputingEngineeringAggregate() {
         
         if (!isNaN(fscPercentageNU)) {
             if (isProgramTypeComputing) {
-                aggregateValue += fscPercentageNU * (4/10); // 40% for computing
+                aggregateValue += adjustedFscPercentageNU * (4/10); // 40% for computing
             } else {
-                aggregateValue += fscPercentageNU * (1/2); // 50% for engineering
+                aggregateValue += adjustedFscPercentageNU * (1/2); // 50% for engineering
             }
             aggregateComponents++;
         } else {
@@ -963,15 +976,20 @@ function calculateBusinessAggregate() {
         return;
     }
 
-    // Validate percentage values if entered
+    // Validate percentage values if entered and set to 100 if exceeded
+    let adjustedSscPercentage = sscPercentage;
+    let adjustedHsscPercentage = hsscPercentage;
+    
     if (!isNaN(sscPercentage) && sscPercentage > 100) {
-        showAlert('SSC Percentage cannot be greater than 100.', 'danger', 'nuForm');
-        return;
+        document.getElementById('sscPercentage').value = 100;
+        adjustedSscPercentage = 100;
+        showAlert('SSC Percentage has been set to 100.', 'warning', 'nuForm');
     }
     
     if (!isNaN(hsscPercentage) && hsscPercentage > 100) {
-        showAlert('HSSC Percentage cannot be greater than 100.', 'danger', 'nuForm');
-        return;
+        document.getElementById('hsscPercentage').value = 100;
+        adjustedHsscPercentage = 100;
+        showAlert('HSSC Percentage has been set to 100.', 'warning', 'nuForm');
     }
     
     // Validate that correct questions don't exceed attempted questions
@@ -1040,13 +1058,13 @@ function calculateBusinessAggregate() {
     }
     
     if (!isNaN(hsscPercentage)) {
-        aggregateValue += hsscPercentage * 0.4; // 40% for HSSC
+        aggregateValue += adjustedHsscPercentage * 0.4; // 40% for HSSC
     } else {
         isPartial = true;
     }
     
     if (!isNaN(sscPercentage)) {
-        aggregateValue += sscPercentage * 0.1; // 10% for SSC
+        aggregateValue += adjustedSscPercentage * 0.1; // 10% for SSC
     } else {
         isPartial = true;
     }
